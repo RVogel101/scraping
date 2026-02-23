@@ -5,7 +5,7 @@ __pycache__/
 .eggs/
 dist/
 build/
-*.phas2_checkpoint
+*.phase2_checkpoint
 
 # Data files
 *.csv
