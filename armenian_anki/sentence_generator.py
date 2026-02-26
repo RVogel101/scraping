@@ -46,6 +46,57 @@ _gh  = ARM["gh"]
 _rr  = ARM["rr"]
 _ch  = ARM["ch"]       # dles (WA: ch — EA "j")
 
+# ─── English Verb Inflection Helpers ─────────────────────────────────
+# Irregular English past-tense forms used in sentence templates.
+_IRREGULAR_PAST: dict[str, str] = {
+    "be": "was", "become": "became", "begin": "began", "break": "broke",
+    "bring": "brought", "build": "built", "buy": "bought", "catch": "caught",
+    "choose": "chose", "come": "came", "cut": "cut", "dig": "dug",
+    "do": "did", "draw": "drew", "drink": "drank", "drive": "drove",
+    "eat": "ate", "fall": "fell", "feel": "felt", "fight": "fought",
+    "find": "found", "fly": "flew", "forget": "forgot", "get": "got",
+    "give": "gave", "go": "went", "grow": "grew", "have": "had",
+    "hear": "heard", "hold": "held", "keep": "kept", "know": "knew",
+    "leave": "left", "lend": "lent", "let": "let", "lie": "lay",
+    "lose": "lost", "make": "made", "mean": "meant", "meet": "met",
+    "pay": "paid", "put": "put", "read": "read", "ride": "rode",
+    "ring": "rang", "rise": "rose", "run": "ran", "say": "said",
+    "see": "saw", "seek": "sought", "sell": "sold", "send": "sent",
+    "set": "set", "show": "showed", "sit": "sat", "sleep": "slept",
+    "speak": "spoke", "spend": "spent", "stand": "stood", "steal": "stole",
+    "swim": "swam", "take": "took", "teach": "taught", "tell": "told",
+    "think": "thought", "throw": "threw", "understand": "understood",
+    "wake": "woke", "wear": "wore", "win": "won", "write": "wrote",
+}
+
+def _en_past(infinitive: str) -> str:
+    """Return the English simple past form of an infinitive."""
+    v = infinitive.lower()
+    if v in _IRREGULAR_PAST:
+        return _IRREGULAR_PAST[v]
+    # Regular: final -e → +d; final consonant-vowel-consonant (short) → double + ed;
+    # otherwise → +ed (good enough for demo sentences)
+    if v.endswith("e"):
+        return v + "d"
+    if (len(v) >= 3 and v[-1] not in "aeiouwy"
+            and v[-2] in "aeiou" and v[-3] not in "aeiou"):
+        return v + v[-1] + "ed"
+    return v + "ed"
+
+
+def _en_progressive(infinitive: str) -> str:
+    """Return the English present-participle (-ing) form of an infinitive."""
+    v = infinitive.lower()
+    # final silent -e → drop before -ing (write → writing)
+    if v.endswith("e") and not v.endswith("ee"):
+        return v[:-1] + "ing"
+    # short CVC doubling (run → running)
+    if (len(v) >= 3 and v[-1] not in "aeiouwy"
+            and v[-2] in "aeiou" and v[-3] not in "aeiou"):
+        return v + v[-1] + "ing"
+    return v + "ing"
+
+
 # ─── Common Words for Templates ──────────────────────────────────────
 # Pronouns (WA transliteration)
 PRON_I = _ye + _s                                    # եdelays (yes = I)
@@ -199,7 +250,7 @@ def _verb_sentence_templates(conj: VerbConjugation) -> list[tuple[str, str, str]
         sentences.append((
             "past 1sg",
             arm_sent,
-            f"I {trans}ed.",
+            f"I {_en_past(trans)}.",
         ))
 
     # 4. Future 1sg — "I will ___"
@@ -235,7 +286,7 @@ def _verb_sentence_templates(conj: VerbConjugation) -> list[tuple[str, str, str]
         sentences.append((
             "imperfect 1sg",
             arm_sent,
-            f"I was {trans}ing.",
+            f"I was {_en_progressive(trans)}.",
         ))
 
     return sentences

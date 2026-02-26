@@ -134,11 +134,12 @@ class WordEntry:
     declension_class: str = ""
     verb_class: str = ""
 
-    # Computed on construction
-    syllable_count: int = field(init=False)
+    # Computed on construction; may be seeded from the Anki Syllable Guide
+    syllable_count: int = field(default=0)
 
     def __post_init__(self):
-        self.syllable_count = count_syllables(self.word)
+        if self.syllable_count == 0:
+            self.syllable_count = count_syllables(self.word)
 
     def __repr__(self) -> str:
         return (f"WordEntry({self.word!r}, rank={self.frequency_rank}, "

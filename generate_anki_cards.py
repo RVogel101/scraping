@@ -22,6 +22,12 @@ import argparse
 import logging
 import sys
 
+# Ensure Armenian Unicode prints correctly on Windows (cp1252 → utf-8)
+if sys.stdout.encoding and sys.stdout.encoding.lower() not in ("utf-8", "utf-8-sig"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if sys.stderr.encoding and sys.stderr.encoding.lower() not in ("utf-8", "utf-8-sig"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 from armenian_anki.anki_connect import AnkiConnect, AnkiConnectError
 from armenian_anki.card_generator import CardGenerator
 from armenian_anki.morphology.nouns import decline_noun, DECLENSION_CLASSES
@@ -47,7 +53,75 @@ def setup_logging(verbose: bool = False):
     )
 
 
-def run_demo():
+def run_list_decks():
+    """Connect to Anki and print all available deck names."""
+    try:
+        anki = AnkiConnect()
+        if not anki.ping():
+            print("✗ Cannot connect to AnkiConnect. Is Anki running?")
+            print("  Install AnkiConnect: Tools → Add-ons → Get Add-ons → Code: 2055492159")
+            sys.exit(1)
+        decks = sorted(anki.deck_names())
+        print(f"\nFound {len(decks)} deck(s) in Anki:\n")
+        for d in decks:
+            print(f"  {d}")
+        print()
+    except AnkiConnectError as exc:
+        print(f"✗ AnkiConnect error: {exc}")
+        sys.exit(1)
+
+
+def run_inspect_deck(deck: str):
+    """Show the field names and a sample note from a deck.
+
+    This helps you discover which field names to pass to --field-word,
+    --field-pos, and --field-translation.
+    """
+    try:
+        anki = AnkiConnect()
+        if not anki.ping():
+            print("✗ Cannot connect to AnkiConnect. Is Anki running?")
+            sys.exit(1)
+
+        note_ids = anki.find_notes(f'"deck:{deck}"')
+        if not note_ids:
+            print(f"✗ No notes found in deck '{deck}'")
+            print("  Run --list-decks to see available decks.")
+            sys.exit(1)
+
+        notes = anki.notes_info(note_ids[:3])  # preview first 3
+        first = notes[0]
+        field_names = list(first.get("fields", {}).keys())
+
+        print(f"\nDeck: {deck}")
+        print(f"Total notes: {len(note_ids)}")
+        print(f"Note type: {first.get('modelName', '?')}")
+        print(f"\nFields ({len(field_names)}):")
+        for name in field_names:
+            sample_val = first["fields"][name]["value"]
+            # Truncate HTML/long values for display
+            if len(sample_val) > 60:
+                sample_val = sample_val[:57] + "..."
+            print(f"  {name!r:30s}  e.g. {sample_val!r}")
+
+        print(f"\nSample notes ({min(3, len(notes))}):")
+        for n in notes:
+            fields = {k: v["value"] for k, v in n.get("fields", {}).items()}
+            preview = " | ".join(f"{k}: {v[:25]}" for k, v in list(fields.items())[:4] if v)
+            print(f"  {preview}")
+
+        print(f"""
+Usage hint — to process this deck, run:
+  python generate_anki_cards.py \\
+    --source-deck "{deck}" \\
+    --field-word "<WORD FIELD NAME>" \\
+    --field-translation "<TRANSLATION FIELD NAME>"
+""")
+    except AnkiConnectError as exc:
+        print(f"✗ AnkiConnect error: {exc}")
+        sys.exit(1)
+
+
     """Run a demonstration of the morphology engine without requiring Anki."""
     print("=" * 80)
     print("  Armenian Morphology Engine — Demo")
@@ -67,7 +141,7 @@ def run_demo():
     _t = ARM["t"]         # dles (WA: t)
 
     word_book = _k + _i + _r + _k_asp               # delays (kirk' = book)
-    word_house = _t + _vo + _yiwn + _n               # delays (tun = house)
+    word_house = _d + _vo + _yiwn + _n               # տouն (dun = house; WA: տ = ARM["d"])
 
     print("\n--- Noun Declension ---")
     for word, trans in [(word_book, "book"), (word_house, "house")]:
@@ -180,7 +254,8 @@ def _push_to_anki_single(word, pos, translation, declension_class, verb_class):
         print(f"\n✗ AnkiConnect error: {exc}")
 
 
-def run_full_pipeline(source_deck: str = None):
+def run_full_pipeline(source_deck: str = None, field_overrides: dict = None,
+                      default_pos: str = "noun"):
     """Process all words in the source deck."""
     try:
         anki = AnkiConnect()
@@ -190,7 +265,7 @@ def run_full_pipeline(source_deck: str = None):
             sys.exit(1)
 
         gen = CardGenerator(anki)
-        stats = gen.process_all(source_deck)
+        stats = gen.process_all(source_deck, field_overrides, default_pos)
 
         print("\n" + "=" * 60)
         print("  Card Generation Complete")
@@ -207,7 +282,8 @@ def run_full_pipeline(source_deck: str = None):
         sys.exit(1)
 
 
-def run_progression_pipeline(source_deck: str = None, dry_run: bool = False):
+def run_progression_pipeline(source_deck: str = None, dry_run: bool = False,
+                             field_overrides: dict = None, default_pos: str = "noun"):
     """Build a phrase-chunking progression plan and push ordered cards to Anki.
 
     Each vocabulary word is assigned to a batch and level based on:
@@ -230,7 +306,7 @@ def run_progression_pipeline(source_deck: str = None, dry_run: bool = False):
 
         # ── 1. Load vocabulary from source deck ──────────────────────
         print(f"Loading vocabulary from '{source_deck or SOURCE_DECK}'…")
-        raw_words = gen.get_source_words(source_deck)
+        raw_words = gen.get_source_words(source_deck, field_overrides, default_pos)
         if not raw_words:
             print("✗ No words found in source deck.")
             sys.exit(1)
@@ -251,6 +327,7 @@ def run_progression_pipeline(source_deck: str = None, dry_run: bool = False):
                 frequency_rank=freq,
                 declension_class=entry.get("declension_class", ""),
                 verb_class=entry.get("verb_class", ""),
+                syllable_count=entry.get("syllable_count", 0),
             ))
 
         # ── 2. Build the progression plan ────────────────────────────
@@ -387,16 +464,23 @@ def main():
         epilog="""
 Examples:
   %(prog)s --demo                              Run demo (no Anki needed)
+  %(prog)s --list-decks                        Show all decks in your Anki
+  %(prog)s --inspect "My Armenian Deck"        Show fields of notes in a deck
   %(prog)s                                     Process all words in source deck
   %(prog)s --source-deck "My Armenian Deck"    Process a specific deck
-  %(prog)s --word գdelayed --pos noun --translation book
-  %(prog)s --word գdelayed --pos verb --translation write --no-anki
+  %(prog)s --source-deck "My Deck" --field-word "Front" --field-translation "Back"
+  %(prog)s --word գիրք --pos noun --translation book
+  %(prog)s --word գրել --pos verb --translation write --no-anki
   %(prog)s --progression                       Build phrase-chunking progression deck
   %(prog)s --progression --dry-run             Preview progression plan without pushing
         """,
     )
     parser.add_argument("--demo", action="store_true",
                         help="Run morphology demo without requiring Anki")
+    parser.add_argument("--list-decks", action="store_true",
+                        help="List all decks available in your Anki app")
+    parser.add_argument("--inspect", type=str, metavar="DECK",
+                        help="Show field names and sample notes from a deck")
     parser.add_argument("--word", type=str,
                         help="Process a single Armenian word")
     parser.add_argument("--pos", type=str, choices=["noun", "verb", "n", "v"],
@@ -411,6 +495,15 @@ Examples:
                         help="Verb conjugation class")
     parser.add_argument("--source-deck", type=str, default=None,
                         help=f"Source deck name (default: {SOURCE_DECK})")
+    parser.add_argument("--field-word", type=str, default=None, metavar="FIELD",
+                        help="Name of the field containing the Armenian word")
+    parser.add_argument("--field-translation", type=str, default=None, metavar="FIELD",
+                        help="Name of the field containing the English translation")
+    parser.add_argument("--field-pos", type=str, default=None, metavar="FIELD",
+                        help="Name of the field containing the part of speech")
+    parser.add_argument("--default-pos", type=str, default="noun",
+                        choices=["noun", "verb"],
+                        help="POS to assume when the pos field is missing (default: noun)")
     parser.add_argument("--no-anki", action="store_true",
                         help="Display output only, don't push to Anki")
     parser.add_argument("--progression", action="store_true",
@@ -423,10 +516,25 @@ Examples:
     args = parser.parse_args()
     setup_logging(args.verbose)
 
+    # Build field-override dict from individual flags
+    field_overrides = {}
+    if args.field_word:
+        field_overrides["word"] = args.field_word
+    if args.field_translation:
+        field_overrides["translation"] = args.field_translation
+    if args.field_pos:
+        field_overrides["pos"] = args.field_pos
+
     if args.demo:
         run_demo()
+    elif args.list_decks:
+        run_list_decks()
+    elif args.inspect:
+        run_inspect_deck(args.inspect)
     elif args.progression:
-        run_progression_pipeline(args.source_deck, dry_run=args.dry_run)
+        run_progression_pipeline(args.source_deck, dry_run=args.dry_run,
+                                 field_overrides=field_overrides or None,
+                                 default_pos=args.default_pos)
     elif args.word:
         if not args.pos:
             parser.error("--pos is required when using --word")
@@ -435,7 +543,9 @@ Examples:
             args.declension_class, args.verb_class, args.no_anki,
         )
     else:
-        run_full_pipeline(args.source_deck)
+        run_full_pipeline(args.source_deck,
+                          field_overrides=field_overrides or None,
+                          default_pos=args.default_pos)
 
 
 if __name__ == "__main__":

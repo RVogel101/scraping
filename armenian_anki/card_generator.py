@@ -7,6 +7,7 @@ via AnkiConnect.
 """
 
 import logging
+import re
 from pathlib import Path
 from typing import Optional
 
@@ -251,8 +252,152 @@ class CardGenerator:
         self.anki.ensure_deck(TARGET_DECK)
         logger.info(f"Target deck ready: {TARGET_DECK}")
 
-    def get_source_words(self, deck: str = None) -> list[dict]:
+    # ─── HTML Field Extraction Helpers ───────────────────────────────
+    # Deck format: Front/Back fields contain HTML like:
+    #   Front: <div style='font-family:"Arial"...'>WORD</div>
+    #          <div class='toggle-section'><div class='toggle-content'>syl-guide</div>...
+    #   Back:  same as Front + <hr> + <div>English</div> + <div><img></div>
+
+    @staticmethod
+    def _clean_html_text(html: str) -> str:
+        s = re.sub(r'\[sound:[^\]]+\]', '', html, flags=re.IGNORECASE)
+        s = re.sub(r'<[^>]+>', ' ', s)
+        s = s.replace('&nbsp;', ' ').replace('&amp;', '&').replace('&quot;', '"')
+        return re.sub(r'\s+', ' ', s).strip()
+
+    @staticmethod
+    def _extract_word_from_front(html: str) -> str:
+        """Pull the Armenian word out of the first font-family <div>.
+
+        Strips coloured <span> tags (vowel / stress highlighting).
+        For comma-separated alternates returns only the first term.
+        Phrase cards (result contains a space) are returned as-is so
+        the caller can skip them.
+        """
+        m = re.search(
+            r'<div[^>]*font-family[^>]*>\s*(.*?)\s*</div>',
+            html, re.IGNORECASE | re.DOTALL,
+        )
+        raw = m.group(1) if m else html
+        text = re.sub(r'<[^>]+>', '', raw)
+        text = re.sub(r'\[sound:[^\]]+\]', '', text, flags=re.IGNORECASE)
+        text = re.sub(r'\s+', ' ', text).strip()
+        if ',' in text:
+            text = text.split(',')[0].strip()
+        return text
+
+    @staticmethod
+    def _extract_translation_from_back(html: str) -> str:
+        """Extract the English translation from a Back field.
+
+        Translation is the first non-empty, non-image div after <hr>.
+        """
+        parts = re.split(r'<[hH][rR]\s*/?>', html)
+        if len(parts) < 2:
+            return ''
+        after_hr = parts[-1]
+        for m in re.finditer(r'<div[^>]*>(.*?)</div>', after_hr, re.IGNORECASE | re.DOTALL):
+            inner = m.group(1).strip()
+            if not inner:
+                continue
+            if re.fullmatch(r'\s*<[iI][mM][gG][^>]*>\s*', inner):
+                continue
+            text = re.sub(r'<[^>]+>', '', inner)
+            text = re.sub(r'\[sound:[^\]]+\]', '', text, flags=re.IGNORECASE)
+            text = re.sub(r'\s+', ' ', text).strip()
+            if text:
+                return text
+        return ''
+
+    @staticmethod
+    def _detect_pos(word: str) -> str:
+        """Heuristically detect POS from an Armenian word's suffix.
+
+        Verb infinitive endings in Western Armenian:
+          -el (U+0565 U+056C)  e-class (most common)
+          -al (U+0561 U+056C)  a-class
+          -il (U+056B U+056C)  reflexive / middle
+        """
+        w = re.sub(r'[\u055b-\u055e\u0589\u02bc]', '', word).strip()
+        if w.endswith('\u0565\u056c') or w.endswith('\u0561\u056c') or w.endswith('\u056b\u056c'):
+            return 'verb'
+        return 'noun'
+
+    @staticmethod
+    def _extract_syllable_count(html: str) -> int:
+        """Extract syllable count from the Syllable Guide toggle-content div.
+
+        The guide uses hyphens between syllables with vowels coloured green:
+          'Պ<span>a</span>t-k<span>e</span>r' => 2 syllables
+        Returns 0 when the guide is absent (fall back to count_syllables).
+        """
+        m = re.search(
+            r'class=["\']toggle-content["\'][^>]*>(.*?)</div>',
+            html, re.IGNORECASE | re.DOTALL,
+        )
+        if not m:
+            return 0
+        text = re.sub(r'<[^>]+>', '', m.group(1)).strip()
+        if not text:
+            return 0
+        parts = [p for p in text.split('-') if p.strip()]
+        return len(parts)
+
+    # Common alternative field names to try when configured names are absent.
+    _WORD_FIELD_ALIASES = [
+        "Word", "Armenian", "Front", "Expression", "Vocabulary",
+        "Հայerén", "Term", "Item", "Headword",
+    ]
+    _TRANSLATION_FIELD_ALIASES = [
+        "Translation", "Meaning", "English", "Back", "Definition",
+        "Gloss", "Answer", "Target",
+    ]
+    _POS_FIELD_ALIASES = [
+        "PartOfSpeech", "POS", "Part of Speech", "Type", "WordClass",
+        "WordType", "Category", "Class",
+    ]
+
+    def _resolve_fields(
+        self,
+        available: list[str],
+        overrides: dict,
+    ) -> dict[str, str | None]:
+        """Map logical key → actual field name, using override → config → alias fallback."""
+        def pick(logical_key: str, aliases: list[str]) -> str | None:
+            # 1) Explicit override wins
+            if logical_key in overrides and overrides[logical_key] in available:
+                return overrides[logical_key]
+            # 2) Configured name (case-insensitive)
+            configured = SOURCE_FIELDS.get(logical_key, "")
+            for f in available:
+                if f.lower() == configured.lower():
+                    return f
+            # 3) Walk through known aliases
+            for alias in aliases:
+                for f in available:
+                    if f.lower() == alias.lower():
+                        return f
+            return None
+
+        return {
+            "word":          pick("word",          self._WORD_FIELD_ALIASES),
+            "translation":   pick("translation",   self._TRANSLATION_FIELD_ALIASES),
+            "pos":           pick("pos",           self._POS_FIELD_ALIASES),
+            "pronunciation": pick("pronunciation", ["Pronunciation", "Romanization",
+                                                    "Transliteration", "Reading"]),
+        }
+
+    def get_source_words(
+        self,
+        deck: str = None,
+        field_overrides: dict | None = None,
+        default_pos: str = "noun",
+    ) -> list[dict]:
         """Read vocabulary words from the source Anki deck.
+
+        Auto-detects field names when the configured names are not found.
+        Pass ``field_overrides`` to force specific field names:
+            {"word": "Front", "translation": "Back", "pos": "POS"}
 
         Returns list of dicts with keys: word, pos, translation, pronunciation.
         """
@@ -262,15 +407,78 @@ class CardGenerator:
             logger.warning(f"No notes found in deck '{deck}'")
             return []
 
-        words = []
-        for note in notes:
-            fields = {k: v["value"] for k, v in note.get("fields", {}).items()}
-            entry = {}
-            for key, field_name in SOURCE_FIELDS.items():
-                entry[key] = fields.get(field_name, "")
-            if entry.get("word"):
-                words.append(entry)
+        # Determine the field names from the first note
+        sample_fields = list(notes[0].get("fields", {}).keys())
+        mapping = self._resolve_fields(sample_fields, field_overrides or {})
 
+        # Warn about what we resolved
+        logger.info(
+            f"Field mapping for '{deck}': "
+            f"word='{mapping['word']}', translation='{mapping['translation']}', "
+            f"pos='{mapping['pos']}'"
+        )
+        if mapping["word"] is None:
+            logger.warning(
+                f"Could not detect word field in deck '{deck}'. "
+                f"Available fields: {sample_fields}. "
+                "Use --field-word to specify it explicitly."
+            )
+            return []
+        if mapping["translation"] is None:
+            logger.warning(
+                f"Could not detect translation field in deck '{deck}'. "
+                f"Available fields: {sample_fields}. "
+                "Use --field-translation to specify it explicitly."
+            )
+
+        words = []
+        skipped_phrases = 0
+        for note in notes:
+            raw = {k: v["value"] for k, v in note.get("fields", {}).items()}
+
+            # Extract and clean the Armenian word
+            word_html = raw.get(mapping["word"] or "", "")
+            word = self._extract_word_from_front(word_html)
+            if not word:
+                continue
+            # Phrase cards contain spaces after cleaning (e.g. 'mi vaze'); skip them
+            if ' ' in word:
+                skipped_phrases += 1
+                logger.debug(f"Skipping phrase card: {word!r}")
+                continue
+
+            # Extract translation from post-<hr> content in Back field
+            trans_html = raw.get(mapping["translation"] or "", "")
+            translation = self._extract_translation_from_back(trans_html)
+            if not translation:
+                translation = self._clean_html_text(trans_html)
+
+            # POS: field value if present, else auto-detect from word suffix
+            if mapping["pos"]:
+                pos = self._clean_html_text(raw.get(mapping["pos"] or "", "")).lower()
+            else:
+                pos = ""
+            if not pos:
+                pos = self._detect_pos(word)
+
+            pronunciation = self._clean_html_text(
+                raw.get(mapping["pronunciation"] or "", "")
+            )
+
+            # Syllable count from Syllable Guide is more reliable than the
+            # pure-algorithmic counter for words in this deck
+            syllable_count = self._extract_syllable_count(word_html)
+
+            words.append({
+                "word":           word,
+                "translation":    translation,
+                "pos":            pos or default_pos,
+                "pronunciation":  pronunciation,
+                "syllable_count": syllable_count,
+            })
+
+        if skipped_phrases:
+            logger.info(f"Skipped {skipped_phrases} phrase/imperative cards")
         logger.info(f"Found {len(words)} vocabulary words in '{deck}'")
         return words
 
@@ -501,7 +709,8 @@ class CardGenerator:
         logger.info(f"Created {len(note_ids)} sentence cards for: {word}")
         return note_ids
 
-    def process_all(self, source_deck: str = None) -> dict:
+    def process_all(self, source_deck: str = None, field_overrides: dict = None,
+                    default_pos: str = "noun") -> dict:
         """Process all words in the source deck and generate morphology cards.
 
         Returns a summary dict with counts.
@@ -509,7 +718,7 @@ class CardGenerator:
         self.setup_models()
         self.setup_decks()
 
-        words = self.get_source_words(source_deck)
+        words = self.get_source_words(source_deck, field_overrides, default_pos)
         if not words:
             return {"total": 0, "nouns": 0, "verbs": 0, "sentences": 0, "errors": 0}
 
