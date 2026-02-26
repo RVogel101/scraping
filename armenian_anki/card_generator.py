@@ -7,6 +7,7 @@ via AnkiConnect.
 """
 
 import logging
+from pathlib import Path
 from typing import Optional
 
 from .anki_connect import AnkiConnect, AnkiConnectError
@@ -16,6 +17,7 @@ from .config import (
     SOURCE_FIELDS, TAG_GENERATED, TAG_DECLENSION, TAG_CONJUGATION, TAG_SENTENCES,
     DEFAULT_NOUN_DECLENSION, DEFAULT_VERB_CLASS, SENTENCES_PER_WORD,
 )
+from .database import CardDatabase
 from .morphology.nouns import decline_noun, NounDeclension, CASE_LABELS_EN
 from .morphology.verbs import conjugate_verb, VerbConjugation, PERSONS, PERSON_LABELS
 from .morphology.articles import add_definite, add_indefinite
@@ -199,10 +201,23 @@ SENTENCE_FIELDS = [
 # ─── Card Generator ──────────────────────────────────────────────────
 
 class CardGenerator:
-    """Orchestrates reading vocab from Anki and generating morphology cards."""
+    """Orchestrates reading vocab from Anki and generating morphology cards.
 
-    def __init__(self, anki: Optional[AnkiConnect] = None):
+    A ``CardDatabase`` is created automatically (or can be injected) so that
+    every generated card and sentence is persisted locally in SQLite
+    independent of the AnkiConnect push.  This local store is the foundation
+    for the future stand-alone app with FSRS spaced-repetition and A/B testing.
+    """
+
+    def __init__(
+        self,
+        anki: Optional[AnkiConnect] = None,
+        db: Optional[CardDatabase] = None,
+        db_path: Optional[str] = None,
+    ):
         self.anki = anki or AnkiConnect()
+        from .database import DEFAULT_DB_PATH
+        self.db: CardDatabase = db or CardDatabase(db_path if db_path else DEFAULT_DB_PATH)
 
     def setup_models(self) -> None:
         """Create the Anki note types (models) if they don't exist."""
@@ -303,6 +318,19 @@ class CardGenerator:
         )
         if note_id:
             logger.info(f"Created noun declension card: {word} (ID: {note_id})")
+
+        # ── Persist to local SQLite ──────────────────────────────────
+        morphology_data = {k: v for k, v in fields.items() if k not in ("Word", "Translation", "DeclensionClass")}
+        self.db.upsert_card(
+            word=word,
+            translation=translation,
+            pos="noun",
+            card_type="noun_declension",
+            declension_class=cls,
+            morphology=morphology_data,
+            anki_note_id=note_id,
+        )
+
         return note_id
 
     def generate_verb_card(self, infinitive: str, translation: str = "",
@@ -355,6 +383,19 @@ class CardGenerator:
         )
         if note_id:
             logger.info(f"Created verb conjugation card: {infinitive} (ID: {note_id})")
+
+        # ── Persist to local SQLite ──────────────────────────────────
+        morphology_data = {k: v for k, v in fields.items() if k not in ("Infinitive", "Translation", "VerbClass", "Root")}
+        self.db.upsert_card(
+            word=infinitive,
+            translation=translation,
+            pos="verb",
+            card_type="verb_conjugation",
+            verb_class=cls,
+            morphology=morphology_data,
+            anki_note_id=note_id,
+        )
+
         return note_id
 
     def generate_sentence_cards(
@@ -435,6 +476,27 @@ class CardGenerator:
             )
             if note_id:
                 note_ids.append(note_id)
+
+            # ── Persist sentence to local SQLite ──────────────────────
+            card_type = "noun_declension" if pos.lower() in ("noun", "n") else "verb_conjugation"
+            db_card = self.db.get_card_by_word(word, card_type)
+            if db_card is None:
+                # Ensure a parent card row exists even if Anki push is skipped.
+                db_card_id = self.db.upsert_card(
+                    word=word,
+                    translation=translation,
+                    pos=pos,
+                    card_type=card_type,
+                )
+            else:
+                db_card_id = db_card["id"]
+            self.db.add_sentence(
+                card_id=db_card_id,
+                form_label=form_label,
+                armenian_text=arm_sentence,
+                english_text=en_sentence,
+                grammar_type=grammar_filter or "",
+            )
 
         logger.info(f"Created {len(note_ids)} sentence cards for: {word}")
         return note_ids

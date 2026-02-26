@@ -7,6 +7,11 @@ dist/
 build/
 *.phase2_checkpoint
 
+# SQLite databases (generated at runtime; not committed to the repo)
+*.db
+*.db-shm
+*.db-wal
+
 # Data files
 *.csv
 *.pkl
