@@ -76,7 +76,7 @@ class TestMorphologyToCardToDb(unittest.TestCase):
         self.assertIsNotNone(note_id)
 
         card = self.db.get_card_by_word(_WORD_BOOK, "noun_declension")
-        self.assertIsNotNone(card)
+        assert card is not None
         self.assertEqual(card["pos"], "noun")
         self.assertEqual(card["declension_class"], "i_class")
 
@@ -93,7 +93,7 @@ class TestMorphologyToCardToDb(unittest.TestCase):
         self.assertIsNotNone(note_id)
 
         card = self.db.get_card_by_word(_WORD_WRITE, "verb_conjugation")
-        self.assertIsNotNone(card)
+        assert card is not None
         self.assertEqual(card["pos"], "verb")
         self.assertEqual(card["verb_class"], "e_class")
 
@@ -111,6 +111,7 @@ class TestMorphologyToCardToDb(unittest.TestCase):
         self.assertGreater(len(sent_ids), 0)
 
         card = self.db.get_card_by_word(_WORD_BOOK, "noun_declension")
+        assert card is not None
         sentences = self.db.get_sentences(card["id"])
         self.assertGreater(len(sentences), 0)
         for s in sentences:
@@ -193,13 +194,13 @@ class TestProgressionToCards(unittest.TestCase):
                     if word_entry.pos == "noun":
                         self.gen.generate_noun_card(
                             word_entry.word, word_entry.translation,
-                            word_entry.declension_class or None,
+                            word_entry.declension_class or "",
                             extra_tags=tags,
                         )
                     elif word_entry.pos == "verb":
                         self.gen.generate_verb_card(
                             word_entry.word, word_entry.translation,
-                            word_entry.verb_class or None,
+                            word_entry.verb_class or "",
                             extra_tags=tags,
                         )
                     stats["vocab"] += 1
@@ -220,8 +221,8 @@ class TestProgressionToCards(unittest.TestCase):
                             target_entry.word,
                             target_entry.pos,
                             target_entry.translation,
-                            target_entry.declension_class or None,
-                            target_entry.verb_class or None,
+                            target_entry.declension_class or "",
+                            target_entry.verb_class or "",
                             grammar_filter=phrase.grammar_type,
                             max_sentences=1,
                             extra_tags=tags,
