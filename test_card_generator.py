@@ -173,7 +173,7 @@ class TestNounCardGeneration(unittest.TestCase):
         self.gen.generate_noun_card(_WORD_BOOK, "book")
         db = CardDatabase(self._tmp.name)
         card = db.get_card_by_word(_WORD_BOOK, "noun_declension")
-        self.assertIsNotNone(card)
+        assert card is not None
         self.assertEqual(card["translation"], "book")
 
     def test_generate_noun_card_with_tags(self):
@@ -236,7 +236,7 @@ class TestVerbCardGeneration(unittest.TestCase):
         self.gen.generate_verb_card(_WORD_WRITE, "write")
         db = CardDatabase(self._tmp.name)
         card = db.get_card_by_word(_WORD_WRITE, "verb_conjugation")
-        self.assertIsNotNone(card)
+        assert card is not None
         self.assertEqual(card["translation"], "write")
 
     def test_generate_verb_a_class(self):
