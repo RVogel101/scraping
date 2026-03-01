@@ -45,6 +45,7 @@ from itertools import cycle
 from typing import Iterator
 
 from .morphology.core import count_syllables
+from .sentence_generator import generate_noun_sentences, generate_verb_sentences
 
 logger = logging.getLogger(__name__)
 
@@ -82,6 +83,41 @@ GRAMMAR_ADVANCED = [
     "prepositional_phrase",
     "question_form",
 ]
+
+
+# ─── Grammar Type → Sentence Label Filter ────────────────────────────
+# Maps each progression grammar_type to a substring filter that matches
+# the form labels produced by sentence_generator.py.
+#
+# Sentence generator noun labels:
+#   "nominative", "nominative (indefinite)", "accusative",
+#   "genitive-dative", "ablative", "instrumental", "plural nominative"
+#
+# Sentence generator verb labels:
+#   "present 1sg", "present 3sg", "past 1sg", "future 1sg",
+#   "imperative 2sg", "present 1pl", "imperfect 1sg"
+
+GRAMMAR_TYPE_TO_FILTER: dict[str, str] = {
+    # Simple (levels 1–5)
+    "plural":              "plural",
+    "definite_article":    "nominative",         # uses nom_sg_def
+    "indefinite_article":  "indefinite",         # matches "nominative (indefinite)"
+    # Intermediate (levels 6–10)
+    "nominative_subject":  "nominative",
+    "accusative_object":   "accusative",
+    "genitive_dative":     "genitive-dative",
+    "ablative":            "ablative",
+    "instrumental":        "instrumental",
+    "present_tense":       "present",
+    "past_tense":          "past",
+    # Advanced (levels 11+)
+    "future_tense":        "future",
+    "imperfect_tense":     "imperfect",
+    "imperative":          "imperative",
+    "adjective_phrase":    "nominative",         # fallback: use noun in nominative
+    "prepositional_phrase": "ablative",          # fallback: ablative conveys "from"
+    "question_form":       "accusative",         # fallback: "I see the ___"
+}
 
 
 def _allowed_grammar(level: int) -> list[str]:
@@ -480,3 +516,80 @@ def assign_due_positions(
             cursor += 1
 
     return positions
+
+
+# ─── Phrase Sentence Filling ──────────────────────────────────────────
+
+def sentence_filter_for(grammar_type: str) -> str:
+    """Return the sentence-label substring filter for a grammar_type.
+
+    Falls back to the grammar_type itself (with underscores replaced by
+    spaces) if no explicit mapping exists.
+    """
+    return GRAMMAR_TYPE_TO_FILTER.get(grammar_type, grammar_type.replace("_", " "))
+
+
+def fill_phrase_sentence(
+    phrase: PhraseEntry,
+    word_entry: WordEntry,
+) -> None:
+    """Fill a PhraseEntry's armenian_sentence and english_sentence fields.
+
+    Uses sentence_generator to produce a sentence matching the phrase's
+    grammar_type, then stores the first matching result in the PhraseEntry.
+    """
+    label_filter = sentence_filter_for(phrase.grammar_type)
+    pos = word_entry.pos.lower()
+
+    if pos in ("noun", "n"):
+        sentences = generate_noun_sentences(
+            word_entry.word,
+            word_entry.declension_class or "i_class",
+            word_entry.translation,
+        )
+    elif pos in ("verb", "v"):
+        sentences = generate_verb_sentences(
+            word_entry.word,
+            word_entry.verb_class or "e_class",
+            word_entry.translation,
+        )
+    else:
+        return
+
+    # Pick the first sentence whose label matches the filter
+    for lbl, arm, eng in sentences:
+        if label_filter.lower() in lbl.lower():
+            phrase.armenian_sentence = arm
+            phrase.english_sentence = eng
+            return
+
+    # Fallback: use the first available sentence
+    if sentences:
+        _, arm, eng = sentences[0]
+        phrase.armenian_sentence = arm
+        phrase.english_sentence = eng
+
+
+def fill_plan_sentences(
+    plan: ProgressionPlan,
+    word_lookup: dict[str, WordEntry] | None = None,
+) -> None:
+    """Fill all PhraseEntry sentences in a ProgressionPlan.
+
+    Args:
+        plan: The progression plan whose phrases need sentences.
+        word_lookup: Optional dict mapping word string → WordEntry.
+            If not provided, one is built from the plan's vocab batches.
+    """
+    if word_lookup is None:
+        word_lookup = {
+            w.word: w
+            for vb in plan.vocab_batches
+            for w in vb.words
+        }
+
+    for pb in plan.phrase_batches:
+        for phrase in pb.phrases:
+            entry = word_lookup.get(phrase.target_word)
+            if entry is not None:
+                fill_phrase_sentence(phrase, entry)
