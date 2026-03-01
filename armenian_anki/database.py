@@ -23,6 +23,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
+from .fsrs import FSRSScheduler, CardState
+
 logger = logging.getLogger(__name__)
 
 # Default path — lives alongside the package so it is easy to find but can
@@ -387,6 +389,75 @@ class CardDatabase:
             cur.lastrowid, user_id, card_id, rating,
         )
         return cur.lastrowid
+
+    def record_review_fsrs(
+        self,
+        user_id: int,
+        card_id: int,
+        rating: int,
+        response_time_ms: int = 0,
+        scheduler: FSRSScheduler | None = None,
+    ) -> tuple[int, CardState]:
+        """Record a review using the FSRS v4 algorithm to compute scheduling.
+
+        Looks up the card's previous FSRS state from the most recent
+        ``fsrs_v4`` review.  If no prior review exists the card is treated
+        as new.
+
+        Returns:
+            (review_id, new_card_state)
+        """
+        scheduler = scheduler or FSRSScheduler()
+        now = datetime.now(timezone.utc)
+
+        # Fetch the latest fsrs_v4 review for this user+card
+        prev = self._latest_review(user_id, card_id, algorithm_version="fsrs_v4")
+
+        if prev is None:
+            # First review — brand new card
+            state = scheduler.first_review(rating, now=now)
+        else:
+            # Reconstruct prior state
+            prev_reviewed = datetime.fromisoformat(prev["reviewed_at"])
+            elapsed_days = max((now - prev_reviewed).total_seconds() / 86400, 0.0)
+            prev_state = CardState(
+                stability=prev["ease_factor"],  # we store stability in ease_factor column
+                difficulty=5.0,                 # difficulty not stored; scheduler recomputes
+                reps=0,
+            )
+            state = scheduler.review(prev_state, rating, elapsed_days, now=now)
+
+        review_id = self.record_review(
+            user_id=user_id,
+            card_id=card_id,
+            rating=rating,
+            response_time_ms=response_time_ms,
+            algorithm_version="fsrs_v4",
+            ease_factor=state.stability,
+            interval_days=float(state.interval),
+            next_due_at=state.next_due or "",
+        )
+        return review_id, state
+
+    def _latest_review(
+        self,
+        user_id: int,
+        card_id: int,
+        algorithm_version: str = "",
+    ) -> Optional[dict]:
+        """Return the most recent review for a user+card (optionally by algorithm)."""
+        clauses = ["user_id = ?", "card_id = ?"]
+        params: list = [user_id, card_id]
+        if algorithm_version:
+            clauses.append("algorithm_version = ?")
+            params.append(algorithm_version)
+        where = " AND ".join(clauses)
+        with self._connect() as conn:
+            row = conn.execute(
+                f"SELECT * FROM card_reviews WHERE {where} ORDER BY reviewed_at DESC LIMIT 1",
+                params,
+            ).fetchone()
+        return dict(row) if row else None
 
     def get_reviews(
         self,
