@@ -27,6 +27,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 from .core import ARM
+from .irregular_verbs import get_irregular_overrides
 
 
 # ─── Character shortcuts (WA transliteration) ────────────────────────
@@ -333,5 +334,25 @@ def conjugate_verb(
     # ── Participles ──
     result.past_participle = root + cls["past_participle"]
     result.present_participle = root + cls["present_participle"]
+
+    # ── Apply irregular overrides (if any) ──
+    overrides = get_irregular_overrides(infinitive)
+    if overrides is not None:
+        if "present" in overrides:
+            result.present.update(overrides["present"])
+        if "past_aorist" in overrides:
+            result.past_aorist.update(overrides["past_aorist"])
+        if "imperfect" in overrides:
+            result.imperfect.update(overrides["imperfect"])
+        if "future" in overrides:
+            result.future.update(overrides["future"])
+        if "subjunctive" in overrides:
+            result.subjunctive.update(overrides["subjunctive"])
+        if "imperative_sg" in overrides:
+            result.imperative_sg = overrides["imperative_sg"]
+        if "imperative_pl" in overrides:
+            result.imperative_pl = overrides["imperative_pl"]
+        if "past_participle" in overrides:
+            result.past_participle = overrides["past_participle"]
 
     return result
