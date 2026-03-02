@@ -5,28 +5,38 @@ __pycache__/
 .eggs/
 dist/
 build/
-*.phase2_checkpoint
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
 
 # SQLite databases (generated at runtime; not committed to the repo)
 *.db
 *.db-shm
 *.db-wal
 
-# Data files
-*.csv
-*.pkl
-*.pickle
-*.json
-*.txt
-*.gz
+# Data files (generated, large, or sensitive)
+data/*.json
+data/*.csv
+data/*.pkl
+data/*.pickle
+data/*.txt
+data/*.gz
+data/anki_media/
+data/anki_export.json
+data/extracted_text_simple/
+data/_wa_source_extract/
+!data/.gitkeep
 
 # Generated corpus data (IA downloads, newspaper scrapes, wiki dumps, etc.)
-wa_corpus/data/
-
-# Anki export artifacts
-anki_export.json
-anki_media/
-_temp_export.apkg
+src/wa_corpus/data/
 
 # Images
 *.jpg
@@ -48,18 +58,18 @@ logs/
 
 # Jupyter
 .ipynb_checkpoints/
-
-# IDE / Editor
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Environment
-.env
-.venv/
-venv/
+notebooks/.ipynb_checkpoints/
 
 # OS
 Thumbs.db
 .DS_Store
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Environment
+.env
+

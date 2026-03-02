@@ -21,6 +21,10 @@ Usage:
 import argparse
 import logging
 import sys
+from pathlib import Path
+
+# Add src directory to path
+sys.path.insert(0, str(Path(__file__).parent.parent / 'src'))
 
 # Ensure Armenian Unicode prints correctly on Windows (cp1252 → utf-8)
 if sys.stdout.encoding and sys.stdout.encoding.lower() not in ("utf-8", "utf-8-sig"):

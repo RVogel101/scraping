@@ -6,6 +6,10 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from pathlib import Path
+
+# Add src directory to path
+sys.path.insert(0, str(Path(__file__).parent.parent / 'src'))
 
 from armenian_anki.database import CardDatabase, DEFAULT_DB_PATH
 from armenian_anki.preview import build_preview_payload

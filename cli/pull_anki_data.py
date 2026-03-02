@@ -11,15 +11,21 @@ import os
 import re
 import shutil
 import sqlite3
+import sys
 import tempfile
 import time
 import zipfile
 from pathlib import Path
+
+# Add src directory to path
+sys.path.insert(0, str(Path(__file__).parent.parent / 'src'))
+
 from armenian_anki.anki_connect import AnkiConnect, AnkiConnectError
 
-OUT_PATH = "anki_export.json"
-MEDIA_DIR = Path(__file__).resolve().parent / "anki_media"
-PROJECT_DIR = Path(__file__).resolve().parent
+PROJECT_DIR = Path(__file__).resolve().parent.parent
+DATA_DIR = PROJECT_DIR / "data"
+OUT_PATH = DATA_DIR / "anki_export.json"
+MEDIA_DIR = DATA_DIR / "anki_media"
 
 # Patterns for media references in Anki field HTML
 RE_SOUND = re.compile(r'\[sound:([^\]]+)\]')
