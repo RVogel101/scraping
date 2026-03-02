@@ -99,27 +99,47 @@ def load_newspaper_frequencies() -> Counter[str]:
     return freq
 
 def load_ia_frequencies() -> Counter[str]:
-    """Load Internet Archive OCR text and compute frequencies."""
+    """Load Internet Archive OCR text and compute frequencies.
+
+    Only includes files classified as Western Armenian by the dialect
+    classifier (score >= threshold). EA, grabar, and non-Armenian files
+    are excluded.
+    """
     if not IA_DATA_DIR.exists():
         logger.warning("IA data directory not found at %s", IA_DATA_DIR)
         return Counter()
 
+    from .wa_classifier import classify_file
+
     texts = []
-    for txt_path in IA_DATA_DIR.rglob("*_djvu.txt"):
+    skipped = {"ea": 0, "uncertain": 0, "not_armenian": 0, "error": 0}
+    for txt_path in sorted(IA_DATA_DIR.rglob("*_djvu.txt")):
         try:
+            result = classify_file(txt_path)
+            if not result.is_western_armenian:
+                skipped[result.label.lower().replace(" ", "_")] = (
+                    skipped.get(result.label.lower().replace(" ", "_"), 0) + 1
+                )
+                continue
             text = txt_path.read_text(encoding="utf-8", errors="replace")
             if text.strip():
                 texts.append(text)
         except Exception as e:
             logger.warning("Failed to read %s: %s", txt_path, e)
+            skipped["error"] += 1
 
     if not texts:
         return Counter()
 
     freq = count_frequencies(texts)
     freq = filter_by_min_length(freq, min_len=2)
-    logger.info("Computed %d word forms from %d IA text files",
-                len(freq), len(texts))
+    logger.info(
+        "Computed %d word forms from %d WA-classified IA files "
+        "(skipped: %d EA, %d uncertain, %d not-Armenian, %d errors)",
+        len(freq), len(texts),
+        skipped.get("ea", 0), skipped.get("uncertain", 0),
+        skipped.get("not_armenian", 0), skipped.get("error", 0),
+    )
     return freq
 
 
