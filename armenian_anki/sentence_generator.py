@@ -6,9 +6,14 @@ of a given word. Demonstrates usage of cases (for nouns) and tenses (for verbs)
 in context.
 
 Sentence templates use Western Armenian word order (SOV tendency but flexible).
+
+Can generate sentences in multiple styles:
+  - With explicit pronouns: "ես կարդամ" (I read)
+  - With optional pronouns: "(ես) կարդամ" (I read — pronoun implied by -մ ending)
+  - With romanization: "(yes) gardam"
 """
 
-from .morphology.core import ARM
+from .morphology.core import ARM, romanize
 from .morphology.nouns import decline_noun, NounDeclension
 from .morphology.verbs import conjugate_verb, VerbConjugation
 from .morphology.articles import add_definite, add_indefinite
@@ -134,8 +139,15 @@ COPULA = _e                                            # delays (ē = is)
 # Each template is (case_used, template_func, english_template)
 # template_func receives the NounDeclension object and returns the Armenian sentence
 
-def _noun_sentence_templates(decl: NounDeclension) -> list[tuple[str, str, str]]:
+def _noun_sentence_templates(
+    decl: NounDeclension,
+    pronoun_style: str = "explicit",
+) -> list[tuple[str, str, str]]:
     """Generate sentences using different case forms of a noun.
+
+    Args:
+        decl: NounDeclension object with all declined forms.
+        pronoun_style: "explicit", "optional", or "none" for pronouns.
 
     Returns list of (case_name, armenian_sentence, english_translation).
     """
@@ -334,18 +346,28 @@ def _noun_sentence_templates(decl: NounDeclension) -> list[tuple[str, str, str]]
 
 # ─── Verb Sentence Templates ─────────────────────────────────────────
 
-def _verb_sentence_templates(conj: VerbConjugation) -> list[tuple[str, str, str]]:
+def _verb_sentence_templates(
+    conj: VerbConjugation,
+    pronoun_style: str = "explicit",
+    supporting_words: list[str] | None = None,
+) -> list[tuple[str, str, str]]:
     """Generate sentences using different tense forms of a verb.
+
+    Args:
+        conj: VerbConjugation object with all conjugated forms.
+        pronoun_style: "explicit", "optional", or "none" for pronouns.
+        supporting_words: Optional list of other vocabulary words to use in phrases.
 
     Returns list of (tense_person, armenian_sentence, english_translation).
     """
     trans = conj.translation or "___"
+    supporting_words = supporting_words or []
     sentences = []
 
     # ── Present tense ────────────────────────────────────────────────
     # 1. Present 1sg — "I ___"
     if "1sg" in conj.present:
-        arm_sent = PRON_I + " " + conj.present["1sg"]
+        arm_sent = _build_sentence(PRON_I, conj.present["1sg"], pronoun_style)
         sentences.append((
             "present 1sg",
             arm_sent,
@@ -354,7 +376,7 @@ def _verb_sentence_templates(conj: VerbConjugation) -> list[tuple[str, str, str]
 
     # 2. Present 3sg — "He/she ___s"
     if "3sg" in conj.present:
-        arm_sent = PRON_HE + " " + conj.present["3sg"]
+        arm_sent = _build_sentence(PRON_HE, conj.present["3sg"], pronoun_style)
         sentences.append((
             "present 3sg",
             arm_sent,
@@ -363,7 +385,7 @@ def _verb_sentence_templates(conj: VerbConjugation) -> list[tuple[str, str, str]
 
     # 3. Present 2sg — "You ___"
     if "2sg" in conj.present:
-        arm_sent = PRON_YOU_SG + " " + conj.present["2sg"]
+        arm_sent = _build_sentence(PRON_YOU_SG, conj.present["2sg"], pronoun_style)
         sentences.append((
             "present 2sg",
             arm_sent,
@@ -372,7 +394,7 @@ def _verb_sentence_templates(conj: VerbConjugation) -> list[tuple[str, str, str]
 
     # 4. Present 1pl — "We ___"
     if "1pl" in conj.present:
-        arm_sent = PRON_WE + " " + conj.present["1pl"]
+        arm_sent = _build_sentence(PRON_WE, conj.present["1pl"], pronoun_style)
         sentences.append((
             "present 1pl",
             arm_sent,
@@ -381,7 +403,7 @@ def _verb_sentence_templates(conj: VerbConjugation) -> list[tuple[str, str, str]
 
     # 5. Present 3pl — "They ___"
     if "3pl" in conj.present:
-        arm_sent = PRON_THEY + " " + conj.present["3pl"]
+        arm_sent = _build_sentence(PRON_THEY, conj.present["3pl"], pronoun_style)
         sentences.append((
             "present 3pl",
             arm_sent,
@@ -391,7 +413,7 @@ def _verb_sentence_templates(conj: VerbConjugation) -> list[tuple[str, str, str]
     # ── Past tense ───────────────────────────────────────────────────
     # 6. Past 1sg — "I ___ed"
     if "1sg" in conj.past_aorist:
-        arm_sent = PRON_I + " " + conj.past_aorist["1sg"]
+        arm_sent = _build_sentence(PRON_I, conj.past_aorist["1sg"], pronoun_style)
         sentences.append((
             "past 1sg",
             arm_sent,
@@ -400,7 +422,7 @@ def _verb_sentence_templates(conj: VerbConjugation) -> list[tuple[str, str, str]
 
     # 7. Past 3sg — "He/she ___ed"
     if "3sg" in conj.past_aorist:
-        arm_sent = PRON_HE + " " + conj.past_aorist["3sg"]
+        arm_sent = _build_sentence(PRON_HE, conj.past_aorist["3sg"], pronoun_style)
         sentences.append((
             "past 3sg",
             arm_sent,
@@ -409,7 +431,7 @@ def _verb_sentence_templates(conj: VerbConjugation) -> list[tuple[str, str, str]
 
     # 8. Past 1pl — "We ___ed"
     if "1pl" in conj.past_aorist:
-        arm_sent = PRON_WE + " " + conj.past_aorist["1pl"]
+        arm_sent = _build_sentence(PRON_WE, conj.past_aorist["1pl"], pronoun_style)
         sentences.append((
             "past 1pl",
             arm_sent,
@@ -419,7 +441,7 @@ def _verb_sentence_templates(conj: VerbConjugation) -> list[tuple[str, str, str]
     # ── Future tense ─────────────────────────────────────────────────
     # 9. Future 1sg — "I will ___"
     if "1sg" in conj.future:
-        arm_sent = PRON_I + " " + conj.future["1sg"]
+        arm_sent = _build_sentence(PRON_I, conj.future["1sg"], pronoun_style)
         sentences.append((
             "future 1sg",
             arm_sent,
@@ -428,7 +450,7 @@ def _verb_sentence_templates(conj: VerbConjugation) -> list[tuple[str, str, str]
 
     # 10. Future 3sg — "He/she will ___"
     if "3sg" in conj.future:
-        arm_sent = PRON_HE + " " + conj.future["3sg"]
+        arm_sent = _build_sentence(PRON_HE, conj.future["3sg"], pronoun_style)
         sentences.append((
             "future 3sg",
             arm_sent,
@@ -437,7 +459,7 @@ def _verb_sentence_templates(conj: VerbConjugation) -> list[tuple[str, str, str]
 
     # 11. Future 1pl — "We will ___"
     if "1pl" in conj.future:
-        arm_sent = PRON_WE + " " + conj.future["1pl"]
+        arm_sent = _build_sentence(PRON_WE, conj.future["1pl"], pronoun_style)
         sentences.append((
             "future 1pl",
             arm_sent,
@@ -466,7 +488,7 @@ def _verb_sentence_templates(conj: VerbConjugation) -> list[tuple[str, str, str]
     # ── Imperfect ────────────────────────────────────────────────────
     # 14. Imperfect 1sg — "I was ___ing"
     if "1sg" in conj.imperfect:
-        arm_sent = PRON_I + " " + conj.imperfect["1sg"]
+        arm_sent = _build_sentence(PRON_I, conj.imperfect["1sg"], pronoun_style)
         sentences.append((
             "imperfect 1sg",
             arm_sent,
@@ -475,7 +497,7 @@ def _verb_sentence_templates(conj: VerbConjugation) -> list[tuple[str, str, str]
 
     # 15. Imperfect 3sg — "He/she was ___ing"
     if "3sg" in conj.imperfect:
-        arm_sent = PRON_HE + " " + conj.imperfect["3sg"]
+        arm_sent = _build_sentence(PRON_HE, conj.imperfect["3sg"], pronoun_style)
         sentences.append((
             "imperfect 3sg",
             arm_sent,
@@ -484,7 +506,7 @@ def _verb_sentence_templates(conj: VerbConjugation) -> list[tuple[str, str, str]
 
     # 16. Imperfect 1pl — "We were ___ing"
     if "1pl" in conj.imperfect:
-        arm_sent = PRON_WE + " " + conj.imperfect["1pl"]
+        arm_sent = _build_sentence(PRON_WE, conj.imperfect["1pl"], pronoun_style)
         sentences.append((
             "imperfect 1pl",
             arm_sent,
@@ -494,13 +516,92 @@ def _verb_sentence_templates(conj: VerbConjugation) -> list[tuple[str, str, str]
     return sentences
 
 
-# ─── Public API ───────────────────────────────────────────────────────
+# ─── Pronoun Styling Helpers ──────────────────────────────────────────
+
+def _format_pronoun(pronoun: str, style: str = "explicit") -> str:
+    """Format a pronoun according to the desired style.
+
+    Args:
+        pronoun: Armenian pronoun (e.g., "ես", "նա").
+        style: "explicit" (always shown), "optional" (in parentheses), "none" (omitted).
+
+    Returns:
+        Formatted pronoun string.
+    """
+    if style == "optional":
+        return f"({pronoun}) "
+    elif style == "none":
+        return ""
+    else:  # explicit (default)
+        return pronoun + " "
+
+
+def _build_sentence(pronoun: str, verb: str, pronoun_style: str = "explicit") -> str:
+    """Build a verb sentence with pronoun styling.
+
+    Args:
+        pronoun: Armenian pronoun.
+        verb: Armenian verb form.
+        pronoun_style: "explicit", "optional", or "none".
+
+    Returns:
+        Complete Armenian sentence.
+    """
+    pron_part = _format_pronoun(pronoun, pronoun_style)
+    return (pron_part + verb).rstrip()
+
+
+def _romanize_sentence(armenian_sentence: str) -> str:
+    """Romanize an Armenian sentence to Latin-based transliteration.
+
+    Args:
+        armenian_sentence: Armenian text (may include spaces, punctuation).
+
+    Returns:
+        Romanized Latin transliteration.
+    """
+    # Split on spaces to preserve structure
+    words = armenian_sentence.split(" ")
+    romanized_words = [romanize(w) if w else "" for w in words]
+    return " ".join(romanized_words)
+
+
+# ─── Sentence Pair Generation (Armenian + Romanized) ───────────────────
+
+def generate_sentence_pair(
+    armenian: str,
+    english: str,
+    encode_variants: bool = False,
+) -> tuple[str, str] | list[tuple[str, str]]:
+    """Create a sentence pair with optional encoding variants.
+
+    Args:
+        armenian: Armenian sentence.
+        english: English translation.
+        encode_variants: If True, return both Armenian + romanized versions.
+
+    Returns:
+        Single (armenian, english) pair, or list of pairs if encode_variants=True.
+    """
+    if not encode_variants:
+        return (armenian, english)
+
+    # Return both Armenian and romanized versions
+    romanized = _romanize_sentence(armenian)
+    return [
+        (armenian, english),
+        (romanized, english),
+    ]
+
+
+    return sentences
 
 def generate_noun_sentences(
     word: str,
     declension_class: str = "i_class",
     translation: str = "",
     max_sentences: int = 21,
+    pronoun_style: str = "explicit",
 ) -> list[tuple[str, str, str]]:
     """Generate example sentences demonstrating case usage for a noun.
 
@@ -509,12 +610,13 @@ def generate_noun_sentences(
         declension_class: Declension class key.
         translation: English translation.
         max_sentences: Maximum number of sentences to generate.
+        pronoun_style: "explicit" (default), "optional" (with parentheses), or "none".
 
     Returns:
         List of (case_label, armenian_sentence, english_sentence) tuples.
     """
     decl = decline_noun(word, declension_class, translation)
-    sentences = _noun_sentence_templates(decl)
+    sentences = _noun_sentence_templates(decl, pronoun_style=pronoun_style)
     return sentences[:max_sentences]
 
 
@@ -523,6 +625,8 @@ def generate_verb_sentences(
     verb_class: str = "e_class",
     translation: str = "",
     max_sentences: int = 16,
+    pronoun_style: str = "explicit",
+    supporting_words: list[str] | None = None,
 ) -> list[tuple[str, str, str]]:
     """Generate example sentences demonstrating tense usage for a verb.
 
@@ -531,10 +635,16 @@ def generate_verb_sentences(
         verb_class: Verb class key.
         translation: English translation.
         max_sentences: Maximum number of sentences to generate.
+        pronoun_style: "explicit" (default), "optional" (with parentheses), or "none".
+        supporting_words: Optional list of previously-learned vocabulary to incorporate.
 
     Returns:
         List of (tense_label, armenian_sentence, english_sentence) tuples.
     """
     conj = conjugate_verb(infinitive, verb_class, translation)
-    sentences = _verb_sentence_templates(conj)
+    sentences = _verb_sentence_templates(
+        conj,
+        pronoun_style=pronoun_style,
+        supporting_words=supporting_words or [],
+    )
     return sentences[:max_sentences]
