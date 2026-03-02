@@ -389,6 +389,36 @@ class TestGetSourceWords(unittest.TestCase):
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0]["pos"], "verb")
 
+    def test_splits_multiple_armenian_words_into_rows(self):
+        """Comma-separated Armenian entries should become one row per word."""
+        self.anki.get_deck_notes.return_value = [{
+            "fields": {
+                "Word": {"value": '<div style="font-family: Arial">գիրք, տուն</div>'},
+                "Translation": {"value": "<hr><div>book</div>"},
+            }
+        }]
+        result = self.gen.get_source_words("Test Deck")
+        self.assertEqual(len(result), 2)
+        self.assertEqual(result[0]["word"], "գիրք")
+        self.assertEqual(result[1]["word"], "տուն")
+        self.assertEqual(result[0]["translation"], "book")
+        self.assertEqual(result[1]["translation"], "book")
+
+    def test_splits_aligned_word_translation_pairs(self):
+        """When counts match, translations should align by index."""
+        self.anki.get_deck_notes.return_value = [{
+            "fields": {
+                "Word": {"value": '<div style="font-family: Arial">գիրք, տուն</div>'},
+                "Translation": {"value": "<hr><div>book, house</div>"},
+            }
+        }]
+        result = self.gen.get_source_words("Test Deck")
+        self.assertEqual(len(result), 2)
+        self.assertEqual(result[0]["word"], "գիրք")
+        self.assertEqual(result[0]["translation"], "book")
+        self.assertEqual(result[1]["word"], "տուն")
+        self.assertEqual(result[1]["translation"], "house")
+
 
 # ─── process_all (Mocked Full Pipeline) ──────────────────────────────
 
