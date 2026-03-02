@@ -183,6 +183,10 @@ def count_syllables(word: str) -> int:
 
     Each vowel nucleus counts as one syllable. The digraph ու (vo + yiwn)
     counts as one vowel (the /u/ sound), not two.
+
+    Note: Hidden vowels (ը) in grammatical contexts can also count as
+    syllables; see morphology.difficulty.count_syllables_with_context()
+    for context-aware counting that includes grammatical vowels.
     """
     if not word:
         return 0
