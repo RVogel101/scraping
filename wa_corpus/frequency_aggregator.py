@@ -5,6 +5,7 @@ into a unified, ranked frequency list.
 Merges token counts from:
   - Western Armenian Wikipedia (hyw)
   - Diaspora newspaper articles (Aztag Daily, Horizon Weekly)
+  - Internet Archive scanned book OCR text (DjVuTXT)
   - Nayiri dictionary headwords (for validation, not frequency)
 
 Outputs:
@@ -33,13 +34,16 @@ logger = logging.getLogger(__name__)
 DEFAULT_OUTPUT_DIR = Path("wa_corpus/data")
 WIKI_FREQ_FILE = Path("wa_corpus/data/wiki/wiki_frequencies.json")
 NEWSPAPER_DATA_DIR = Path("wa_corpus/data/newspapers")
+IA_DATA_DIR = Path("wa_corpus/data/ia")
 NAYIRI_DATA_DIR = Path("wa_corpus/data/nayiri")
 
 # Source weighting: Wikipedia text is encyclopedic (formal),
 # Newspaper text is journalistic (closer to daily use). Weight newspapers higher.
+# IA books are historical/literary — weight similar to newspapers.
 SOURCE_WEIGHTS = {
     "wiki": 1.0,
     "news": 1.5,
+    "ia": 1.2,
 }
 
 # Minimum corpus appearances to include in final list
@@ -91,6 +95,30 @@ def load_newspaper_frequencies() -> Counter[str]:
     freq = count_frequencies(texts)
     freq = filter_by_min_length(freq, min_len=2)
     logger.info("Computed %d word forms from %d newspaper articles",
+                len(freq), len(texts))
+    return freq
+
+def load_ia_frequencies() -> Counter[str]:
+    """Load Internet Archive OCR text and compute frequencies."""
+    if not IA_DATA_DIR.exists():
+        logger.warning("IA data directory not found at %s", IA_DATA_DIR)
+        return Counter()
+
+    texts = []
+    for txt_path in IA_DATA_DIR.rglob("*_djvu.txt"):
+        try:
+            text = txt_path.read_text(encoding="utf-8", errors="replace")
+            if text.strip():
+                texts.append(text)
+        except Exception as e:
+            logger.warning("Failed to read %s: %s", txt_path, e)
+
+    if not texts:
+        return Counter()
+
+    freq = count_frequencies(texts)
+    freq = filter_by_min_length(freq, min_len=2)
+    logger.info("Computed %d word forms from %d IA text files",
                 len(freq), len(texts))
     return freq
 
@@ -151,6 +179,7 @@ def aggregate_frequencies(
     wiki_freq: Counter[str],
     news_freq: Counter[str],
     nayiri_headwords: set[str],
+    ia_freq: Counter[str] | None = None,
     min_count: int = MIN_CORPUS_COUNT,
 ) -> list[dict]:
     """Merge frequency counts from all sources into a ranked list.
@@ -161,13 +190,17 @@ def aggregate_frequencies(
       - total_count: weighted total count across sources
       - wiki_count: raw count from Wikipedia
       - news_count: raw count from newspapers
+      - ia_count: raw count from Internet Archive texts
       - in_nayiri: whether the word appears in Nayiri dictionary
       - sources: number of sources the word appears in
 
     Returns list sorted by total_count descending.
     """
+    if ia_freq is None:
+        ia_freq = Counter()
+
     # Combine all known words
-    all_words = set(wiki_freq.keys()) | set(news_freq.keys())
+    all_words = set(wiki_freq.keys()) | set(news_freq.keys()) | set(ia_freq.keys())
     logger.info("Total unique word forms across sources: %d", len(all_words))
 
     entries: list[dict] = []
@@ -175,16 +208,18 @@ def aggregate_frequencies(
     for word in all_words:
         wiki_count = wiki_freq.get(word, 0)
         news_count = news_freq.get(word, 0)
+        ia_count = ia_freq.get(word, 0)
 
         # Weighted total
         weighted = (wiki_count * SOURCE_WEIGHTS["wiki"]
-                    + news_count * SOURCE_WEIGHTS["news"])
+                    + news_count * SOURCE_WEIGHTS["news"]
+                    + ia_count * SOURCE_WEIGHTS["ia"])
 
         # Source count
-        sources = sum(1 for c in [wiki_count, news_count] if c > 0)
+        sources = sum(1 for c in [wiki_count, news_count, ia_count] if c > 0)
 
         # Skip very rare words unless they're in Nayiri
-        raw_total = wiki_count + news_count
+        raw_total = wiki_count + news_count + ia_count
         in_nayiri = word in nayiri_headwords
         if raw_total < min_count and not in_nayiri:
             continue
@@ -194,6 +229,7 @@ def aggregate_frequencies(
             "total_count": round(weighted, 1),
             "wiki_count": wiki_count,
             "news_count": news_count,
+            "ia_count": ia_count,
             "in_nayiri": in_nayiri,
             "sources": sources,
         })
@@ -237,7 +273,7 @@ def save_frequency_list(
     # CSV
     csv_path = output_dir / "wa_frequency_list.csv"
     fieldnames = ["rank", "word", "english", "total_count", "wiki_count",
-                  "news_count", "in_nayiri", "sources"]
+                  "news_count", "ia_count", "in_nayiri", "sources"]
     with open(csv_path, "w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction="ignore")
         writer.writeheader()
@@ -249,7 +285,7 @@ def save_frequency_list(
 
 def print_summary(entries: list[dict]) -> None:
     """Print a summary of the frequency list."""
-    total_tokens = sum(e["wiki_count"] + e["news_count"] for e in entries)
+    total_tokens = sum(e["wiki_count"] + e["news_count"] + e.get("ia_count", 0) for e in entries)
     in_nayiri = sum(1 for e in entries if e["in_nayiri"])
     multi_source = sum(1 for e in entries if e["sources"] > 1)
 
@@ -286,12 +322,14 @@ def main():
     # Load all sources
     wiki_freq = load_wiki_frequencies()
     news_freq = load_newspaper_frequencies()
+    ia_freq = load_ia_frequencies()
     nayiri_headwords = load_nayiri_headwords()
     translations = load_nayiri_translations()
 
     # Aggregate
     entries = aggregate_frequencies(
         wiki_freq, news_freq, nayiri_headwords,
+        ia_freq=ia_freq,
         min_count=args.min_count,
     )
 
