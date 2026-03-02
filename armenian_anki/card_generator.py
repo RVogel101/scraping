@@ -288,6 +288,55 @@ class CardGenerator:
         return text
 
     @staticmethod
+    def _extract_word_text_from_front(html: str) -> str:
+        """Extract the raw Armenian word field text from Front HTML.
+
+        Unlike ``_extract_word_from_front``, this keeps comma-separated values
+        so callers can split one note into multiple vocabulary rows.
+        """
+        m = re.search(
+            r'<div[^>]*font-family[^>]*>\s*(.*?)\s*</div>',
+            html, re.IGNORECASE | re.DOTALL,
+        )
+        raw = m.group(1) if m else html
+        text = re.sub(r'<[^>]+>', '', raw)
+        text = re.sub(r'\[sound:[^\]]+\]', '', text, flags=re.IGNORECASE)
+        text = re.sub(r'\s+', ' ', text).strip()
+        return text
+
+    @staticmethod
+    def _split_multi_values(text: str) -> list[str]:
+        """Split a many-to-many field into ordered, deduplicated values."""
+        if not text:
+            return []
+        parts = re.split(r'\s*(?:,|;|/|\u0589|\u055d|\n|\|)\s*', text)
+        cleaned: list[str] = []
+        seen: set[str] = set()
+        for part in parts:
+            value = re.sub(r'\s+', ' ', part).strip()
+            if not value:
+                continue
+            key = value.lower()
+            if key in seen:
+                continue
+            seen.add(key)
+            cleaned.append(value)
+        return cleaned
+
+    @classmethod
+    def _split_armenian_words(cls, html: str) -> list[str]:
+        """Return one or more Armenian word candidates from the Front field."""
+        return cls._split_multi_values(cls._extract_word_text_from_front(html))
+
+    @classmethod
+    def _split_translations(cls, html: str) -> list[str]:
+        """Return one or more translation candidates from the translation field."""
+        translation = cls._extract_translation_from_back(html)
+        if not translation:
+            translation = cls._clean_html_text(html)
+        return cls._split_multi_values(translation)
+
+    @staticmethod
     def _extract_translation_from_back(html: str) -> str:
         """Extract the English translation from a Back field.
 
@@ -388,8 +437,14 @@ class CardGenerator:
         deck: Optional[str] = None,
         field_overrides: Optional[dict] = None,
         default_pos: str = "noun",
+        use_cache: bool = True,
+        allow_anki_fallback: bool = True,
     ) -> list[dict]:
         """Read vocabulary words from the source Anki deck.
+
+        If ``use_cache`` is True and the vocabulary cache is populated for
+        this deck, returns cached entries. Otherwise falls back to fetching
+        from AnkiConnect unless ``allow_anki_fallback`` is False.
 
         Auto-detects field names when the configured names are not found.
         Pass ``field_overrides`` to force specific field names:
@@ -398,6 +453,36 @@ class CardGenerator:
         Returns list of dicts with keys: word, pos, translation, pronunciation.
         """
         deck = deck or SOURCE_DECK
+        
+        # Try to use cache first if enabled
+        if use_cache and self.db.has_vocabulary_cache(deck):
+            logger.info(f"Loading vocabulary from cache for deck '{deck}'")
+            cached = self.db.get_vocabulary_from_cache(deck)
+            if cached:
+                # Convert cache format to CardGenerator format
+                vocab = []
+                for entry in cached:
+                    vocab.append({
+                        "word": entry["lemma"],
+                        "translation": entry.get("translation", ""),
+                        "pos": entry.get("pos", default_pos),
+                        "pronunciation": entry.get("pronunciation", ""),
+                        "syllable_count": entry.get("syllable_count", 0),
+                        "declension_class": entry.get("declension_class", ""),
+                        "verb_class": entry.get("verb_class", ""),
+                    })
+                logger.info(f"Loaded {len(vocab)} words from vocabulary cache")
+                return vocab
+        
+        if not allow_anki_fallback:
+            logger.warning(
+                f"No cache found for '{deck}' and Anki fallback is disabled. "
+                "Run vocabulary sync first or disable local-only mode."
+            )
+            return []
+
+        # Fall back to AnkiConnect
+        logger.info(f"Loading vocabulary from Anki deck '{deck}' (cache miss or disabled)")
         notes = self.anki.get_deck_notes(deck)
         if not notes:
             logger.warning(f"No notes found in deck '{deck}'")
@@ -432,30 +517,22 @@ class CardGenerator:
         for note in notes:
             raw = {k: v["value"] for k, v in note.get("fields", {}).items()}
 
-            # Extract and clean the Armenian word
+            # Split many-to-many values so each output row maps to one Armenian word.
             word_html = raw.get(mapping["word"] or "", "")
-            word = self._extract_word_from_front(word_html)
-            if not word:
-                continue
-            # Phrase cards contain spaces after cleaning (e.g. 'mi vaze'); skip them
-            if ' ' in word:
-                skipped_phrases += 1
-                logger.debug(f"Skipping phrase card: {word!r}")
+            split_words = self._split_armenian_words(word_html)
+            if not split_words:
                 continue
 
-            # Extract translation from post-<hr> content in Back field
+            # Translation can also contain multiple values.
             trans_html = raw.get(mapping["translation"] or "", "")
-            translation = self._extract_translation_from_back(trans_html)
-            if not translation:
-                translation = self._clean_html_text(trans_html)
+            split_translations = self._split_translations(trans_html)
+            full_translation = ", ".join(split_translations) if split_translations else ""
 
-            # POS: field value if present, else auto-detect from word suffix
+            # POS: field value if present, else auto-detect per word.
             if mapping["pos"]:
-                pos = self._clean_html_text(raw.get(mapping["pos"] or "", "")).lower()
+                pos_hint = self._clean_html_text(raw.get(mapping["pos"] or "", "")).lower()
             else:
-                pos = ""
-            if not pos:
-                pos = self._detect_pos(word)
+                pos_hint = ""
 
             pronunciation = self._clean_html_text(
                 raw.get(mapping["pronunciation"] or "", "")
@@ -465,13 +542,30 @@ class CardGenerator:
             # pure-algorithmic counter for words in this deck
             syllable_count = self._extract_syllable_count(word_html)
 
-            words.append({
-                "word":           word,
-                "translation":    translation,
-                "pos":            pos or default_pos,
-                "pronunciation":  pronunciation,
-                "syllable_count": syllable_count,
-            })
+            # If translation count matches, pair by index; otherwise preserve
+            # the full translation text for each Armenian word to avoid bad pairing.
+            if len(split_translations) == len(split_words) and len(split_words) > 1:
+                paired_translations = split_translations
+            elif len(split_translations) == 1:
+                paired_translations = split_translations * len(split_words)
+            else:
+                paired_translations = [full_translation] * len(split_words)
+
+            for idx, word in enumerate(split_words):
+                # Phrase cards contain spaces after cleaning (e.g. 'mi vaze'); skip them
+                if ' ' in word:
+                    skipped_phrases += 1
+                    logger.debug(f"Skipping phrase card: {word!r}")
+                    continue
+
+                pos = pos_hint or self._detect_pos(word)
+                words.append({
+                    "word":           word,
+                    "translation":    paired_translations[idx] if idx < len(paired_translations) else full_translation,
+                    "pos":            pos or default_pos,
+                    "pronunciation":  pronunciation,
+                    "syllable_count": syllable_count,
+                })
 
         if skipped_phrases:
             logger.info(f"Skipped {skipped_phrases} phrase/imperative cards")
@@ -481,8 +575,9 @@ class CardGenerator:
     def generate_noun_card(self, word: str, translation: str = "",
                            declension_class: Optional[str] = None,
                            extra_tags: Optional[list] = None,
-                           deck: Optional[str] = None) -> Optional[int]:
-        """Generate and add a noun declension card to Anki."""
+                           deck: Optional[str] = None,
+                           push_to_anki: bool = True) -> Optional[int]:
+        """Generate a noun declension card and persist morphology locally."""
         cls = declension_class or detect_noun_class(word)
         decl = decline_noun(word, cls, translation)
 
@@ -513,19 +608,21 @@ class CardGenerator:
             "InstrPlDef": decl.instr_pl_def,
         }
 
-        tags = [TAG_GENERATED, TAG_DECLENSION] + (extra_tags or [])
-        note_id = self.anki.add_note(
-            deck=deck or TARGET_DECK,
-            model=NOUN_DECLENSION_MODEL,
-            fields=fields,
-            tags=tags,
-        )
-        if note_id:
-            logger.info(f"Created noun declension card: {word} (ID: {note_id})")
+        note_id = None
+        if push_to_anki:
+            tags = [TAG_GENERATED, TAG_DECLENSION] + (extra_tags or [])
+            note_id = self.anki.add_note(
+                deck=deck or TARGET_DECK,
+                model=NOUN_DECLENSION_MODEL,
+                fields=fields,
+                tags=tags,
+            )
+            if note_id:
+                logger.info(f"Created noun declension card: {word} (ID: {note_id})")
 
         # ── Persist to local SQLite ──────────────────────────────────
         morphology_data = {k: v for k, v in fields.items() if k not in ("Word", "Translation", "DeclensionClass")}
-        self.db.upsert_card(
+        card_id = self.db.upsert_card(
             word=word,
             translation=translation,
             pos="noun",
@@ -535,13 +632,13 @@ class CardGenerator:
             anki_note_id=note_id,
         )
 
-        return note_id
-
+        return note_id if push_to_anki else card_id
     def generate_verb_card(self, infinitive: str, translation: str = "",
                            verb_class: Optional[str] = None,
                            extra_tags: Optional[list] = None,
-                           deck: Optional[str] = None) -> Optional[int]:
-        """Generate and add a verb conjugation card to Anki."""
+                           deck: Optional[str] = None,
+                           push_to_anki: bool = True) -> Optional[int]:
+        """Generate a verb conjugation card and persist morphology locally."""
         cls = verb_class or detect_verb_class(infinitive)
         conj = conjugate_verb(infinitive, cls, translation)
 
@@ -578,19 +675,21 @@ class CardGenerator:
         fields["PastPart"] = conj.past_participle
         fields["PresPart"] = conj.present_participle
 
-        tags = [TAG_GENERATED, TAG_CONJUGATION] + (extra_tags or [])
-        note_id = self.anki.add_note(
-            deck=deck or TARGET_DECK,
-            model=VERB_CONJUGATION_MODEL,
-            fields=fields,
-            tags=tags,
-        )
-        if note_id:
-            logger.info(f"Created verb conjugation card: {infinitive} (ID: {note_id})")
+        note_id = None
+        if push_to_anki:
+            tags = [TAG_GENERATED, TAG_CONJUGATION] + (extra_tags or [])
+            note_id = self.anki.add_note(
+                deck=deck or TARGET_DECK,
+                model=VERB_CONJUGATION_MODEL,
+                fields=fields,
+                tags=tags,
+            )
+            if note_id:
+                logger.info(f"Created verb conjugation card: {infinitive} (ID: {note_id})")
 
         # ── Persist to local SQLite ──────────────────────────────────
         morphology_data = {k: v for k, v in fields.items() if k not in ("Infinitive", "Translation", "VerbClass", "Root")}
-        self.db.upsert_card(
+        card_id = self.db.upsert_card(
             word=infinitive,
             translation=translation,
             pos="verb",
@@ -600,8 +699,7 @@ class CardGenerator:
             anki_note_id=note_id,
         )
 
-        return note_id
-
+        return note_id if push_to_anki else card_id
     def generate_sentence_cards(
         self,
         word: str,
@@ -613,6 +711,9 @@ class CardGenerator:
         max_sentences: Optional[int] = None,
         extra_tags: Optional[list] = None,
         deck: Optional[str] = None,
+        push_to_anki: bool = True,
+        supporting_words: Optional[list[str]] = None,
+        pronoun_style: str = "explicit",
     ) -> list[int]:
         """Generate sentence practice cards for a vocabulary word.
 
@@ -623,19 +724,26 @@ class CardGenerator:
                             grammar structure per phrase slot.
             max_sentences:  Cap on how many sentence cards to create.
                             Defaults to SENTENCES_PER_WORD.
+            supporting_words: Optional list of previously-learned vocabulary words
+                             to incorporate into sentence structures.
+            pronoun_style: "explicit" (default), "optional" (parentheses), or "none".
         """
         note_ids = []
         limit = max_sentences if max_sentences is not None else SENTENCES_PER_WORD
+        supporting_words = supporting_words or []
 
         if pos.lower() in ("noun", "n"):
             sentences = generate_noun_sentences(
                 word, declension_class or DEFAULT_NOUN_DECLENSION,
                 translation, limit * 3 if grammar_filter else limit,
+                pronoun_style=pronoun_style,
             )
         elif pos.lower() in ("verb", "v"):
             sentences = generate_verb_sentences(
                 word, verb_class or DEFAULT_VERB_CLASS,
                 translation, limit * 3 if grammar_filter else limit,
+                pronoun_style=pronoun_style,
+                supporting_words=supporting_words,
             )
         else:
             logger.debug(f"Skipping sentence generation for POS '{pos}': {word}")
@@ -665,21 +773,22 @@ class CardGenerator:
         tags = [TAG_GENERATED, TAG_SENTENCES] + (extra_tags or [])
 
         for form_label, arm_sentence, en_sentence in sentences:
-            fields = {
-                "Word": word,
-                "Translation": translation,
-                "FormLabel": form_label,
-                "ArmenianSentence": arm_sentence,
-                "EnglishSentence": en_sentence,
-            }
-            note_id = self.anki.add_note(
-                deck=deck or TARGET_DECK,
-                model=VOCAB_SENTENCES_MODEL,
-                fields=fields,
-                tags=tags,
-            )
-            if note_id:
-                note_ids.append(note_id)
+            if push_to_anki:
+                fields = {
+                    "Word": word,
+                    "Translation": translation,
+                    "FormLabel": form_label,
+                    "ArmenianSentence": arm_sentence,
+                    "EnglishSentence": en_sentence,
+                }
+                note_id = self.anki.add_note(
+                    deck=deck or TARGET_DECK,
+                    model=VOCAB_SENTENCES_MODEL,
+                    fields=fields,
+                    tags=tags,
+                )
+                if note_id:
+                    note_ids.append(note_id)
 
             # ── Persist sentence to local SQLite ──────────────────────
             card_type = "noun_declension" if pos.lower() in ("noun", "n") else "verb_conjugation"
@@ -694,27 +803,37 @@ class CardGenerator:
                 )
             else:
                 db_card_id = db_card["id"]
-            self.db.add_sentence(
+            sentence_id = self.db.add_sentence(
                 card_id=db_card_id,
                 form_label=form_label,
                 armenian_text=arm_sentence,
                 english_text=en_sentence,
                 grammar_type=grammar_filter or "",
             )
+            if not push_to_anki:
+                note_ids.append(sentence_id)
 
         logger.info(f"Created {len(note_ids)} sentence cards for: {word}")
         return note_ids
 
     def process_all(self, source_deck: Optional[str] = None, field_overrides: Optional[dict] = None,
-                    default_pos: str = "noun") -> dict:
-        """Process all words in the source deck and generate morphology cards.
+                    default_pos: str = "noun", local_only: bool = False) -> dict:
+        """Process all words and generate morphology cards.
 
-        Returns a summary dict with counts.
+        In ``local_only`` mode, reads vocabulary from local cache only and
+        persists generated morphology/sentences to SQLite without Anki writes.
         """
-        self.setup_models()
-        self.setup_decks()
+        if not local_only:
+            self.setup_models()
+            self.setup_decks()
 
-        words = self.get_source_words(source_deck, field_overrides, default_pos)
+        words = self.get_source_words(
+            source_deck,
+            field_overrides,
+            default_pos,
+            use_cache=True,
+            allow_anki_fallback=not local_only,
+        )
         if not words:
             return {"total": 0, "nouns": 0, "verbs": 0, "sentences": 0, "errors": 0}
 
@@ -727,16 +846,21 @@ class CardGenerator:
 
             try:
                 if pos in ("noun", "n"):
-                    if self.generate_noun_card(word, translation):
+                    if self.generate_noun_card(word, translation, push_to_anki=not local_only):
                         stats["nouns"] += 1
 
                 elif pos in ("verb", "v"):
-                    if self.generate_verb_card(word, translation):
+                    if self.generate_verb_card(word, translation, push_to_anki=not local_only):
                         stats["verbs"] += 1
 
                 # Generate sentence cards for both nouns and verbs
                 if pos in ("noun", "n", "verb", "v"):
-                    sent_ids = self.generate_sentence_cards(word, pos, translation)
+                    sent_ids = self.generate_sentence_cards(
+                        word,
+                        pos,
+                        translation,
+                        push_to_anki=not local_only,
+                    )
                     stats["sentences"] += len(sent_ids)
 
             except Exception as exc:
