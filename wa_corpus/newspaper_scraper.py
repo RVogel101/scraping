@@ -5,7 +5,7 @@ Scrapes Armenian-language articles from accessible WA news sources:
   - Aztag Daily (aztagdaily.com) — Beirut-based WA daily
   - Horizon Weekly (horizonweekly.ca) — Montreal-based WA weekly
 
-Uses Selenium for JavaScript-rendered pages.
+Uses requests + BeautifulSoup (no browser/Selenium needed).
 Rate-limited to be respectful of servers.
 
 Usage:
@@ -20,11 +20,8 @@ import re
 import time
 from pathlib import Path
 
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
+import requests
+from bs4 import BeautifulSoup
 
 logger = logging.getLogger(__name__)
 
@@ -87,29 +84,45 @@ HORIZON = NewsSource(
 ALL_SOURCES = [AZTAG, HORIZON]
 
 
-# ─── Browser Setup ───────────────────────────────────────────────────
+# ─── HTTP Session ────────────────────────────────────────────────────
 
-def _create_driver() -> webdriver.Chrome:
-    """Create a headless Chrome driver."""
-    options = Options()
-    options.add_argument("--headless=new")
-    options.add_argument("--disable-gpu")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--window-size=1920,1080")
-    options.add_argument(
-        "--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+_HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
         "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-    )
-    options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    options.add_experimental_option("useAutomationExtension", False)
+    ),
+    "Accept-Language": "hy,en;q=0.9",
+}
 
-    driver = webdriver.Chrome(options=options)
-    driver.execute_cdp_cmd(
-        "Page.addScriptToEvaluateOnNewDocument",
-        {"source": "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"},
+MAX_RETRIES = 3
+
+
+def _create_session() -> requests.Session:
+    """Create a requests session with retry-capable adapter."""
+    session = requests.Session()
+    session.headers.update(_HEADERS)
+    adapter = requests.adapters.HTTPAdapter(
+        max_retries=requests.adapters.Retry(
+            total=MAX_RETRIES, backoff_factor=1.0,
+            status_forcelist=[429, 500, 502, 503, 504],
+        ),
     )
-    return driver
+    session.mount("https://", adapter)
+    session.mount("http://", adapter)
+    return session
+
+
+def _fetch(session: requests.Session, url: str) -> BeautifulSoup | None:
+    """Fetch a URL and return parsed soup, or None on failure."""
+    try:
+        resp = session.get(url, timeout=20)
+        if resp.status_code == 404:
+            return None
+        resp.raise_for_status()
+        return BeautifulSoup(resp.text, "html.parser")
+    except requests.RequestException as exc:
+        logger.warning("Failed to fetch %s: %s", url, exc)
+        return None
 
 
 # ─── Helpers ─────────────────────────────────────────────────────────
@@ -120,17 +133,15 @@ def _has_armenian(text: str, min_chars: int = 10) -> bool:
     return arm_count >= min_chars
 
 
-def _extract_armenian_links(driver: webdriver.Chrome, selector: str, base_url: str) -> list[str]:
+def _extract_armenian_links(soup: BeautifulSoup, selector: str, base_url: str) -> list[str]:
     """Extract article URLs that likely contain Armenian content."""
     urls: list[str] = []
     try:
-        elements = driver.find_elements(By.CSS_SELECTOR, selector)
+        elements = soup.select(selector)
         for elem in elements:
-            href = elem.get_attribute("href") or ""
-            text = elem.text.strip()
-            # Accept links that have Armenian text or are article-like URLs
+            href = elem.get("href", "")
+            text = elem.get_text(strip=True)
             if href and href.startswith(base_url):
-                # Strip fragment (#respond, etc.) to avoid duplicates
                 href = href.split("#")[0]
                 if _has_armenian(text, min_chars=5) or re.search(r"/archives/\d+", href):
                     if href not in urls:
@@ -143,7 +154,7 @@ def _extract_armenian_links(driver: webdriver.Chrome, selector: str, base_url: s
 # ─── Article Collection ──────────────────────────────────────────────
 
 def collect_article_urls(
-    driver: webdriver.Chrome,
+    session: requests.Session,
     source: NewsSource,
     max_pages: int | None = None,
 ) -> list[str]:
@@ -160,22 +171,16 @@ def collect_article_urls(
 
         logger.info("[%s] Listing page %d: %s", source.name, page_num, url)
 
-        try:
-            driver.get(url)
-            WebDriverWait(driver, 15).until(
-                EC.presence_of_element_located((By.TAG_NAME, "body"))
-            )
-            time.sleep(2)  # Let dynamic content render
-        except Exception:
-            logger.warning("[%s] Could not load listing page %d", source.name, page_num)
+        soup = _fetch(session, url)
+        if soup is None:
+            logger.info("[%s] Page %d returned no content, stopping", source.name, page_num)
             break
 
-        # Check if page has content (not 404)
-        if "404" in driver.title or len(driver.page_source) < 500:
-            logger.info("[%s] Page %d appears empty/404, stopping", source.name, page_num)
+        if len(soup.get_text()) < 200:
+            logger.info("[%s] Page %d appears empty, stopping", source.name, page_num)
             break
 
-        links = _extract_armenian_links(driver, source.article_link_selector, source.base_url)
+        links = _extract_armenian_links(soup, source.article_link_selector, source.base_url)
 
         new_count = 0
         for link in links:
@@ -198,65 +203,47 @@ def collect_article_urls(
 # ─── Article Extraction ─────────────────────────────────────────────
 
 def extract_article(
-    driver: webdriver.Chrome,
+    session: requests.Session,
     url: str,
     source: NewsSource,
 ) -> dict | None:
     """Extract article text from a single page."""
-    try:
-        driver.get(url)
-        WebDriverWait(driver, 15).until(
-            EC.presence_of_element_located((By.TAG_NAME, "body"))
-        )
-        time.sleep(1)
-    except Exception:
-        logger.warning("[%s] Failed to load: %s", source.name, url)
+    soup = _fetch(session, url)
+    if soup is None:
         return None
 
     # Title
     title = ""
-    try:
-        for sel in source.title_selector.split(", "):
-            elems = driver.find_elements(By.CSS_SELECTOR, sel.strip())
-            if elems:
-                title = elems[0].text.strip()
-                break
-    except Exception:
-        pass
+    for sel in source.title_selector.split(", "):
+        elem = soup.select_one(sel.strip())
+        if elem:
+            title = elem.get_text(strip=True)
+            break
 
     # Date
     date_str = ""
-    try:
-        for sel in source.date_selector.split(", "):
-            elems = driver.find_elements(By.CSS_SELECTOR, sel.strip())
-            if elems:
-                date_str = elems[0].get_attribute("datetime") or elems[0].text.strip()
-                break
-    except Exception:
-        pass
+    for sel in source.date_selector.split(", "):
+        elem = soup.select_one(sel.strip())
+        if elem:
+            date_str = elem.get("datetime", "") or elem.get_text(strip=True)
+            break
 
     # Body — try each selector
     body = ""
     for sel in source.article_body_selector.split(", "):
-        try:
-            content_elems = driver.find_elements(By.CSS_SELECTOR, sel.strip())
-            if content_elems:
-                paragraphs = content_elems[0].find_elements(By.TAG_NAME, "p")
-                body = "\n".join(p.text.strip() for p in paragraphs if p.text.strip())
-                if body:
-                    break
-        except Exception:
-            continue
+        content = soup.select_one(sel.strip())
+        if content:
+            paragraphs = content.find_all("p")
+            body = "\n".join(p.get_text(strip=True) for p in paragraphs if p.get_text(strip=True))
+            if body:
+                break
 
     if not body:
         # Fallback: try all <p> tags in the page
-        try:
-            paragraphs = driver.find_elements(By.TAG_NAME, "p")
-            armenian_p = [p.text.strip() for p in paragraphs
-                          if p.text.strip() and _has_armenian(p.text, 10)]
-            body = "\n".join(armenian_p)
-        except Exception:
-            pass
+        paragraphs = soup.find_all("p")
+        armenian_p = [p.get_text(strip=True) for p in paragraphs
+                      if p.get_text(strip=True) and _has_armenian(p.get_text(), 10)]
+        body = "\n".join(armenian_p)
 
     if not body or not _has_armenian(body, 30):
         return None
@@ -313,36 +300,32 @@ def scrape_newspapers(
     output_dir.mkdir(parents=True, exist_ok=True)
     scraped_urls, articles = _load_checkpoint(output_dir)
 
-    driver = _create_driver()
-    try:
-        for source in sources:
-            logger.info("=" * 50)
-            logger.info("  Scraping: %s (%s)", source.name, source.base_url)
-            logger.info("=" * 50)
+    session = _create_session()
+    for source in sources:
+        logger.info("=" * 50)
+        logger.info("  Scraping: %s (%s)", source.name, source.base_url)
+        logger.info("=" * 50)
 
-            # Collect URLs
-            all_urls = collect_article_urls(driver, source, max_listing_pages)
-            new_urls = [u for u in all_urls if u not in scraped_urls]
-            logger.info("[%s] %d new articles to scrape (of %d found)",
-                        source.name, len(new_urls), len(all_urls))
+        # Collect URLs
+        all_urls = collect_article_urls(session, source, max_listing_pages)
+        new_urls = [u for u in all_urls if u not in scraped_urls]
+        logger.info("[%s] %d new articles to scrape (of %d found)",
+                    source.name, len(new_urls), len(all_urls))
 
-            # Scrape articles
-            for i, url in enumerate(new_urls, 1):
-                logger.info("[%s] [%d/%d] %s", source.name, i, len(new_urls), url)
-                article = extract_article(driver, url, source)
+        # Scrape articles
+        for i, url in enumerate(new_urls, 1):
+            logger.info("[%s] [%d/%d] %s", source.name, i, len(new_urls), url)
+            article = extract_article(session, url, source)
 
-                if article:
-                    articles.append(article)
-                    _save_article(output_dir, article)
-                    scraped_urls.add(url)
-                    logger.info("[%s]   OK: %d chars", source.name, len(article["text"]))
-                else:
-                    logger.info("[%s]   Skipped (no Armenian content)", source.name)
+            if article:
+                articles.append(article)
+                _save_article(output_dir, article)
+                scraped_urls.add(url)
+                logger.info("[%s]   OK: %d chars", source.name, len(article["text"]))
+            else:
+                logger.info("[%s]   Skipped (no Armenian content)", source.name)
 
-                time.sleep(REQUEST_DELAY)
-
-    finally:
-        driver.quit()
+            time.sleep(REQUEST_DELAY)
 
     logger.info("Scraping complete: %d total articles across all sources", len(articles))
     return articles
