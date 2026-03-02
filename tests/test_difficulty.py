@@ -22,21 +22,82 @@ class TestHiddenVowelCounting(unittest.TestCase):
     def test_basic_syllable_count(self):
         """Basic counting without grammatical vowels."""
         # Single syllable
-        self.assertEqual(count_syllables_with_context(ARM["a"], with_grammatical_vowels=False), 1)
+        self.assertEqual(count_syllables_with_context(ARM["a"], with_epenthesis=False), 1)
         # Two syllables
         mama = ARM["m"] + ARM["a"] + ARM["m"] + ARM["a"]
-        self.assertEqual(count_syllables_with_context(mama, with_grammatical_vowels=False), 2)
+        self.assertEqual(count_syllables_with_context(mama, with_epenthesis=False), 2)
 
     def test_with_hidden_vowels(self):
         """Test that hidden vowels (ը) count in grammatical contexts."""
         # Word ending in stem + schwa + suffix pattern
         # ե.ր+ք (երք) = "day" + suffix, has hidden vowel context
         word_with_schwa = ARM["ye"] + ARM["r"] + ARM["y_schwa"] + ARM["k"]
-        count_base = count_syllables_with_context(word_with_schwa, with_grammatical_vowels=False)
-        count_with_grammar = count_syllables_with_context(word_with_schwa, with_grammatical_vowels=True)
+        count_base = count_syllables_with_context(word_with_schwa, with_epenthesis=False)
+        count_with_grammar = count_syllables_with_context(word_with_schwa, with_epenthesis=True)
         # Should count higher with grammatical vowels
         self.assertGreaterEqual(count_with_grammar, count_base)
 
+    def test_epenthesis_initial_cluster(self):
+        """Test epenthesis detection in initial consonant clusters.
+        
+        Western Armenian requires schwa insertion in initial CC clusters.
+        Example: սպասել (usbasel, "to wait") has initial sp cluster
+        which in pronunciation becomes սְ-պա-սե-լ (4 syllables instead of 3).
+        """
+        # Construct simple word with initial sp cluster: սպա (spa)
+        # Note: we're testing orthographic input; actual pronunciation would be սə-պա
+        word_sp = ARM["s"] + ARM["p"] + ARM["a"]
+        # Base count from orthography: 1 syllable (CCV pattern)
+        base = count_syllables_with_context(word_sp, with_epenthesis=False)
+        # With epenthesis: 2 syllables (C@CV → s@-pa)
+        with_epenthesis = count_syllables_with_context(word_sp, with_epenthesis=True)
+        # Epenthesis should add one syllable for initial sp
+        self.assertEqual(base, 1)
+        self.assertEqual(with_epenthesis, 2)
+
+    def test_epenthesis_initial_cluster_kt(self):
+        """Test epenthesis with initial kt cluster (կտ)."""
+        word_kt = ARM["k"] + ARM["t"] + ARM["a"]
+        base = count_syllables_with_context(word_kt, with_epenthesis=False)
+        with_epenthesis = count_syllables_with_context(word_kt, with_epenthesis=True)
+        self.assertEqual(base, 1)  # Orthographic: կտա = 1 syllable
+        self.assertEqual(with_epenthesis, 2)  # Pronounced: կə-տա = 2 syllables
+
+    def test_no_epenthesis_affricates(self):
+        """Test that affricates (single units) don't trigger epenthesis."""
+        # ծ (ts) is a single affricate, not a cluster
+        word = ARM["ts"] + ARM["a"]
+        base = count_syllables_with_context(word, with_epenthesis=False)
+        with_epenthesis = count_syllables_with_context(word, with_epenthesis=True)
+        # No epenthesis needed
+        self.assertEqual(base, with_epenthesis)
+
+    def test_epenthesis_medial_rising_sonority(self):
+        """Test epenthesis in medial position with rising sonority clusters.
+        
+        Rising sonority (e.g., stop before nasal) requires epenthesis
+        because codas need falling/level sonority.
+        Example: tm (t=stop, m=nasal) has rising sonority → requires schwa
+        """
+        # Build word: ա-տ-մ-ա (a-t-m-a) where tm is medial
+        # tm has rising sonority: stop (t, son=1) before nasal (m, son=3)
+        word_medial_tm = ARM["a"] + ARM["t"] + ARM["m"] + ARM["a"]
+        base = count_syllables_with_context(word_medial_tm, with_epenthesis=False)
+        with_epenthesis = count_syllables_with_context(word_medial_tm, with_epenthesis=True)
+        # With rising sonority tm in medial position, epenthesis occurs
+        self.assertGreater(with_epenthesis, base)
+
+    def test_no_epenthesis_falling_sonority(self):
+        """Test that falling sonority clusters don't trigger epenthesis.
+        
+        Example: rm (r is liquid/high sonority, m is nasal/lower) is valid coda.
+        """
+        # Build word: ա-ր-մ-ա (a-r-m-a) where rm is medial with falling sonority
+        word_falling = ARM["a"] + ARM["r"] + ARM["m"] + ARM["a"]
+        base = count_syllables_with_context(word_falling, with_epenthesis=False)
+        with_epenthesis = count_syllables_with_context(word_falling, with_epenthesis=True)
+        # Falling sonority, no epenthesis needed
+        self.assertEqual(base, with_epenthesis)
 
 class TestPhonologicalScoring(unittest.TestCase):
     """Test phoneme rarity scoring."""

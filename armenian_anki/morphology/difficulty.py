@@ -16,53 +16,145 @@ when present, ensuring learners encounter simpler morphological patterns first.
 from dataclasses import dataclass
 from typing import Optional
 
+
+
+
+
 from .core import ARM, VOWELS, count_syllables, is_armenian
 
-# ─── Hidden Vowel (Schwa) Constants ──────────────────────────────────
-# In Armenian, ը (schwa/y_schwa) is often unstressed but becomes
-# syllabic in certain grammatical contexts:
-#   - With oblique case suffixes (genitive-dative, ablative, instrumental)
-#   - In plural forms
-#   - In formal or slow speech
+# ─── Schwa Epenthesis Constants ──────────────────────────────────
+# In Western Armenian, illegal consonant clusters are "repaired" with schwa (ə/ը)
+# Based on phonotactic constraints: initial CC → C@C, medial/final violations → epenthesis
 HIDDEN_VOWEL = ARM["y_schwa"]  # ը
+
+# Sonority hierarchy for detecting epenthesis
+# Lower number = lower sonority (obstruent); Higher = higher sonority (sonorant)
+_SONORITY_MAP = {
+    ARM["p"]: 1, ARM["b"]: 1, ARM["t"]: 1, ARM["d"]: 1,
+    ARM["k"]: 1, ARM["g"]: 1,  # Stops
+    ARM["ts"]: 2, ARM["dz"]: 2, ARM["ch"]: 2, ARM["j"]: 2,  # Affricates (single units)
+    ARM["s"]: 2.5, ARM["z"]: 2.5, ARM["sh"]: 2.5, ARM["zh"]: 2.5,
+    ARM["kh"]: 2.5, ARM["gh"]: 2.5, ARM["f"]: 2.5, ARM["v"]: 2.5,  # Fricatives
+    ARM["m"]: 3, ARM["n"]: 3,  # Nasals
+    ARM["l"]: 3.5, ARM["r"]: 3.5, ARM["rr"]: 3.5,  # Liquids
+    ARM["y"]: 4,  # Glides/approximants
+}
+
+# Single-unit consonants (affricates/aspirates) don't form clusters
+_SINGLE_CONSONANT_UNITS = {
+    ARM["ts"], ARM["dz"], ARM["ch"], ARM["j"],  # Affricates
+    ARM["t_asp"], ARM["p_asp"], ARM["k_asp"],   # Aspirates
+    ARM["c_asp"], ARM["ch_asp"],                 # Compound aspirates
+}
+
+
+def _get_consonant_clusters(word: str) -> list:
+    """Extract consonant clusters from word.
+    
+    Returns:
+        List of tuples: (start_index, end_index, cluster_string, position_type)
+    """
+    consonants = set(ARM.values()) - VOWELS - {HIDDEN_VOWEL}
+    clusters = []
+    i = 0
+    
+    while i < len(word):
+        if word[i] in consonants:
+            cluster_start = i
+            while i < len(word) and word[i] in consonants:
+                i += 1
+            cluster_end = i
+            cluster = word[cluster_start:cluster_end]
+            
+            if len(cluster) >= 2:
+                pos_type = "initial" if cluster_start == 0 else (
+                    "final" if cluster_end == len(word) else "medial"
+                )
+                clusters.append((cluster_start, cluster_end, cluster, pos_type))
+        else:
+            i += 1
+    
+    return clusters
+
+
+def _requires_epenthesis(cluster: str, position: str) -> bool:
+    """Check if cluster requires schwa epenthesis based on phonotactics.
+    
+    Args:
+        cluster: Consonant sequence
+        position: "initial", "medial", or "final"
+    
+    Returns:
+        True if epenthesis would occur
+    """
+    # All-single-units don't need epenthesis (e.g., two affricates)
+    if all(c in _SINGLE_CONSONANT_UNITS for c in cluster):
+        return False
+    
+    if position == "initial":
+        # Initial CC/CCC with non-single-unit elements requires epenthesis
+        for char in cluster:
+            if char not in _SINGLE_CONSONANT_UNITS:
+                return True
+        return False
+    
+    elif position == "medial":
+        # Rising sonority (sonority increases from c1 to c2) needs epenthesis
+        # Codas require falling or level sonority (c1_son >= c2_son)
+        # So if c1_son < c2_son (rising), epenthesis is needed
+        if len(cluster) >= 2:
+            c1_son = _SONORITY_MAP.get(cluster[0], 2.0)
+            c2_son = _SONORITY_MAP.get(cluster[1], 2.0)
+            if c1_son < c2_son:  # Rising sonority = epenthesis needed
+                return True
+        return False
+    
+    elif position == "final":
+        # Final clusters with rising sonority need epenthesis
+        # Codas need falling/level sonority
+        for i in range(len(cluster) - 1):
+            c1_son = _SONORITY_MAP.get(cluster[i], 2.0)
+            c2_son = _SONORITY_MAP.get(cluster[i + 1], 2.0)
+            if c1_son < c2_son:  # Rising sonority = epenthesis needed
+                return True
+        return False
+    
+    return False
 
 
 def count_syllables_with_context(
     word: str,
-    with_grammatical_vowels: bool = False,
+    with_epenthesis: bool = False,
 ) -> int:
-    """Count syllables, optionally counting hidden vowels (ը) in grammatical contexts.
-
+    """Count syllables, optionally including epenthetic schwa insertions.
+    
+    When with_epenthesis=True, counts extra syllables from schwa insertion
+    in illegal consonant clusters (following Western Armenian phonotactics).
+    
     Args:
         word: Armenian word
-        with_grammatical_vowels: If True, count ը as a syllable when it appears
-                                 in positions where it becomes pronounced (stem + suffix)
-
+        with_epenthesis: If True, add syllables for epenthetic schwas
+    
     Returns:
-        Syllable count (minimum 1 for any Armenian word)
+        Syllable count
     """
     if not word:
         return 0
 
     base_count = count_syllables(word)
-
-    # If not counting grammatical vowels, return base count
-    if not with_grammatical_vowels:
+    
+    if not with_epenthesis:
         return base_count
 
-    # Count hidden vowels in grammatical contexts
-    # Rule: ը counts as a syllable when it appears before case/plural suffixes
-    # or when it's a "stem ը" marker in certain declension classes
-    hidden_count = 0
-    for i, char in enumerate(word):
-        if char == HIDDEN_VOWEL:
-            # Check if this is in a grammatical suffix position
-            # (roughly: appears after at least one consonant from the stem)
-            if i > 0 and not word[i - 1] in VOWELS and word[i - 1] != HIDDEN_VOWEL:
-                hidden_count += 1
+    # Count epenthetic schwas
+    clusters = _get_consonant_clusters(word)
+    epenthesis_count = 0
+    
+    for _, _, cluster, position in clusters:
+        if _requires_epenthesis(cluster, position):
+            epenthesis_count += 1
 
-    return base_count + hidden_count
-
+    return base_count + epenthesis_count
 
 # ─── Phonological Complexity Scoring ──────────────────────────────────
 
@@ -295,7 +387,7 @@ def analyze_word(
 ) -> WordDifficultyAnalysis:
     """Create a full difficulty analysis for a word."""
     syl_base = count_syllables(word)
-    syl_with_grammar = count_syllables_with_context(word, with_grammatical_vowels=True)
+    syl_with_grammar = count_syllables_with_context(word, with_epenthesis=True)
     phon_score = _score_rare_phonemes(word)
     cluster_score = _score_consonant_clusters(word)
     affix_count = _score_affix_count(word)
