@@ -150,6 +150,7 @@ Examples:
         logger.info("=" * 60)
         from .frequency_aggregator import (
             aggregate_frequencies,
+            load_ia_frequencies,
             load_newspaper_frequencies,
             load_nayiri_headwords,
             load_nayiri_translations,
@@ -160,10 +161,12 @@ Examples:
 
         wiki_freq = load_wiki_frequencies()
         news_freq = load_newspaper_frequencies()
+        ia_freq = load_ia_frequencies()
         nayiri_headwords = load_nayiri_headwords()
         translations = load_nayiri_translations()
 
-        entries = aggregate_frequencies(wiki_freq, news_freq, nayiri_headwords)
+        entries = aggregate_frequencies(wiki_freq, news_freq, nayiri_headwords,
+                                        ia_freq=ia_freq)
         save_frequency_list(entries, args.output_dir, translations)
         print_summary(entries)
 
