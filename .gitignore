@@ -17,6 +17,8 @@ build/
 *.pkl
 *.pickle
 *.json
+*.txt    # OCR/text output from IA, etc.
+*.gz     # compressed OCR/html from IA
 
 # Images
 *.jpg
