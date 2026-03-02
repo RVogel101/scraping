@@ -119,7 +119,7 @@ class TestIrregularConjugation(unittest.TestCase):
         conj = conjugate_verb(
             INF_BE,
             verb_class=overrides.get("verb_class", "a_class"),
-            translation="be",
+            translation="to be",
         )
         # The past aorist should contain the irregular forms
         self.assertIn("1sg", conj.past_aorist)
@@ -134,7 +134,7 @@ class TestIrregularConjugation(unittest.TestCase):
         conj = conjugate_verb(
             INF_GIVE,
             verb_class=overrides.get("verb_class", "a_class"),
-            translation="give",
+            translation="to give",
         )
         irr_past = overrides.get("past_aorist", {})
         if irr_past:
@@ -146,7 +146,7 @@ class TestIrregularConjugation(unittest.TestCase):
         conj = conjugate_verb(
             INF_GO,
             verb_class=overrides.get("verb_class", "a_class"),
-            translation="go",
+            translation="to go",
         )
         irr_past = overrides.get("past_aorist", {})
         if irr_past:
@@ -158,7 +158,7 @@ class TestIrregularConjugation(unittest.TestCase):
         conj = conjugate_verb(
             INF_COME,
             verb_class=overrides.get("verb_class", "a_class"),
-            translation="come",
+            translation="to come",
         )
         irr_pres = overrides.get("present", {})
         if irr_pres:
