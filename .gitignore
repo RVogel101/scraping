@@ -23,6 +23,11 @@ build/
 # Generated corpus data (IA downloads, newspaper scrapes, wiki dumps, etc.)
 wa_corpus/data/
 
+# Anki export artifacts
+anki_export.json
+anki_media/
+_temp_export.apkg
+
 # Images
 *.jpg
 *.jpeg
