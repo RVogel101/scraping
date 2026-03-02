@@ -96,11 +96,31 @@ CREATE TABLE IF NOT EXISTS card_reviews (
     next_due_at       TEXT    NOT NULL DEFAULT ''
 );
 
+-- Vocabulary cache synced from Anki — enables offline vocabulary access
+-- and eliminates dependency on AnkiConnect for reading sourced words.
+CREATE TABLE IF NOT EXISTS vocabulary (
+    id               INTEGER PRIMARY KEY AUTOINCREMENT,
+    lemma            TEXT    NOT NULL UNIQUE,  -- Armenian word/infinitive form
+    translation      TEXT    NOT NULL DEFAULT '',
+    pos              TEXT    NOT NULL DEFAULT '',  -- noun | verb | adjective …
+    pronunciation    TEXT    NOT NULL DEFAULT '',  -- transliteration/romanization
+    declension_class TEXT    NOT NULL DEFAULT '',  -- i_class, u_class, etc.
+    verb_class       TEXT    NOT NULL DEFAULT '',  -- e_class, i_class, etc.
+    syllable_count   INTEGER NOT NULL DEFAULT 0,
+    anki_note_id     INTEGER,                   -- Original Anki note ID
+    source_deck      TEXT    NOT NULL DEFAULT '',  -- Which deck it came from
+    synced_at        TEXT    NOT NULL,          -- Last sync timestamp
+    UNIQUE (lemma, source_deck)
+);
+
 -- Indexes for common query patterns
 CREATE INDEX IF NOT EXISTS idx_cards_word        ON cards(word);
 CREATE INDEX IF NOT EXISTS idx_sentences_card    ON sentences(card_id);
 CREATE INDEX IF NOT EXISTS idx_reviews_user_card ON card_reviews(user_id, card_id);
 CREATE INDEX IF NOT EXISTS idx_reviews_due       ON card_reviews(user_id, next_due_at);
+CREATE INDEX IF NOT EXISTS idx_vocabulary_lemma  ON vocabulary(lemma);
+CREATE INDEX IF NOT EXISTS idx_vocabulary_pos    ON vocabulary(pos);
+CREATE INDEX IF NOT EXISTS idx_vocabulary_deck   ON vocabulary(source_deck);
 """
 
 
@@ -555,3 +575,145 @@ class CardDatabase:
             d["accuracy_pct"] = round(100 * d["correct_count"] / total, 1)
             stats.append(d)
         return {"by_algorithm": stats}
+
+    # ── Vocabulary Cache (Synced from Anki) ────────────────────────────────────
+
+    def sync_vocabulary_from_anki(
+        self,
+        anki_connect_client,
+        deck: str,
+        field_overrides: dict | None = None,
+        default_pos: str = "noun",
+    ) -> dict:
+        """Sync vocabulary from an Anki deck into the local SQLite cache.
+
+        Extracts all notes from the Anki deck using the same field mapping
+        logic as CardGenerator.get_source_words(), then inserts/updates 
+        vocabulary cache entries.
+
+        Args:
+            anki_connect_client: An AnkiConnect instance
+            deck: Name of the source Anki deck
+            field_overrides: Optional field name overrides
+            default_pos: POS to assume when pos field is missing
+
+        Returns:
+            A dict with keys: added, updated, skipped, total_processed
+        """
+        # Import CardGenerator to reuse its field extraction logic
+        from .card_generator import CardGenerator
+        
+        gen = CardGenerator(anki=anki_connect_client, db=self)
+        vocab_entries = gen.get_source_words(deck, field_overrides, default_pos, use_cache=False)
+        
+        now = _now_iso()
+        stats = {"added": 0, "updated": 0, "skipped": 0, "total_processed": len(vocab_entries)}
+        
+        with self._connect() as conn:
+            for entry in vocab_entries:
+                lemma = entry.get("word", "")
+                if not lemma:
+                    stats["skipped"] += 1
+                    continue
+                
+                existing = conn.execute(
+                    "SELECT id FROM vocabulary WHERE lemma = ? AND source_deck = ?",
+                    (lemma, deck),
+                ).fetchone()
+
+                conn.execute(
+                    """
+                    INSERT INTO vocabulary
+                        (lemma, translation, pos, pronunciation, 
+                         declension_class, verb_class, syllable_count, 
+                         source_deck, synced_at)
+                    VALUES
+                        (:lemma, :translation, :pos, :pronunciation,
+                         :declension_class, :verb_class, :syllable_count,
+                         :source_deck, :synced_at)
+                    ON CONFLICT(lemma, source_deck) DO UPDATE SET
+                        translation      = excluded.translation,
+                        pos              = excluded.pos,
+                        pronunciation    = excluded.pronunciation,
+                        declension_class = excluded.declension_class,
+                        verb_class       = excluded.verb_class,
+                        syllable_count   = excluded.syllable_count,
+                        synced_at        = excluded.synced_at
+                    """,
+                    {
+                        "lemma": lemma,
+                        "translation": entry.get("translation", ""),
+                        "pos": entry.get("pos", ""),
+                        "pronunciation": entry.get("pronunciation", ""),
+                        "declension_class": entry.get("declension_class", ""),
+                        "verb_class": entry.get("verb_class", ""),
+                        "syllable_count": entry.get("syllable_count", 0),
+                        "source_deck": deck,
+                        "synced_at": now,
+                    },
+                )
+                if existing:
+                    stats["updated"] += 1
+                else:
+                    stats["added"] += 1
+        
+        logger.info(
+            f"Synced vocabulary from '{deck}': "
+            f"({stats['added']} new, {stats['updated']} updated, {stats['skipped']} skipped)"
+        )
+        return stats
+
+    def get_vocabulary_from_cache(self, source_deck: str | None = None) -> list[dict]:
+        """Retrieve vocabulary entries from the local cache.
+
+        Args:
+            source_deck: If provided, filter to only this deck. If None, return all.
+
+        Returns:
+            List of vocabulary dicts with keys: lemma, translation, pos, etc.
+        """
+        with self._connect() as conn:
+            if source_deck:
+                rows = conn.execute(
+                    """
+                    SELECT lemma, translation, pos, pronunciation, 
+                           declension_class, verb_class, syllable_count, 
+                           source_deck, synced_at
+                    FROM vocabulary
+                    WHERE source_deck = ?
+                    ORDER BY lemma
+                    """,
+                    (source_deck,),
+                ).fetchall()
+            else:
+                rows = conn.execute(
+                    """
+                    SELECT lemma, translation, pos, pronunciation, 
+                           declension_class, verb_class, syllable_count, 
+                           source_deck, synced_at
+                    FROM vocabulary
+                    ORDER BY source_deck, lemma
+                    """,
+                ).fetchall()
+        return [dict(row) for row in rows]
+
+    def has_vocabulary_cache(self, source_deck: str | None = None) -> bool:
+        """Check if vocabulary cache is populated.
+
+        Args:
+            source_deck: Check for a specific deck. If None, check for any vocabulary.
+
+        Returns:
+            True if cache has entries, False otherwise.
+        """
+        with self._connect() as conn:
+            if source_deck:
+                count = conn.execute(
+                    "SELECT COUNT(*) as cnt FROM vocabulary WHERE source_deck = ?",
+                    (source_deck,),
+                ).fetchone()
+            else:
+                count = conn.execute(
+                    "SELECT COUNT(*) as cnt FROM vocabulary"
+                ).fetchone()
+        return count and count["cnt"] > 0
