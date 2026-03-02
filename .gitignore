@@ -17,8 +17,11 @@ build/
 *.pkl
 *.pickle
 *.json
-*.txt    # OCR/text output from IA, etc.
-*.gz     # compressed OCR/html from IA
+*.txt
+*.gz
+
+# Generated corpus data (IA downloads, newspaper scrapes, wiki dumps, etc.)
+wa_corpus/data/
 
 # Images
 *.jpg
