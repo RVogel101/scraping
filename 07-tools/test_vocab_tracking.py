@@ -36,3 +36,4 @@ if sent_ids:
         print(f'  Vocabulary used: {vocab}')
         print(f'  Word count: {len(vocab)}')
     conn.close()
+

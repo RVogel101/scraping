@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 from __future__ import annotations
 
 import csv
@@ -17,10 +17,10 @@ from lousardzag.database import CardDatabase
 def normalize(s: str) -> str:
     s = (s or "").strip().replace("\xa0", " ").lower()
     s = s.replace("&nbsp", "")
-    s = s.replace("եւ", "և")
+    s = s.replace("Õ¥Ö‚", "Ö‡")
     s = unicodedata.normalize("NFC", s)
     s = "".join(ch for ch in s if unicodedata.category(ch) != "Mn")
-    s = re.sub(r"[()\[\]{}'\"“”՝՚՛~`«»]", "", s)
+    s = re.sub(r"[()\[\]{}'\"â€œâ€ÕÕšÕ›~`Â«Â»]", "", s)
     s = re.sub(r"\s+", " ", s).strip()
     return s
 
@@ -36,7 +36,7 @@ def reason(raw: str, norm: str) -> str:
         return "contains-digit"
     if any(ch in raw for ch in ["(", ")", "[", "]", "{", "}"]):
         return "parenthesized-form"
-    if any(ch in raw for ch in ["՛", "՚", "՝", "«", "»", "'", '"']):
+    if any(ch in raw for ch in ["Õ›", "Õš", "Õ", "Â«", "Â»", "'", '"']):
         return "diacritic-or-punct-variant"
     if " " in norm:
         return "multiword"
@@ -81,3 +81,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 from __future__ import annotations
 
 import csv
@@ -11,13 +11,13 @@ from pathlib import Path
 def normalize(s: str) -> str:
     s = (s or "").strip().replace("\xa0", " ").lower()
     s = s.replace("&nbsp", "")
-    s = s.replace("եւ", "և")
+    s = s.replace("Õ¥Ö‚", "Ö‡")
     s = unicodedata.normalize("NFC", s)
     s = "".join(
         ch for ch in s
         if unicodedata.category(ch) != "Mn" and not unicodedata.category(ch).startswith("P")
     )
-    s = re.sub(r"[()\[\]{}'\"“”՝՚՛~`«»]", "", s)
+    s = re.sub(r"[()\[\]{}'\"â€œâ€ÕÕšÕ›~`Â«Â»]", "", s)
     s = re.sub(r"\s+", " ", s).strip()
     return s
 
@@ -33,7 +33,7 @@ def main() -> int:
             if w:
                 corpus_set.add(w)
 
-    suffixes = ["ներ", "ները", "ն", "ը", "ին", "էս", "իս", "ուս", "ով", "էն", "ում", "եալ", "ութիւն"]
+    suffixes = ["Õ¶Õ¥Ö€", "Õ¶Õ¥Ö€Õ¨", "Õ¶", "Õ¨", "Õ«Õ¶", "Õ§Õ½", "Õ«Õ½", "Õ¸Ö‚Õ½", "Õ¸Õ¾", "Õ§Õ¶", "Õ¸Ö‚Õ´", "Õ¥Õ¡Õ¬", "Õ¸Ö‚Õ©Õ«Ö‚Õ¶"]
 
     recoverable = []
     unrecoverable = []
@@ -74,3 +74,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

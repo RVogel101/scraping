@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """Map corpus frequency ranks into cached vocabulary and report distribution."""
 
 from __future__ import annotations
@@ -21,14 +21,14 @@ def _normalize_lemma(value: str) -> str:
     # HTML noise from deck export.
     s = s.replace("&nbsp", "")
     # Normalize old/new Armenian conjunction form for better alignment.
-    s = s.replace("եւ", "և")
+    s = s.replace("Õ¥Ö‚", "Ö‡")
     s = unicodedata.normalize("NFC", s)
     # Remove combining marks and punctuation to collapse token variants.
     s = "".join(
         ch for ch in s
         if unicodedata.category(ch) != "Mn" and not unicodedata.category(ch).startswith("P")
     )
-    s = re.sub(r"[()\[\]{}'\"“”՝՚՛~`«»]", "", s)
+    s = re.sub(r"[()\[\]{}'\"â€œâ€ÕÕšÕ›~`Â«Â»]", "", s)
     s = re.sub(r"\s+", " ", s).strip()
     return s
 
@@ -161,3 +161,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
