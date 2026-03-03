@@ -7,6 +7,7 @@ import sys
 import json
 import html
 import re
+import math
 from pathlib import Path
 
 # Ensure UTF-8 output on Windows
@@ -22,11 +23,16 @@ from lousardzag.sentence_generator import (
     generate_verb_sentences,
     extract_vocabulary
 )
-from lousardzag.morphology.core import count_syllables
+from lousardzag.morphology.difficulty import count_syllables_with_context
 from lousardzag.morphology.detect import detect_noun_class, detect_verb_class
 
 
 ARMENIAN_WORD_RE = re.compile(r"^[\u0531-\u0556\u0561-\u0587]+$")
+
+# Targeted correction for known noisy deck glosses.
+LEMMA_TRANSLATION_OVERRIDES = {
+    "է": "being, existence",
+}
 
 
 def _sanitize_text(value: str) -> str:
@@ -102,6 +108,143 @@ def _use_english_sentences(translation: str, pos: str) -> bool:
     return False
 
 
+def _normalize_translation_for_lemma(lemma: str, translation: str) -> str:
+    """Apply lemma-specific translation corrections when source data is noisy."""
+    return LEMMA_TRANSLATION_OVERRIDES.get(lemma, translation)
+
+
+def _max_syllables_for_word_at_level(
+    level: int,
+    pos: str,
+    level_default_limit: int,
+    level1_nonverb_max_syllables: int = 1,
+    level1_verb_max_syllables: int = 2,
+) -> int:
+    """Return a POS-aware syllable ceiling for a word at a given level.
+
+    Level 1 policy:
+      - Verbs: up to 2 syllables.
+      - Non-verbs (nouns/adjectives/etc.): 1 syllable.
+    Later levels fall back to progression's global band limits.
+    """
+    if level == 1:
+        if (pos or "").lower() in ("verb", "v"):
+            return level1_verb_max_syllables
+        return level1_nonverb_max_syllables
+    return level_default_limit
+
+
+def _select_with_first_batch_policy(
+    entries: list[WordEntry],
+    max_words: int,
+    first_batch_size: int = 20,
+    force_word: str = "է",
+    mono_ratio: float = 0.7,
+    two_syllable_verbs_target: int = 3,
+    first_batch_max_syllables: int | None = 2,
+    level1_nonverb_max_syllables: int = 1,
+    level1_verb_max_syllables: int = 2,
+) -> tuple[list[WordEntry], bool]:
+    """Select words while enforcing first-batch composition constraints.
+
+    Policy for first batch (up to 20 words):
+      - Force inclusion of `force_word` when available.
+      - Keep a majority mono-syllable words.
+      - Include a few 2-syllable verbs.
+    """
+    if not entries or max_words <= 0:
+        return [], False
+
+    limit = min(max_words, len(entries))
+    batch_target = min(first_batch_size, limit)
+    mono_target = min(batch_target, math.ceil(batch_target * mono_ratio))
+
+    selected: list[WordEntry] = []
+    selected_ids: set[int] = set()
+
+    def _add_entry(entry: WordEntry) -> bool:
+        if len(selected) >= limit:
+            return False
+        eid = id(entry)
+        if eid in selected_ids:
+            return False
+        selected.append(entry)
+        selected_ids.add(eid)
+        return True
+
+    force_added = False
+
+    def _is_first_batch_eligible(entry: WordEntry) -> bool:
+        level_default = first_batch_max_syllables if first_batch_max_syllables is not None else 999
+        word_limit = _max_syllables_for_word_at_level(
+            1,
+            entry.pos,
+            level_default,
+            level1_nonverb_max_syllables=level1_nonverb_max_syllables,
+            level1_verb_max_syllables=level1_verb_max_syllables,
+        )
+        return entry.syllable_count <= word_limit
+
+    # 1) Force "է" into the first batch if present.
+    for entry in entries:
+        if entry.word == force_word and _is_first_batch_eligible(entry):
+            _add_entry(entry)
+            force_added = True
+            break
+
+    # 2) Add a few 2-syllable verbs early.
+    two_syl_verb_added = 0
+    for entry in entries:
+        if len(selected) >= batch_target:
+            break
+        if not _is_first_batch_eligible(entry):
+            continue
+        if entry.syllable_count == 2 and entry.pos.lower() in ("verb", "v"):
+            if _add_entry(entry):
+                two_syl_verb_added += 1
+                if two_syl_verb_added >= two_syllable_verbs_target:
+                    break
+
+    # 3) Fill majority with mono-syllable words.
+    mono_added = sum(1 for e in selected if e.syllable_count == 1)
+    if mono_added < mono_target:
+        for entry in entries:
+            if len(selected) >= batch_target:
+                break
+            if not _is_first_batch_eligible(entry):
+                continue
+            if entry.syllable_count == 1 and _add_entry(entry):
+                mono_added += 1
+                if mono_added >= mono_target:
+                    break
+
+    # 4) Fill remaining first-batch slots by original order.
+    for entry in entries:
+        if len(selected) >= batch_target:
+            break
+        if not _is_first_batch_eligible(entry):
+            continue
+        _add_entry(entry)
+
+    # Fallback if strict first-batch eligibility underfills.
+    for entry in entries:
+        if len(selected) >= batch_target:
+            break
+        if not _is_first_batch_eligible(entry):
+            continue
+        _add_entry(entry)
+
+    # 5) Fill remainder up to max_words by original order.
+    for entry in entries:
+        if len(selected) >= limit:
+            break
+        if not _is_first_batch_eligible(entry):
+            continue
+        _add_entry(entry)
+
+    return selected, force_added
+
+
 def check_prerequisites(sentence_armenian: str, taught_words: set[str]) -> tuple[bool, list[str]]:
     """Check if all vocabulary in a sentence has been previously taught.
     
@@ -123,7 +266,10 @@ def generate_ordered_cards(
     include_sentences: bool = True,
     output_html: str | None = None,
     max_syllables_level_1: int = 2,
+    level1_nonverb_max_syllables: int = 1,
+    level1_verb_max_syllables: int = 2,
     english_mode: str = "strict",
+    sentence_start_after_vocab: int = 20,
 ):
     """Generate flashcards in proper difficulty order with prerequisite checking.
     
@@ -144,6 +290,11 @@ def generate_ordered_cards(
     print(f"Max words: {max_words}")
     print(f"Include sentences: {include_sentences}\n")
     print(f"English sentence mode: {english_mode}\n")
+    print(f"Sentence start threshold: {sentence_start_after_vocab} vocab word(s)\n")
+    print(
+        f"Level 1 POS syllable policy: non-verbs <= {level1_nonverb_max_syllables}, "
+        f"verbs <= {level1_verb_max_syllables}\n"
+    )
     
     # Get vocabulary from cache
     vocab_entries = db.get_vocabulary_from_cache(source_deck)
@@ -155,15 +306,13 @@ def generate_ordered_cards(
     print(f"Found {len(vocab_entries)} vocabulary entries in cache\n")
     
     # Convert to WordEntry format for progression sorting
-    word_entries = []
+    candidate_entries = []
     skipped_invalid = 0
     skipped_non_armenian = 0
     for entry in vocab_entries:
-        if len(word_entries) >= max_words:
-            break
-
         lemma = _sanitize_text(entry.get('lemma', ''))
         translation = _sanitize_text(entry.get('translation', ''))
+        translation = _normalize_translation_for_lemma(lemma, translation)
 
         if not lemma or not translation:
             skipped_invalid += 1
@@ -179,16 +328,33 @@ def generate_ordered_cards(
             word=lemma,
             translation=translation,
             pos=pos,
+            frequency_rank=entry.get('frequency_rank', 9999),
             declension_class=entry.get('declension_class', ''),
             verb_class=entry.get('verb_class', ''),
-            syllable_count=count_syllables(lemma),
+            syllable_count=count_syllables_with_context(lemma, with_epenthesis=True),
         )
-        word_entries.append(word_entry)
+        candidate_entries.append(word_entry)
+
+    word_entries, force_e_added = _select_with_first_batch_policy(
+        candidate_entries,
+        max_words=max_words,
+        first_batch_size=20,
+        force_word='է',
+        mono_ratio=0.7,
+        two_syllable_verbs_target=3,
+        first_batch_max_syllables=max_syllables_level_1,
+        level1_nonverb_max_syllables=level1_nonverb_max_syllables,
+        level1_verb_max_syllables=level1_verb_max_syllables,
+    )
 
     print(
         f"Selected {len(word_entries)} usable entries "
         f"(skipped {skipped_invalid} empty/invalid, {skipped_non_armenian} non-single-word/non-Armenian)\n"
     )
+    if force_e_added:
+        print("First-batch policy: forced inclusion of 'է' when available")
+    else:
+        print("First-batch policy: 'է' not found in usable candidate pool")
     
     # Build progression (sorts by difficulty)
     print("Building progression order...")
@@ -218,6 +384,7 @@ def generate_ordered_cards(
     
     # Track taught words for prerequisite checking
     taught_words = set(bootstrap_vocab)  # Start with bootstrap vocabulary
+    taught_vocab_count = 0
     print(f"Bootstrap vocabulary: {len(bootstrap_vocab)} common grammatical words\n")
     
     # Generate cards in order
@@ -225,7 +392,7 @@ def generate_ordered_cards(
     
     for segment in progression.ordered_segments():
         if hasattr(segment, 'words'):  # VocabBatch
-            # Determine syllable limit for this level
+            # Determine base syllable limit for this level.
             if segment.level == 1:
                 syllable_limit = max_syllables_level_1
             else:
@@ -236,9 +403,16 @@ def generate_ordered_cards(
             print(f"{'─'*70}\n")
             
             for word_entry in segment.words:
-                # Skip words that exceed syllable limit for this level
-                if word_entry.syllable_count > syllable_limit:
-                    print(f"  ⊗ {word_entry.word:15s} ({word_entry.translation:20s}) [SKIPPED: {word_entry.syllable_count} syllables > {syllable_limit}]")
+                # Level 1 is POS-aware: only verbs may be disyllabic.
+                word_limit = _max_syllables_for_word_at_level(
+                    segment.level,
+                    word_entry.pos,
+                    syllable_limit,
+                    level1_nonverb_max_syllables=level1_nonverb_max_syllables,
+                    level1_verb_max_syllables=level1_verb_max_syllables,
+                )
+                if word_entry.syllable_count > word_limit:
+                    print(f"  ⊗ {word_entry.word:15s} ({word_entry.translation:20s}) [SKIPPED: {word_entry.syllable_count} syllables > {word_limit}]")
                     continue
                 word = word_entry.word
                 translation = word_entry.translation
@@ -247,6 +421,7 @@ def generate_ordered_cards(
                 # Normalize and add to taught words
                 normalized_word = word.lower()
                 taught_words.add(normalized_word)
+                taught_vocab_count += 1
                 
                 # Determine card type and class
                 if pos.lower() in ('noun', 'n'):
@@ -266,6 +441,8 @@ def generate_ordered_cards(
                     'card_type': card_type,
                     'level': segment.level,
                     'syllables': syllables,
+                    'frequency_rank': word_entry.frequency_rank,
+                    'difficulty_score': word_entry.difficulty_score,
                     'show_english_sentences': (
                         english_mode == 'full'
                         or (
@@ -278,7 +455,7 @@ def generate_ordered_cards(
                 }
                 
                 # Generate sentence cards if enabled
-                if include_sentences:
+                if include_sentences and taught_vocab_count >= sentence_start_after_vocab:
                     if pos.lower() in ('noun', 'n') and _looks_adjectival_gloss(translation):
                         print("    ⊘ Skipped sentence generation (adjective-like gloss for noun template)")
                         generated_cards.append(card_info)
@@ -322,6 +499,11 @@ def generate_ordered_cards(
                             print("    • English disabled (mode=off); showing Armenian-only examples")
                         elif english_mode == 'strict' and not card_info['show_english_sentences']:
                             print("    • English hidden (low-confidence gloss); showing Armenian-only examples")
+                elif include_sentences:
+                    print(
+                        f"    ⊘ Delayed sentence generation "
+                        f"(taught {taught_vocab_count}/{sentence_start_after_vocab} vocab words)"
+                    )
                 
                 generated_cards.append(card_info)
     
@@ -383,7 +565,7 @@ def generate_html_preview(cards: list[dict], taught_words: set[str], output_path
             f"<span class='level-badge'>Level {card['level']}</span>",
             f"<div class='word'>{word_decoded}</div>",
             f"<div class='translation'>{translation_decoded}</div>",
-            f"<div class='meta'>Card {i} | {card['syllables']} syllable(s) | {card['pos']} | {card['card_type']}</div>",
+            f"<div class='meta'>Card {i} | {card['syllables']} syl | Freq Rank: {card['frequency_rank']} | Difficulty: {card['difficulty_score']:.1f}/10 | {card['pos']} | {card['card_type']}</div>",
             f"</div>",
         ])
         
@@ -457,6 +639,24 @@ if __name__ == "__main__":
             "off (Armenian-only), strict (only confident glosses), full (always show)"
         ),
     )
+    parser.add_argument(
+        "--sentence-start-after-vocab",
+        type=int,
+        default=20,
+        help="Only generate sentence/phrase cards after this many vocab words are taught (default: 20)",
+    )
+    parser.add_argument(
+        "--level1-nonverb-max-syllables",
+        type=int,
+        default=1,
+        help="Max syllables for level-1 non-verbs (nouns/adjectives/etc), default: 1",
+    )
+    parser.add_argument(
+        "--level1-verb-max-syllables",
+        type=int,
+        default=2,
+        help="Max syllables for level-1 verbs, default: 2",
+    )
     
     args = parser.parse_args()
     
@@ -466,5 +666,8 @@ if __name__ == "__main__":
         include_sentences=not args.no_sentences,
         output_html=args.output_html,
         max_syllables_level_1=args.max_syllables_level_1,
+        level1_nonverb_max_syllables=args.level1_nonverb_max_syllables,
+        level1_verb_max_syllables=args.level1_verb_max_syllables,
         english_mode=args.english_mode,
+        sentence_start_after_vocab=args.sentence_start_after_vocab,
     )

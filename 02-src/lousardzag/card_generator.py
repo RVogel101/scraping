@@ -24,6 +24,9 @@ from .morphology.articles import add_definite, add_indefinite
 from .morphology.detect import detect_verb_class, detect_noun_class, detect_pos_and_class
 from .renderer import load_card_model_assets, build_loanword_metadata
 from .sentence_generator import generate_noun_sentences, generate_verb_sentences, extract_vocabulary
+from .sentence_progression import (
+    SentenceProgressionConfig, select_sentences_for_progression
+)
 
 logger = logging.getLogger(__name__)
 
@@ -599,6 +602,8 @@ class CardGenerator:
         push_to_anki: bool = True,
         supporting_words: Optional[list[str]] = None,
         pronoun_style: str = "explicit",
+        level: Optional[int] = None,
+        progression_config: Optional[SentenceProgressionConfig] = None,
     ) -> list[int]:
         """Generate sentence practice cards for a vocabulary word.
 
@@ -612,6 +617,11 @@ class CardGenerator:
             supporting_words: Optional list of previously-learned vocabulary words
                              to incorporate into sentence structures.
             pronoun_style: "explicit" (default), "optional" (parentheses), or "none".
+            level: Optional level (1-20) for sentence progression control.
+            progression_config: Optional SentenceProgressionConfig to control
+                               which sentence tiers are available at this level.
+                               If provided, sentences will be selected progressively
+                               even if grammar_filter is not set.
         """
         note_ids = []
         limit = max_sentences if max_sentences is not None else SENTENCES_PER_WORD
@@ -633,6 +643,13 @@ class CardGenerator:
         else:
             logger.debug(f"Skipping sentence generation for POS '{pos}': {word}")
             return note_ids
+
+        # Apply sentence progression if configured
+        if progression_config and level is not None:
+            sentences = select_sentences_for_progression(
+                sentences, level, progression_config
+            )
+            limit = min(limit, len(sentences))
 
         # Apply grammar filter: keep sentences whose label contains the filter key
         if grammar_filter:

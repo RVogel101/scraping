@@ -20,7 +20,7 @@ from typing import Optional
 
 
 
-from .core import ARM, VOWELS, count_syllables, is_armenian
+from .core import ARM, ARM_UPPER, VOWELS, count_syllables, is_armenian
 
 # ─── Schwa Epenthesis Constants ──────────────────────────────────
 # In Western Armenian, illegal consonant clusters are "repaired" with schwa (ə/ը)
@@ -54,7 +54,7 @@ def _get_consonant_clusters(word: str) -> list:
     Returns:
         List of tuples: (start_index, end_index, cluster_string, position_type)
     """
-    consonants = set(ARM.values()) - VOWELS - {HIDDEN_VOWEL}
+    consonants = (set(ARM.values()) | set(ARM_UPPER.values())) - VOWELS - {HIDDEN_VOWEL}
     clusters = []
     i = 0
     

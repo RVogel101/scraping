@@ -14,6 +14,11 @@ from .renderer import build_loanword_metadata, load_card_model_assets, render_ca
 from .sentence_generator import generate_noun_sentences, generate_verb_sentences, extract_vocabulary
 
 
+LEMMA_TRANSLATION_OVERRIDES: dict[str, str] = {
+    "է": "being, existence",
+}
+
+
 def _first_vocab_by_pos(
     db: CardDatabase,
     pos: str,
@@ -27,7 +32,10 @@ def _first_vocab_by_pos(
         if lemma:
             entry = dict(entry)
             entry["lemma"] = lemma
-            entry["translation"] = _normalize_text(entry.get("translation", ""))
+            entry["translation"] = _normalize_translation_for_lemma(
+                lemma,
+                _normalize_text(entry.get("translation", "")),
+            )
             return entry
     return None
 
@@ -39,6 +47,11 @@ def _normalize_text(value: str) -> str:
     return text
 
 
+def _normalize_translation_for_lemma(lemma: str, translation: str) -> str:
+    """Apply targeted translation fixes for known noisy vocabulary rows."""
+    return LEMMA_TRANSLATION_OVERRIDES.get(lemma, translation)
+
+
 def _fallback_from_cards(db: CardDatabase, card_type: str) -> dict[str, Any] | None:
     cards = db.list_cards(card_type=card_type)
     for card in cards:
@@ -46,7 +59,10 @@ def _fallback_from_cards(db: CardDatabase, card_type: str) -> dict[str, Any] | N
         if lemma:
             card = dict(card)
             card["word"] = lemma
-            card["translation"] = _normalize_text(card.get("translation", ""))
+            card["translation"] = _normalize_translation_for_lemma(
+                lemma,
+                _normalize_text(card.get("translation", "")),
+            )
             return card
     return None
 

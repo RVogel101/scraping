@@ -109,6 +109,7 @@ CREATE TABLE IF NOT EXISTS vocabulary (
     pronunciation    TEXT    NOT NULL DEFAULT '',  -- transliteration/romanization
     declension_class TEXT    NOT NULL DEFAULT '',  -- i_class, u_class, etc.
     verb_class       TEXT    NOT NULL DEFAULT '',  -- e_class, i_class, etc.
+    frequency_rank   INTEGER NOT NULL DEFAULT 9999,
     syllable_count   INTEGER NOT NULL DEFAULT 0,
     anki_note_id     INTEGER,                   -- Original Anki note ID
     source_deck      TEXT    NOT NULL DEFAULT '',  -- Which deck it came from
@@ -194,6 +195,18 @@ class CardDatabase:
                 "ALTER TABLE sentences ADD COLUMN vocabulary_used TEXT NOT NULL DEFAULT '[]'"
             )
             logger.info("Applied migration: Added vocabulary_used column to sentences table")
+
+        # Check vocabulary table columns
+        vocab_cols = {
+            row["name"]
+            for row in conn.execute("PRAGMA table_info(vocabulary)").fetchall()
+        }
+
+        if "frequency_rank" not in vocab_cols:
+            conn.execute(
+                "ALTER TABLE vocabulary ADD COLUMN frequency_rank INTEGER NOT NULL DEFAULT 9999"
+            )
+            logger.info("Applied migration: Added frequency_rank column to vocabulary table")
 
     @contextmanager
     def _connect(self):
@@ -683,11 +696,11 @@ class CardDatabase:
                     """
                     INSERT INTO vocabulary
                         (lemma, translation, pos, pronunciation, 
-                         declension_class, verb_class, syllable_count, 
+                         declension_class, verb_class, frequency_rank, syllable_count, 
                          source_deck, synced_at)
                     VALUES
                         (:lemma, :translation, :pos, :pronunciation,
-                         :declension_class, :verb_class, :syllable_count,
+                         :declension_class, :verb_class, :frequency_rank, :syllable_count,
                          :source_deck, :synced_at)
                     ON CONFLICT(lemma, source_deck) DO UPDATE SET
                         translation      = excluded.translation,
@@ -695,6 +708,7 @@ class CardDatabase:
                         pronunciation    = excluded.pronunciation,
                         declension_class = excluded.declension_class,
                         verb_class       = excluded.verb_class,
+                        frequency_rank   = excluded.frequency_rank,
                         syllable_count   = excluded.syllable_count,
                         synced_at        = excluded.synced_at
                     """,
@@ -705,6 +719,7 @@ class CardDatabase:
                         "pronunciation": entry.get("pronunciation", ""),
                         "declension_class": entry.get("declension_class", ""),
                         "verb_class": entry.get("verb_class", ""),
+                        "frequency_rank": entry.get("frequency_rank", 9999),
                         "syllable_count": entry.get("syllable_count", 0),
                         "source_deck": deck,
                         "synced_at": now,
@@ -735,7 +750,7 @@ class CardDatabase:
                 rows = conn.execute(
                     """
                     SELECT lemma, translation, pos, pronunciation, 
-                           declension_class, verb_class, syllable_count, 
+                          declension_class, verb_class, frequency_rank, syllable_count, 
                            source_deck, synced_at
                     FROM vocabulary
                     WHERE source_deck = ?
@@ -747,13 +762,64 @@ class CardDatabase:
                 rows = conn.execute(
                     """
                     SELECT lemma, translation, pos, pronunciation, 
-                           declension_class, verb_class, syllable_count, 
+                           declension_class, verb_class, frequency_rank, syllable_count, 
                            source_deck, synced_at
                     FROM vocabulary
                     ORDER BY source_deck, lemma
                     """,
                 ).fetchall()
         return [dict(row) for row in rows]
+
+    def update_vocabulary_frequency_ranks(
+        self,
+        rank_by_lemma: dict[str, int],
+        source_deck: str | None = None,
+    ) -> dict:
+        """Bulk-update vocabulary frequency_rank from a lemma->rank mapping.
+
+        Args:
+            rank_by_lemma: Mapping of Armenian lemma -> rank (1-based, lower is more frequent).
+            source_deck: Optional deck filter. If omitted, updates all decks.
+
+        Returns:
+            Dict with counts: total_vocab, mapped, updated, unmapped.
+        """
+        with self._connect() as conn:
+            if source_deck:
+                rows = conn.execute(
+                    "SELECT lemma, source_deck, frequency_rank FROM vocabulary WHERE source_deck = ?",
+                    (source_deck,),
+                ).fetchall()
+            else:
+                rows = conn.execute(
+                    "SELECT lemma, source_deck, frequency_rank FROM vocabulary"
+                ).fetchall()
+
+            total_vocab = len(rows)
+            mapped = 0
+            updated = 0
+
+            for row in rows:
+                lemma = row["lemma"]
+                if lemma not in rank_by_lemma:
+                    continue
+
+                new_rank = int(rank_by_lemma[lemma])
+                mapped += 1
+
+                if row["frequency_rank"] != new_rank:
+                    conn.execute(
+                        "UPDATE vocabulary SET frequency_rank = ? WHERE lemma = ? AND source_deck = ?",
+                        (new_rank, lemma, row["source_deck"]),
+                    )
+                    updated += 1
+
+        return {
+            "total_vocab": total_vocab,
+            "mapped": mapped,
+            "updated": updated,
+            "unmapped": total_vocab - mapped,
+        }
 
     def has_vocabulary_cache(self, source_deck: str | None = None) -> bool:
         """Check if vocabulary cache is populated.
