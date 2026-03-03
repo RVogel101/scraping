@@ -43,16 +43,35 @@ pip install -r requirements.txt
 
 ## Usage
 
-### Generate Flashcards
+### Generate Vocabulary Lists
 
+**Generate N-standard proficiency vocabulary (N1-N7):**
 ```bash
-python 07-tools/generate_ordered_cards.py --max-cards 50 --english-mode off
+python 07-tools/gen_vocab_simple.py --preset n-standard --max-words 140 --csv-output 08-data/vocab_n_standard.csv
+```
+
+**Generate custom vocabulary with proficiency blocks:**
+```bash
+python 07-tools/gen_vocab_simple.py --preset l1-core --max-words 60 --proficiency-enabled
 ```
 
 Options:
-- `--max-cards`: Number of cards to generate
-- `--english-mode`: Control English translations (off/always/fallback)
-- `--max-syllables-level-1`: Syllable limit for level 1 (default: 2)
+- `--preset`: l1-core | l2-expand | l3-bridge | n-standard (default: n-standard)
+- `--max-words`: Maximum vocabulary size
+- `--csv-output`: Output CSV file path
+- `--proficiency-enabled`: Enable N1-N7 block assignment
+
+### Generate Flashcards
+
+```bash
+python 07-tools/generate_ordered_cards.py --max-words 40 --english-mode strict
+```
+
+Options:
+- `--max-words`: Number of cards to generate
+- `--english-mode`: strict | fallback | off (default: strict)
+- `--level1-nonverb-max-syllables`: Syllable limit for Level 1 non-verbs (default: 1)
+- `--level1-verb-max-syllables`: Syllable limit for Level 1 verbs (default: 2)
 
 ### Build Western Armenian Corpus
 
@@ -74,30 +93,46 @@ python -m wa_corpus.nayiri_scraper --delay-min 3.0 --delay-max 6.0
 ### Development Server
 
 ```bash
-python 03-cli/preview_server.py
+python 03-cli/preview_server.py --pretty
 ```
 
-Launches FastAPI server at http://127.0.0.1:8000 for flashcard preview.
+Launches FastAPI server at http://127.0.0.1:8000 for flashcard preview with phonetic data.
 
 ## Key Features
+
+### Western Armenian Phonetics
+- **IPA Transcription**: 38 phonemes with proper Western Armenian voicing (reversed letter-shape convention)
+- **Pronunciation Difficulty**: 1-5 scale for English speakers (guttural consonants highlighted)
+- **Diphthong Support**: ու (oo), իւ (yoo) with contextual vowel handling
+- **Integration**: Difficulty scores feed into vocabulary ordering
+- **Reference**: See `.github/copilot-instructions.md` for critical voicing rules
+
+### Vocabulary Ordering System
+- **5 Ordering Modes**: frequency, pos_frequency, band_pos_frequency, difficulty, difficulty_band
+- **3 Batch Strategies**: fixed size, growth (with step), banded by difficulty
+- **4 Presets**: l1-core (60), l2-expand (80), l3-bridge (100), n-standard (flexible with N1-N7 levels)
+- **Proficiency Blocks**: N1-N7 standards-style progression (like JLPT)
+- **Filtering**: Automatic removal of phrases/sentences (>4 words, questions, sentence starters)
+- **CSV + HTML Outputs**: Include IPA, English approximations, phonetic difficulty
+
+### Sentence Progression Framework
+- **Morphological Analysis**: Syllable count, verb conjugations, rare word tracking
+- **Progression Strategies**: Linear and adaptive (based on vocabulary difficulty)
+- **Prerequisite Tracking**: Ensures introduced vocabulary is already taught
+- **Difficulty Filtering**: Prevents grammatically complex sentences early in progression
+- **Comprehensive Tests**: Full test suite in `04-tests/test_sentence_progression.py`
 
 ### Morphological Analysis
 - Noun declension (8 cases: nominative, accusative, genitive, dative, ablative, instrumental, locative)
 - Verb conjugation (15 tenses, 6 persons, irregular verb support)
 - Schwa epenthesis detection
-- Syllable counting and phonological difficulty assessment
-
-### Progression System
-- Level-based vocabulary introduction (20 words per batch, 5 batches per level)
-- Syllable constraints by level (Level 1-5: 1-2 syllables, Level 6-10: 2 syllables, etc.)
-- Prerequisite tracking (vocabulary used in sentences must be taught first)
-- Bootstrap vocabulary (36 common grammatical words)
+- Syllable counting with epenthesis support
 
 ### Corpus Tools
 - Multi-source newspaper scraping with deduplication
 - Internet Archive catalog management and PDF text extraction
-- Nayiri dictionary scraping with rate limiting and cooldown periods
 - Western Armenian tokenization and frequency analysis
+- Corpus analysis utilities for vocabulary mapping and unmatched word reports
 
 ## Testing
 
@@ -105,7 +140,7 @@ Launches FastAPI server at http://127.0.0.1:8000 for flashcard preview.
 python -m pytest
 ```
 
-Current test coverage: 323 tests passing
+Run full test suite including vocabulary ordering, sentence progression, phonetics, and morphological analysis.
 
 ## Project Name
 
@@ -114,40 +149,6 @@ Current test coverage: 323 tests passing
 ## License
 
 MIT
-
-### 1. Scrape Images
-
-```bash
-python scrape_fb_images.py
-```
-
-Launches Chrome, logs in to Facebook (uses an existing session cookie), scrolls through the CWAS photos page, and downloads full-resolution images to `FB-UK-CWAS-Content/`.
-
-### 2. Extract Text (OCR)
-
-```bash
-python extract_image_text_simple.py
-```
-
-Processes all images with Tesseract OCR using `eng+hye` language mode, multiple preprocessing variants (grayscale, denoised, binary, adaptive, morphological, contrast-enhanced, sharpened), and multiple PSM modes. Results are saved as CSV, JSON, and pickle.
-
-### 3. Explore & Categorise
-
-Open `exloration.ipynb` in Jupyter/VS Code and run the cells to:
-
-- Load and clean the extracted text (remove copyright notices, headers)
-- Categorise entries: Etymology, Word Breakdown, Phrasal Breakdown, Example, Declension, Conjugation, Conjunction, etc.
-- Split combined Declension-Example cards into separate rows
-
-### Full Pipeline
-
-```bash
-python main_coordinator.py
-```
-
-Runs scraping and extraction end-to-end.
-
-## Card Categories
 
 The CWAS "Word of the Day" images fall into these categories:
 
