@@ -35,8 +35,21 @@ data/extracted_text_simple/
 data/_wa_source_extract/
 !data/.gitkeep
 
+# Data directory (08-data)
+08-data/*.json
+08-data/*.csv
+08-data/*.txt
+08-data/*.bak
+08-data/*.pkl
+08-data/*.pickle
+08-data/anki_media/
+08-data/extracted_text_simple/
+08-data/_wa_source_extract/
+!08-data/.gitkeep
+
 # Generated corpus data (IA downloads, newspaper scrapes, wiki dumps, etc.)
 02-src/wa_corpus/data/
+wa_corpus/
 
 # Images
 *.jpg
@@ -78,6 +91,16 @@ htmlcov/
 07-tools/test_*.py
 07-tools/check_*.py
 07-tools/debug_*.py
+
+# Temporary scripts
+*.bat
+*.sh
+*.cmd
+
+# Temporary data exports
+*.bak
+*.tmp
+*.temp
 07-tools/example_*.py
 07-tools/analyze_*.py
 07-tools/generate_vocab_cards.py
