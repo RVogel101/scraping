@@ -1,0 +1,50 @@
+07-tools index
+
+Canonical entrypoints
+- Run canonical scripts from 07-tools root when possible.
+- Category folders contain launcher wrappers for discoverability.
+- Example: use 07-tools/validate_word_mappings.py as canonical.
+
+Categories
+- analysis/
+  - analyze_case_forms_strict.py
+  - analyze_case_suffixes.py
+  - analyze_missing_phrases.py
+  - analyze_stemming_detailed.py
+  - analyze_stemming_impact.py
+  - analyze_unmatched.py
+  - analyze_unmatched_fallbacks.py
+
+- cleanup/
+  - clean_anki_export.py
+  - extract_anki_words_clean.py
+
+- debug/
+  - debug_filter.py
+  - debug_problem_words.py
+  - test_phonetics.py
+  - test_vocab_tracking.py
+
+- ocr/
+  - extract_image_text.py
+  - ocr_setup_check.py
+
+- scraping/
+  - _extract_wa_sources.py
+  - scrape_fb_images.py
+
+- unmatched/
+  - export_unmatched_report.py
+  - map_frequency_to_vocab.py
+  - report_unmatched_reasons.py
+  - validate_word_mappings.py
+
+High-traffic root scripts
+- gen_vocab_simple.py
+- generate_ordered_cards.py
+- validate_word_mappings.py
+- extract_vocabulary_words.py
+- clean_anki_export.py
+- export_unmatched_report.py
+- map_frequency_to_vocab.py
+- report_unmatched_reasons.py
