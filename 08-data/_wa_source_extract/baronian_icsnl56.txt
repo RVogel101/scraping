@@ -1,0 +1,885 @@
+ 
+Papers for the International Conference on Salish and Neighboring Languages 56.  
+D. K. E. Reisinger, Hannah Green, Laura Griffin, Marianne Huijsmans, Gloria Mellesmoen, and Bailey 
+Trotter (eds.). Vancouver, BC: UBCWPL, 2021. 
+ 
+Acoustic Description of Secwepemctsín Vowels* 
+Michelle Kamigaki-Baron 
+University of British Columbia 
+Abstract: Kuipers (1989) argues that in Secwepemctsín (Shuswap) nearly all unstressed vowels 
+will phonetically surface as schwa (/ə/), this includes unstre ssed /a/, /e/, /i/, /o/,  and /u/. Under his 
+analysis, it is posited that the unstressed position automatically reduces the vowel to /ə/. 
+Furthermore, Kuipers makes the claim that reduced vowels and epenthetic /ə/ may be classifie d as 
+the same sound. This paper provides an acoustic description of the vowels of Secwepemctsín to test 
+theories presented by Kuipers’ hypothesis (1989). This acoustic description is based on two 
+Secwepemctsín speakers recorded in 2020 –2021. After obtainin g voice recordings, vowels were 
+manually transcribed and first (F1) and second (F2) formant frequencies were measured. This study 
+confirms some previous observations relating to the pronunciation of stressed Secwepemctsín 
+vowels, but presents several novel  insights, most notably in regard to unstressed vowels and 
+occurrence of /ə/. Based on the analysis presented in this paper, I propose that unstressed /e/ partially 
+reduce to /ə/, while other vowels appear to not be significantly reduced to /ə/ in unstressed position. 
+The findings p resented in this paper may potentially lead to classroom applications for learning 
+Secwepemctsín pronunciation. 
+Keywords: Secwepemctsín, Salish, phonetics, vowels, schwa, pronunciation 
+1 Introduction 
+1.1 Secwepemctsín vowels 
+Secwepemctsín (Shuswap) is from the Northern Interior branch of the Salish family, traditionally 
+spoken in the interior BC region. It is considered critically endangered with less than 50 L1 speakers 
+(FPCC 2018). Several studies have described Secwepemctsín vowels, most notably Kuipers (1974, 
+1989). Kuipers (1974) characterizes the Secwepemctsín vowel system as consisting of 5 underlying 
+vowels, each with stressed and unstressed variants: /á/, /é/, /í/, /ó/, /ú/, /a/, /e/, /i/, /o/, and /u/. This 
+system forms the basis of the practical orthography presented in Kuipers (1974) where /á/, /é/, /í/, 
+/ó/, and /ú/ are “stressed” and /a/, /e/, /i/, /o/, and /u/ are “unstressed”. Kuipers (1989) argues that 
+nearly all unstressed vowels are reduced to schwa (henceforth /ə /). Kuipers claims that the  
+unstressed position automatically reduces the vowel to /ə/. Furthermore, he states that reduced 
+vowels and epenthetic /ə/ are descriptively identical. Under this claim, Kuipers (1989) presents the 
+ 
+* This project is dedicated to Bernadette Dodson and Louella Jules who have put in hours and hours of work 
+into this project. Thank you for your effort, patience, and kindness. Your relentless dedication to the language 
+and community is inspiring to all of us who have had the privilege to work with you. Kukwstsétselp! A huge 
+thanks to Dr. Henry Davis, Dr. Molly Babel, Gloria Mellesmoen, Jessica Charest, Dr. Thomas Kettig , and 
+members of Salish Working Group for providing feedback and advice. Thanks to my elicitation partner, 
+Celina Medrano-Miller and to Hannah Green for m anaging elicitation sessi ons. As this project ultimately 
+belongs to the speakers, BD and LJ, so I’ve asked them to also include their own acknowledgements. LJ 
+writes, “I’d like to thank my grandparents, all my other elders and mentors, my aunt  Garlene, and all new 
+Secwepemctsín l earners.” BD writes, “Celena Jules (Restelme t̓ecken) ell Hyacinthe Jules (S k̓ elep) Ell 
+xwexweyt re kenknúcwmen Ell xwexweyt re texwpenwéllen̓ -es te Secwepemctsném Ell em7ímts ell m-yews 
+ri7 stet̓7ék.”  
+ 
+ 
+ 
+ 
+135 
+hypothesis that all unstressed vowels (/a/, /e/, /i/, /o/, and /u/), as well as epenthetic /ə/, should each 
+be acoustically similar to one another.  
+Cross-linguistically, full vowel reduction is considered most likely to occur in unstressed 
+closed syllables in order to reduce the phonological weight of the non -head (Flemming 2009). 
+While Kuipers (1989) argues that Secwepemctsín vowel reduction will sur face as /ə/, t here are 
+other analyses of vowel reduction in Salish languages which argue that unstressed position will 
+result in partial vowel reduction rather than full vowel reduction (e.g. , Blake’s 2000 analysis o f 
+ʔayʔaǰuθəm/Comox-Sliammon). 
+1.2 Sonority hierarchy 
+To discuss environments motivating schwa epenthesis, I will first establish the sonority hierarchy 
+as it relates to syllabic requirements that will determin e predictability of schwa epenthesis. First,  
+the term syllable refers to a phonological entity in which segments are organized around a single 
+sonority peak (e.g., Sievers 1881:203–206). Sonority is defined as the physical force contained by 
+a syllable, which typically is analyzed as minimized at the margins of syllables and raised to a peak 
+in sonority contained in the nucleus (e.g., Pike 1943; Selkirk 1984). The sonority scale, posited by 
+Clements (1990), describes the sonority distances between types of segments. According to 
+Clements (1990), in order of sonority: vowels are va lued highest in sonority (index value of 5), 
+followed by glides (index value of 4), liquids (index value of 3), nasals (index value of 2), and 
+obstruents (index value of 1). While t his ordering system is widely accepted, the hierarchical 
+assignment of the following more specific groups of sounds remains controversial due to language-
+specific sonority effects: (1) /h/ and /ʔ/, (2) voiceless fricatives vs. voiced stops, and (3) affricates 
+(Parker 2002). Clements (1990) generalizes these sounds within the obst ruent category, however, 
+different languages will treat these sounds variably relative to sonority requireme nts. Languages 
+are variable in their tolerance of sonority hierarchy violations. For many languages, schwa 
+epenthesis is a common solution to avoid such violations (Bader 1985). 
+Salish languages are known to strictly follow the sonority hierarchy. There is a phonological 
+opposition between resonants (including liquids, nasals, glides, /h/ and /ʔ/) and obstruents (stops, 
+affricates, and fricatives) , where resonants are closer to the syllabic nucleus than obstruents. 
+Violations of the sonority hierarchy generally lead to schwa epenthesis (Davis 2019). 
+1.3 Salish /ə/ distribution 
+Schwa in Salish languages is often described as only appearing in surface representations as a result 
+of some phonetic or phonological process of vowel reduction or insertion. See , in particular , 
+Kinkade (1993, 1998) who proposed tha t every /ə/ in Salish is absent from underlying 
+representations.  
+According to Levin (1987), cross -linguistically there are two types of /ə/ that occur due to 
+insertion: excrescent and epenthetic /ə/. Excrescent /ə/ is described as a sound that may optionally 
+be inserted within certain consonant clusters solely for the purpose of easing articulatory or 
+perceptual transitions between sounds and does not carry stress nor affect syllabification (see 
+Bagemihl 1991; Dyck 2004; Leonard 2007; and Rowicka 2002 for work on excrescent schwa in 
+Salish). Crucially, excrescent /ə/ is often highly variable in phonetic quality (Gick & Wilson 2006). 
+In contrast, epenthetic /ə/ is non-optional and is inserted by a phonological rule. Unlike excrescent 
+/ə/, epenthetic /ə/ interacts with the prosodic rules of the language. Thus, it is important to exclude 
+excrescent /ə/ in the current analysis.  
+ 
+ 
+ 
+ 
+136 
+To identify epenthetic /ə/, I surveyed previous literature regarding epenthetic /ə/ distribution in 
+Salish languages. Most descriptions analyze epenthetic /ə/ as occurring to prevent illicit consonant 
+clusters and to carry stress when no full vowel is present (Parker 2011). For Salish languages, 
+phonological rules will often insert /ə/ for the purposes of stress assignment or syllabification (see 
+Bianco 1994; Blake 2000; Czaykowska-Higgins & Willett 1997; Matthewson 1994a, 1994b; Shaw 
+2002). Several other studies on Salish languages also discuss the occurrence of epenthetic /ə/ as a 
+means to prevent illicit consonant clusters, most prom inently with onset consonant clusters 
+(Nakamura 2000). Epenthetic /ə/ in Salish languages is described as occurring most often in illicit 
+consonant clusters that are in the first syllable; these consonant clusters often fall in the following 
+sound categories: obstruent-obstruent (OO), resonant-resonant (RR), resonant-obstruent (RO), or 
+obstruent-resonant (OR) clusters (Dyck 2004; Flemming et al. 2008 Leonard 2007; Shaw et al. 
+1999; Shaw 2002 ; Shaw 2004; Urbanczyk  2001). For Bella Coola (Nuxalk), Bagemihl (1991 ) 
+argues for the occurrence of excrescent /ə/ only and no epenthetic /ə/. Epenthetic /ə/ is not needed 
+to break apart consonant clusters because, under Bagemihl’s analysis, all unsyllabified consonants 
+in Bella Coola are moraic. For a vowelless word with t wo obstruents and a fricative (e.g. , t’xt 
+‘stone’), Bagemihl (1991) argues for two possible analyses which do not require /ə/ insertion: (1) 
+no syllabification, or (2) one syllable per obstruent. Mellesmoen (2021) argues for a third analysis, 
+where the fri cative will be nuclear and stops will be parsed as onset and coda. This solution is 
+permitted only when there is not a better option nearby to fill the nucleus. Crucially these analyses 
+provide an analysis alternative to epenthetic /ə/. 
+Based on this analysis, I present several examples of words with incidence of schwa epenthesis 
+in Secwepemctsín (see Table 1). 
+Table 1: Schwa epenthesis 
+Lexical item IPA transcription Gloss 
+qmút 
+xlécw 
+s7í7llcw 
+kwellk̓ múse7 
+cméye 
+tmúsmes 
+/qəmut/ 
+/xəlæxw/ 
+/səʔiʔɬxʷ/ 
+/kweɬk’əmusəʔ/ 
+/xəmejə/ 
+/təmusməs/ 
+‘hat’ 
+‘tooth’ 
+‘some of them’ 
+‘cheek’ 
+‘house fly’ 
+‘four (people)’ 
+1.4 /ə/ variability and acoustic susceptibility  
+In an investigation on Lekwungen vowel variability it was found that of the vowels, /ə/ was  the 
+most persistently affected by its surrounding environment (Nolan 2017). It was determi ned that 
+uvular and glottal consonants had the most persistent effects on F1, F2, and F3 of all vowels, most 
+notably /ə/ (Nolan 2017). Likewise, an analysis o f ʔayʔaǰuθəm (Mellesmoen & Huijsmans 2019) 
+demonstrates that /ə/ had significant overlap with phonemic vowels /a/, /i/, and /u/.  
+1.5 The current study  
+There are two goals for the current study: (1) conduct an acoustic analysis of Secwepemctsín 
+vowels, and (2) test Kuipers’ (1989) hypothesis regarding vowel reduction of stressed vowels by 
+comparing the acoustic similarity between unstressed vowels and epenthetic /ə/, as well as the 
+acoustic similarity between stressed vowels and unstressed vowels. This project has po tential 
+ 
+ 
+ 
+ 
+137 
+implications for the classroom context. A careful understanding of the relationship between the 
+orthography and sound system may facilitate L2 acquisition of pronunciation (Bassetti 2008).  
+2 Methods  
+2.1 Elicitation of word list   
+I began the study by c ompiling a list of words for comparison with the following vowels: /a/, /e/, 
+/i/, /o/, /u/, /á/, /é/, /í/, /ó/, /ú/; and /ə/. To properly compare these vowels, words that were elicited 
+were minimal pairs and near-minimal pairs, controlling for phonological environment. An example 
+of a minimal pair featured in this analysis is páq (‘get caught’ as in yiri7 es páq ‘the one who has 
+been caught’) and péq (‘white’); an example of a near minimal pair is túqweqwiqw (‘to gallop’) 
+and stíqtem (adj. ‘cloudy with still clouds’).  
+True minimal pairs are difficult to find in Secwepemctsín for several reasons. Secwepemctsín 
+is a polysynthetic language, and as such many lexical items are too morphologically complex to 
+find true minimal pairs (Rose & Blackmore 2018:587). Near-minimal pairs as well as reduplicated 
+words where the stressed and unstressed comparisons allow sounds to be compared to one another 
+in the absence of true minimal pairs. 
+2.2 Speakers  
+Data consisted of 13 hours of recordings, containing 136 words. Each word has 3 repetitions for a 
+total of n=904 vowel tokens. All speech data were recorded from two speakers; both speakers are 
+female, L1 speakers of the Western dialect of Secwepemctsín, and are bilingual speakers of 
+English. Neither report to have studied any other languages. Here are a few examples of minimal 
+pairs and near-minimal pairs to compare stressed and unstressed vowels. Many words have more 
+than one vowel which we were able to analyze. BD (born in Skeetchestn in 1942) was raised by 
+two mon olingual speakers of Secwepem ctsín. LJ (born in Skeetchestn in 1960) was raised by 
+bilingual speakers of Secwepemctsín and English. Due to COVID -19 restrictions, all elicitation 
+was remote and conducted via Zoom. 
+2.3 Annotation and acoustic measurement  
+Speech data were recorded through Zoom in a .m4a format, then converted to .wav, and then 
+converted from stereo to mono using Audacity (Audacity Team 2021). I then annotated the files at 
+word and grapheme level using Praat (Boersma & Weenink 2021). Epenthetic /ə/ was identified by 
+first predicting the likely environment which would elicit epenthetic /ə/ based on previous work. 
+Previous work identified this environment to be onset consonant clusters and syllables that have no 
+vowel present. After locating th ese environments, the presence or absence of /ə/ was identified 
+perceptually. Text grid and audio files were then separated into individual files at the word level , 
+cut by word , and then cut at the segmental level using the Extract Vowels tool via Fast Tra ck 
+(Barreda 2021), a Praat plugin. Then, using the Track Folder tool in Fast track, I extracted the 
+following types of acoustic information: mean formant values (F1 –F3), pitch, intensity, and 
+duration of each vowel token. Cross -linguistic investigations of vowel inventories often measure 
+vowel categories in terms of first and second formants (F1 and F2, in Hz) (e.g. , Becker-Kristal 
+2010) thus for this preliminary analysis, I used F1 and F2 primarily to measure and compare vowel 
+categories. 
+ 
+ 
+ 
+ 
+138 
+2.4 Statistical analysis  
+Given the small sample size, raw formant values were used, and analysis was separated by speaker. 
+R was used for statistical analysis to take the average measurements for F1 and F2 for each vowel 
+and to measure the differences between vowels. Vowels were measured at the midpoint of first and 
+second formants (F1 a nd F2, in Hz) , then a mean was calculated . A t-test was used to measure 
+significance in differences between average F1 and F2 values for vowels.  
+3 Results 
+In Figures 1 and 2, vowels are separated by stressed and unstressed forms, divided by speaker. Both 
+figures demonstrate significant overlap in stressed and unstressed forms and /ə/ is well scattered 
+acoustically. Tables 2 and 3 provide F1 and F2 averages for each vowel, divided by speaker.    
+ 
+   
+Figure 1: Full vowel system; Speaker = BD 
+ 
+    
+Figure 2: Full vowel system; Speaker = LJ 
+
+ 
+ 
+ 
+ 
+139 
+ 
+ 
+Table 2: BD; Vowel measurements — mean F1 & F2 (Hz) 
+Vowel F1 F2 
+a 692.0000 1465.000 
+á 738.2500 1091.000 
+e 562.6471 1629.000 
+é 656.2174 1575.365 
+i 479.0588 2298.588 
+í 466.4118 2220.020 
+o 557.0000 1133.000 
+ó 558.1111 1057.667 
+u 491.1304 1028.913 
+ú 482.3684 1090.421 
+ə 595.1250 1522.125 
+ 
+ 
+Table 3: LJ; Vowel measurements — mean F1 & F2 (Hz) 
+ 
+Vowel F1 F2 
+a 652.5000 1648.000 
+á 695.6667 1095.444 
+e 592.4295 1425.147 
+é 672.3457 1511.988 
+i 473.2500 2188.250 
+í 422.8780 2063.195 
+o 594.5000 1101.500 
+ó 522.0000 990.000 
+u 428.2500 1026.750 
+ú 415.5000 1209.325 
+ə 460.7308 1318.308 
+ 
+ 
+To obtain a closer look, I have created maps specific to unstressed and stressed counterparts of 
+the vowels  along with /ə/. Figures 3 and 4 depict unstressed and stressed variations of /a/. 
+Unfortunately, the count of /a/ tokens in the current analysis is very low and thus, at this time, there 
+is not sufficient data to draw meaningful conclusions for /a/. The sample size is too low to meet 
+requirements to run a t-test.     
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+140 
+ 
+Figure 3: BD; /a/, /á/, /ə/ 
+ 
+ 
+Figure 4: LJ; /a/, /á/, /ə/ 
+       
+Figures 5 and 6 depict unstressed and stressed versions of /e/, along with /ə/. Although there is 
+overlap in all three categories (/ə/, /e/, and /é/), it appears that /é/ has a significantly higher F1 than 
+/e/. Regarding F1, /ə/  does not seem significantly different from /e/, however in terms of F2 /ə/ 
+appears significantly different from /e/, with a rightward bias. A t-test was run to confirm whether 
+/e/, /é/, and /ə/ are significantly different. The t-test results are shown in Table 4 and 5. For BD, a 
+t-test comparing /é/ and /e/, as well as /e/ and /ə/ demonstrates the following outcomes: (1) /é/ and 
+/e/ are significantly different in F1, with /é/ being significantly higher in F1 than /e/; and (2) /e/ and 
+/ə/ are significantly different in F2, with /ə/ being significantly lower in F2 than /e/. For LJ, a t-test 
+comparing /é/ and /e/, as well as /e/ and /ə/ demonstrates the following outcome: (1) /é/ and /e/ are 
+significantly different in F1 and  F2 values, with / é/ being significantly higher in both F1 and F2 
+
+ 
+ 
+ 
+ 
+141 
+than /e/; (2) /e/ and /ə/ are significantly different in F1, with /ə/ being significantly lower in F1 than 
+/e/. Values that did not reach significance do demonstrate slight differences. Overall, these data do 
+not support the claim that /ə/ and /e/ are acoustically identical, and may instead support the claim 
+that /ə/, /é/, and /e/ are acoustically distinct.  
+ 
+ 
+ 
+Figure 5: BD; /e/, /é/, /ə/ 
+ 
+ 
+Figure 6: LJ; /e/, /é/, /ə/ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+142 
+Table 4: Pairwise comparisons of stressed and unstressed counterparts within /e/ and /ə/ for both F1 and 
+F2. Shaded contrast reaches significance at p<0.05. Speaker: BD 
+Contrast Dim. df t-ratio p-value cohensD 
+effect size 
+Outcome 
+stressed_e 
+unstressed_e 
+F1 261.51 7.9763 4.73e-14 0.8558999 /é/ and /e/ are 
+significantly different 
+in F1, with /é/ being 
+significantly higher in 
+F1 than /e/.   F2 260.11 -1.4958 0.1359  
+unstressed_e  
+/ə/ 
+F1 37.153 -1.2898  0.2051  /e/ and /ə/ are 
+significantly different 
+in F2, with /ə/ being 
+significantly lower in 
+F2 than /e/.  
+F2 51.017 2.2386 0.02957 0.3160494 
+ 
+Table 5: Pairwise comparisons of stressed and unstressed counterparts within /e/ and /ə/ for both F1 and 
+F2. Shaded contrast reaches significance at p<0.05. Speaker: LJ 
+Contrast Dim. df t-ratio p-value cohensD 
+effect size 
+Outcome 
+stressed_e 
+unstressed_e 
+F1 169.65  4.4875 1.325e-05 0.3050838 /é/ and /e/ are 
+significantly different 
+in F1 and F2 values, 
+with /é/ being 
+significantly higher in 
+both F1 and F2 than 
+/e/.   
+F2 185.25 2.3386 0.02042 0.3050838 
+unstressed_e  
+/ə/ 
+F1 41.892 5.907 5.453e-07 1.011649 /e/ and /ə/ are 
+significantly different 
+in F1, with /ə/ being 
+significantly lower in 
+F1 than /e/.  
+F2 33.226 1.6384 0.1108  
+ 
+Figures 7 and 8 depict unstressed and stressed variations of /i/, along with /ə/. In both speakers’ 
+plots, there is no evidence to support the claim that /i/ and / í/ are acoustically distinct. Regarding 
+/i/ and /ə/ for BD, it appears that /ə/ is distinct from /i/. With LJ’s plot this is less clear as there are 
+very few /i/ tokens from which we may draw meanin gful conclusions. After running a t-test, it 
+appears that (i) /i/ and /ə/ are significantly different in F1 and F2 values, with /i/ being significantly 
+lower in F1 and /i / being signi ficantly higher in F2 than /ə/ and (ii) /i/ and /ə/ are significantly 
+different in F2, with /i/ being significantly higher in F2 than /ə/. See Tables 6 and 7 for specific t-
+ 
+ 
+ 
+ 
+143 
+test results. Much like with results from /e/, results from /i/ do not  support Kuipers’ claim that 
+unstressed /i/ will surface as acoustically identical to /ə/. In fact, in the case of /i/ there is more data 
+to support the claim that unstressed /i/ and stressed /i/ are acoustically the same, while /i/ and /ə/ 
+are distinct.  
+ 
+ 
+Figure 7: BD; /i/, /í/, /ə/ 
+ 
+ 
+Figure 8: LJ; /i/, /í/, /ə/ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+144 
+ 
+Table 6: Pairwise comparisons of stressed and unstressed counterparts within /i / and /ə/ for both F1 and F2. 
+Shaded contrast reaches significance at p<0.05. Speaker: BD 
+ 
+Contrast Dim. df t-ratio p-value cohensD 
+effect size 
+Outcome 
+stressed_i 
+unstressed_i 
+F1 21.475 -0.31399 0.7566   
+F2 46.561 -0.84213 0.404  
+unstressed_i  
+/ə/ 
+F1 29.424 -2.6129 0.014 0.8148809 /i/ and /ə/ are 
+significantly 
+different in F1 and 
+F2 values, with /i/ 
+being significantly 
+lower in F1 and /i/ 
+being significantly 
+higher in F2 than /ə/ 
+F2 28.691 9.7922 1.185e-10 3.08234 
+ 
+Table 7: Pairwise comparisons of stressed and unstressed counterparts within /i/ and /ə/ for both F1 and F2. 
+Shaded contrast reaches significance at p<0.05. Speaker: LJ 
+Contrast Dim. df t-ratio p-value cohensD 
+effect size 
+Outcome 
+stressed_i 
+unstressed_i 
+F1 4.0738 -1.0259 0.3619   
+F2 4.3773 -0.95784 0.388  
+unstressed_i  
+/ə/ 
+F1 4.1917 0.25304 0.8122  /i/ and /ə/ are 
+significantly 
+different in F2, with 
+/i/ being significantly 
+higher in F2 than /ə/ 
+F2 4.734 6.5261 0.001552 2.875949 
+ 
+As with /a/, /o/ does not have enough unstressed /o/ tokens to draw meaningful conclusions. Figures 
+9 and 10 depict the variation between /o/, /ó/ and /ə/ for both speakers, however, no t-test was run 
+as the number of unstressed /o/ tokens does not meet the requirements to run a t-test. 
+ 
+ 
+ 
+ 
+ 
+145 
+   
+Figure 9: BD; /o/, /ó/, /ə/ 
+    
+    
+Figure 10: LJ; /o/, /ó/, /ə/ 
+ 
+Lastly, for /u/, /ú/, and /ə/, it appears that with BD, /u/ and /ə/ are significantly different, whereas 
+/u/ and /ú/ are not considered significantly different. A t-test provides support for the claim that /ú/ 
+and /u/ are not significantly different while /u/ and /ə/ are significantly distinct. This relationship is 
+less clear with LJ, where pairwise comparisons between / ú/ and /u/, and /u/ and /ə/ are both 
+significantly distinct only along the F2 axis but not in terms of F1. Figures of acoustic plots for 
+speakers BD and LJ appear in Figures 11 and 12, respectively. T-test results are provided in Tables 
+7 and 8, respectively.  
+
+ 
+ 
+ 
+ 
+146 
+ 
+Figure 11: BD; /u/, /ú/, /ə/ 
+ 
+ 
+Figure 12: LJ; /u/, /ú/, /ə/ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+147 
+Table 8: Pairwise comparisons of stressed and unstressed counterparts within /u/ and /ə/ for both F1 and 
+F2. Shaded contrast reaches significance at p<0.05. Speaker: BD 
+Contrast Dim. df t-ratio p-value cohensD 
+effect size  
+Outcome 
+stressed_u 
+unstressed_u 
+F1 54.137 -0.435 0.6653   
+F2 37.482 1.2122 0.233  
+unstressed_u 
+/ə/ 
+F1 48.571 -3.7024 0.0005455 0.9177484 /u/ and /ə/ are 
+significantly 
+different in F1 and 
+F2 values, with /u/ 
+being significantly 
+lower in F1 and /u/ 
+being significantly 
+lower in F2 than /ə/ 
+F2 50.761 -8.1409 9.05e-11 2.178726 
+ 
+ 
+Table 9: Pairwise comparisons of stressed and unstressed counterparts within /u/ and /ə/ for both F1 and 
+F2. Shaded contrast reaches significance at p<0.05. Speaker: LJ 
+Contrast Dim. df t-ratio p-value cohensD 
+effect size  
+Outcome 
+stressed_u 
+unstressed_u 
+F1 13.833 -0.52411 0.6085  /ú/ and /u/ are 
+significantly 
+different in regards 
+to F2 where / ú/ is 
+significantly higher 
+than /u/.  
+F2 28.254 2.5556 0.01626 0.670271 
+unstressed_u 
+/ə/ 
+F1 26.564 -1.078 0.2907  /u/ and / ə/ are 
+significantly 
+different in F2 
+where /u/ is 
+significantly lower 
+in F2 than /ə/.  
+F2 32.892 -3.5729 0.001114 1.048063 
+ 
+ 
+ 
+ 
+ 
+148 
+4 Additional findings: A syllabic consonant can take the place of /ə/ 
+The inserted /ə/ is expected to occur when there are no full vowels present to break apart consonant 
+clusters. However, the data reveal this is not always the case and  is optional, dependent on the 
+speaker.  
+Rather than a /ə/, a syllabic consonant is produced in several instances. For example, the word 
+m7éll (‘to feel better’) is predicted to insert a /ə/ due to the onset complex consonant cluster, 
+however, /ə/ was only inserted 5 0% of the time. The other 50% of the time, the word was 
+pronounced with a syllabic /m/. Syllabic consonant occurred i n three onset environments in this 
+dataset: (1) #mʔ, (2) #n_ʔ, and (3) #l_ʔ. This alternative pronunciation occurred only by speaker 
+LJ, and never by BD. Speaker BD inserted a /ə/ in such environments 100% of the time, while LJ 
+produced a syllabic consonant 100% of the time. Table 9 describes four examples of this pattern.  
+ 
+Table 10: A syllabic consonant can take the place of /ə/ 
+Word /ə/ insertion BD count 
+of /ə/ 
+insertion 
+LJ 
+count of /ə/ 
+insertion 
+Syllabic 
+consonant 
+BD count of 
+syllabic 
+consonant 
+LJ count of 
+syllabic 
+consonant 
+m7éll  Mə7éll  3/3 tokens 0/3 tokens M̩7éll  0/3 tokens 3/3 tokens 
+m7íxw   Mə7íxw   3/3 tokens 0/3 tokens M̩7íxw  0/3 tokens 3/3 tokens 
+n7éq   Nə7éq   3/3 tokens 0/3 tokens N̩7éq  0/3 tokens 3/3 tokens 
+l7ép̓    Lə7ép̓    3/3 tokens 0/3 tokens L̩7ép̓   0/3 tokens 3/3 tokens 
+ 
+5 Discussion  
+Referring back to Kuipers’ (1989) claim regarding vowel reduction in unstressed positions, acoustic 
+results provide a more complex picture. For /e/, results demonstrate that /é/ and /e/ are significantly 
+different in F1 and F2 values, with / é/ being significantly higher in both F1 and F2 than /e/. T his 
+offers support for the claim for partial vowel reduction. However, these data do not support the 
+claim that stressed vowels fully reduce to /ə/. I base this claim on statistical evidence which 
+demonstrates that /e/ and / ə/ are acoustically distinct, wh ereby /ə/ is lower in F1 and F2 than /e/. 
+For /i/, results indicate no significant difference between /i/ and / í/. Instead, /ə/ and /i/ are 
+significantly different from one another. It is unclear if there is support for the  claim of partial 
+vowel reduction due to variable proximity between /i/ and /ə/. For /u/, productions of /u/ and /ə/ are 
+significantly different in F1 and F2 values, whereas unstressed and stressed counterparts of u are 
+not significantly different from one  another. It is also unclear if there is support for the claim of 
+partial vowel reduction due to variable proximity between /u/ and /ə/. Based on this preliminary 
+analysis, I propose that only unstressed /e/ will partially reduce toward /ə/, whereas unstre ssed /i/ 
+and /u/ do not exhibit signs of vowel reduction toward /ə/. This analysis does not support the claim 
+of full vowel reduction to /ə/ for any vowels.  
+Further evidence is required to make strong conclusions regarding partial vowel reduction, 
+particularly in vowels /a/ and /o/, but  also in /i/ and /u/ because these counts are relatively low in 
+ 
+ 
+ 
+ 
+149 
+number compared to the sample population of /e/. Future steps to improve this analysis also lies in 
+a more thorough investigation of Secwepemc tsín phonology, primarily for the purposes of 
+identifying epenthetic /ə/. Finding some alternation between whether an illicit consonant cluster is 
+resolved either via epenthetic /ə/ or syllabic consonant may suggest that the inserted /ə/ is 
+phonologically optional and perhaps phonetically variable. In ree valuating which consonant 
+clusters are illicit and thus require epenthetic /ə/ in Secwepemctsín, this may lead to more accurate 
+identification of epenthetic /ə/ and thus a more precise acoustic description of /ə/ for which other 
+vowels can be compared.  
+Furthermore, evidence in ʔayʔaǰuθəm indicate that /ə/ had greatest susceptibility to 
+conditioning effects as a result of its phonological environment (Mellesmoen & Huijsmans 2019). 
+Narrowing the analysis to i nclude only specific phonological environments wil l provide further 
+insight as to understand the acoustic variability of /ə/ in Secwepemctsín. Focusing on phonological 
+environment rather than on minimal pairs is reiterated in Mellesmoen and Cardoso (2021). 
+Investigating the role that vowel stress may have  on vowel reduction links directly to better 
+understanding the pronunciation of vowels in Secwepemctsín (i.e., whether stressed vowels 
+compared to unstressed vowels are only different prosodically or whethe r full or partial vowel 
+reduction occurs and therefore acoustically distinguishes stressed and unstressed vowels).  
+6 Conclusion  
+This paper set out to present an acoustic description of the vowel system of Secwepemctsín. Mean 
+formant values separated per speaker are summarized in this paper. This paper also was interested 
+in testing Kuipers’ (1989) claim of vowel reduction in unstressed position. This analysis suggests 
+that only stressed /e/ will reduce partially when unstressed, whereas for other vowels, including /i/ 
+and /u/, stressed and unstressed forms appear statistically indistinguishable. This acoustic analysis 
+overall does not find evidence to support the claim that vowel reduction to /ə/ occurs in unstressed 
+position in Secwepemctsín.  
+References  
+Audacity Team . 2021. Audacity (R): Free Audio Edito r and Recorder [Computer application].  
+Version 3.0.0 retrieved March 17, 2021 from https://audacityteam.org.  
+Bader, Yousef. 1985. Schwa in Berber: a non-linear analysis. Lingua 67:225–249.  
+Bagemihl, Bruce. 1991. Syllable structure in Bella Coola. Linguistic Inquiry 22(4):589–646. 
+Barreda, Santiago. 2021. Fast Track: fast (nearly) automatic formant -tracking using Praat.  
+Linguistics Vanguard 7(1). 
+Bassetti, Benedetta. 2008. Orthographic input and second language phonology. In: Thorsten Piske 
+and Martha Young-Scholten (eds.), Input Matters in SLA. Clevedon, UK: Multilingual Matters, 
+191–206. 
+Becker-Kristal, Roy. 2010. Acoustic typology of vowel inventory and dispersion theory : Insights 
+from a large cross -linguistic corpus. Doctoral dissertation. The Univ ersity of California Los 
+Angeles (UCLA). 
+Bianco, Violet. M. 1994 . The role of sonority in the prosody of Cowichan.  Master’s Thesis. 
+University of Victoria, Victoria. 
+ 
+ 
+ 
+ 
+150 
+Blake, S usan Jane . 200 0. On the distribution and representation of schwa in Sliammon (Sa lish): 
+Descriptive and Theoretical perspectives. Doctoral Dissertation. The University of British Columbia.  
+Boersma, Paul. & Weenink, David. 2021. Praat: doing phonetics by c omputer [Computer program].  
+Version 6.1.42 retrieved April 15 2021 from http://www.praat.org. 
+Clements, G. N. 1990. The role of the sonority cycle in core syllabification.  In: John Kingston & Mary 
+E. Beckman (eds.), Papers in Laboratory Phonology I: Between the grammar and the physics of 
+speech. Cambridge, UK: Cambridge University Press, 283–333. 
+Czaykowska-Higgins, Ewa. & Willet, Marie Louise . 1997. Simple syllables in Nxa ʔamxcin. 
+International Journal of American Linguistics 63(3):385–411. 
+Davis, H enry. 2019. Salish Languages.  In: Daniel Siddiqi, Michael Barrie, Carrie Gillon, Jaso n D. 
+Haugen, Éric Mathieu (eds.), The Routledge Handbook of North American Languages . New York, 
+USA: Routledge, 452–472. 
+Dyck, Ruth Anne . 2004. Prosodic and morphological factors in Squamish (Skwxwú7mesh) stress 
+assignment. Doctoral dissertation. The University of Victoria, Victoria. 
+Flemming, Edward. 2009. The Phonetics of Schwa Vowels.  In: Donka Minkova (ed.), Phonological 
+weakness in English: From old to p resent-day English. Basingstoke, UK: Palgrave Macmillan, 78–
+98. 
+Flemming, Edward., & Johnson , Stephanie. 2007. Rosa’s roses: reduced vowels in American English. 
+Journal of the International Phonetic Association 37:83–96. 
+FPCC. 2018. Report on the Status of B.C. First Nations Languages . Retrieved March 17 , 2021 from 
+http://www.fpcc.ca 
+Gick, Bryan., & Wilson. Ian. 2006. Excrescent schwa and vowel laxing: Cross -linguistic responses to 
+conflicting articulatory targets. Laboratory phonology 8:635–659.  
+Harris, James. W. 1983. Syllable structure and stress in Spanish: a nonlinear analysis. Cambridge, USA: 
+MIT Press, 238–247. 
+Kinkade, M.  Dale. 1993. The chimerical schwas of Salish.  Paper read at 92 Annual Meeting of the 
+American Anthropological Association/ 32nd Conference on American Indian Languages, 
+Washington, D.C., November 21, 1993. 
+Kinkade, M. Dale. 1998. How much does a schwa weigh?  In Ewa Czaykowska-Higgins,  & M. Dale 
+Kinkade (Eds.), Salish languages and linguistics: theoretical and descriptive perspectives . New 
+York, USA: Mouton de Gruyter, 197–216. 
+Kuipers, Aert H. 1974. The Shuswap Language: Grammar, Text, Dictionary. The Hague, Netherlands: 
+Mouton. 
+Kuipers, Aert H. 1989. A Report on Shuswap with a Squamish Lexical Appendix. LSA2 (Societe d'Etudes 
+Linguistiques et Anthropologiques de France). Paris, France: Peeters/Selaf, 220. 
+Ladefoged, Peter. & Johnson, Keith. 2015. A Course in Phonetics . [7th ed.]. Stamford, USA: Cengage 
+Learning. 
+Leonard, Janet. 2007. A preliminary analysis of stress in SENĆOŦEN (Saanich/North Straits Salish).  
+Northwest Journal of Linguistics 1(4):1–59. 
+ 
+ 
+ 
+ 
+151 
+Levin, Juliette. 1987. Between epenthetic and excrescent vowels (or what happens after redundancy 
+rules). In: Megan Crowhurst (e.d.) sWCCFL The Proceedings of the Sixth West Coast Conference 
+on Formal Linguistics 6: 187–201. 
+Matthewson, Lisa. 1994a. Syllable structure in  St’at’imcets. In: Koskinen, P. (ed.), Toronto Working 
+Papers in Linguistics: Proceedings of the Canadian Linguistics Association . Toronto, Canada: 
+Department of Linguistics University of Toronto. 
+Matthewson, L isa. 1994b. Optimality and syllable structure  in St’at’imcets . UBC Generals paper. 
+Vancouver, Canada: Department of Linguistics University of British Columbia. 
+Mellesmoen, Gloria., & Cardoso, Amanda. 2021. Investigating Phonemic Inventories without Minimal 
+Pairs: Defining Contrast in the Vowel Inven tory of Comox-Sliammon (ʔayʔaǰuθəm). Paper read at 
+12th International Conference of Nordic and General Linguistics (ICNGL), Oslo, Norway, June 16, 
+2021. 
+Mellesmoen, G loria., & Huijsmans , Marianne. 2019. The relationship between pronunciation and 
+orthography: Using acoustic analysis as a practical illustration of ʔayʔaǰuθəm (Comox-Sliammon) 
+vowel quality. In: Sasha Calhoun, Paola Escudero, Marija Tabain and Paul Warren  (eds.), 
+Proceedings of the 19th International Congress of Phonetic Sciences. Melbourne, Australia: ICPhS, 
+979–983 
+Mellesmoen, Gloria. 2021. Words without Vowels, Reduplication, and Syllable Structure in Bella Coola 
+(Nuxalk) [abstract].  Paper read at  28th Manchester Phonology Meeting (mfm28) . Manchester, 
+England, May 2021. 
+Nakamura, Yumiko. 2000. Secwepemctsín (shuswap) reduplication. Papers for ICSNL 35:171–184. 
+Nolan, Tess. 2017. A Phonetic Investigation of Vowel Variation in Lekwungen.  Master’s Thesis. The 
+University of Victoria.  
+Parker, Stephen G Parker . 2002. Quantifying the Sonority Hi erarchy. Doctoral Dissertation. The 
+University of Massachusetts, Amherst. 
+Parker, Aliana. 2011. It’s that schwa again! Towards a typology of Salish schwa. Working Papers of the 
+Linguistics Circle of the University of Victoria 21, 9–21 
+Pike, Kenneth L. 1943. Phonetics: a critical analysis of phonetic theory and a technic for the practical 
+description of sounds. Ann Arbor, USA: The University of Michigan Press. 
+Rose, Yvan., & Blackmore, Sarah. 2018. Questioning the role of lexical contrastiveness in phonological 
+development: Converging evidence from perception and production studies . Canadian Journal of 
+Linguistics (Revue canadienne de linguistique) 63(4):580–608.  
+Rowicka, Grażyna J.  2002. Lateral deletion and more or less excrescent schwa in Upper Chehal is. 
+Linguistics in the Netherlands, 139–149. 
+Selkirk, Elisabeth. 1984. On the major class features and syllable theory. In: Mark Aronoff and Richard 
+T. Oehrle, (eds.) Language sound structure: studies in phonology . Cambridge, Massachusetts: The 
+MIT Press, 107–136.  
+Shaw, Patricia. A. 2002. On the edge: obstruent clusters in Salish. Proceedings of WSCLA 7:119–136. 
+ 
+ 
+ 
+ 
+152 
+Shaw, Patricia. A. 2004. Reduplicant order and identity: Never trust a Salish CVC either ? In Donna 
+Gerdts & L isa Matthewson ( eds.), Studies in Salish linguistics in honor of M. Dale Kinkade . 
+University of Montana Occasional Papers in Linguistics 17. Missoula, USA: University of Montana. 
+Shaw, Patricia A., Blake, Susan, Campbell, Jill,  & Shepherd, Cody . 1999. Stress in h ənqəminəm 
+(Musqueam) Salish. Proceedings of WSCLA 4:131–163. 
+Sievers, Eduard. 1881. Grundzüge der Phonetik, zur Einführung in das Studium der Lautlehre der 
+indogermanischen Sprachen. Leipzig: Breitkopf & Hartel. 203–206 
+Urbanczyk, Suzanne. 2001. Patterns of reduplication in Lushootseed. London, UK: Garland Pub. 
+Appendix 
+Table A1: Full word list 
+ 
+Lexical item Gloss 
+7newí7 2SG 
+ápels ‘apple’ 
+ckelltsínten ‘key’ 
+ck̓ em̓ ímen ‘jail’ 
+ckemtsenéllcw ‘door’ 
+ck̓ lúcw ‘terminally ill’ 
+ck̓ úl̓ten ‘culture, heritage’ 
+ck̓ úlusem ‘building a road/bridge’ 
+ckúpcen̓  ‘socks’ 
+ckupwíl̓ epten ‘sled’ 
+ckwtústen ‘eye’ 
+cmegmgétkwe ‘warm water’ 
+cmegmín ‘kettle’ 
+cméye ‘housefly’ 
+cpespesíselt ‘kittens’ 
+ct̓eqw7mín̓ tn ‘sewing machine’ 
+ctsemts̓ m̓ éqs ‘sharp’ 
+cú7tsem ‘again, repeat’ 
+cwecuwéll ‘small road’ 
+cwecwéll ‘road’ 
+cwetcwét̓t ‘clean’ 
+estsék̓  ‘squirrel’ 
+geyú7 ‘carrot’ 
+gwesgwést ‘sunny’ 
+gyepuwíken ‘I am angry’ 
+íxw ‘sweeping movement’ 
+íxwle7p ‘broom’ 
+kélc ‘hand’ 
+kelúcwkelcw ‘to gallop’ 
+képkept ‘painful’ 
+Lexical item Gloss 
+ketkét̕t ‘dirty’ 
+kóso ‘pig’ 
+kwellk̓ múse7 ‘cheek’ 
+kw̓ elltiyénecum ‘year’ 
+l7ép̓  ‘bent down’ 
+le7 xéyem te sítqt ‘happy new year’ 
+legém ‘to drag’ 
+legmín ‘to drag something’ 
+legmíns ‘to haul’ 
+lesél ‘salt’ 
+llekllekwékw ‘to gallop’ 
+m7éll ‘to feel better’ 
+m7éy ‘coming close by’ 
+m7íxw ‘melted’ 
+mé7e ‘yes’ 
+mekwmékw ‘dull’ 
+memélt ‘brown (non-living 
+things)’ 
+menmén ‘shadow’ 
+mesékst te snewt ‘four winds’ 
+m-kítscwes 
+ntsítstcw 
+‘she has arrived’ 
+m-
+pegwpégwtsnemes 
+‘she knocked’ 
+múyem ‘to bend’ 
+n7éq ‘rotten’ 
+necíkwem ‘to stir, for liquids’ 
+nehé7en ‘where’ 
+nen sténes ‘here’ 
+ 
+ 
+ 
+ 
+153 
+Lexical item Gloss 
+net.sellpéte ‘peanut butter’ 
+newí7s 3SG 
+nkékelc ‘my hand’  
+ntsétswe7 1 SG  
+núnxwenxw ‘girl’ 
+pálpelt ‘stubborn’  
+páq ‘to get caught’ 
+penhé7en ‘when’  
+pep̓ e7súsle7cw ‘earthworm’  
+pepép̓ xe7t ‘thin’ 
+péq ‘white’ 
+peqpéq  ‘flour’ 
+petetét ‘to boil, for liquids’ 
+qeq̓ iméke7 ‘pencil’ 
+qéwten ‘hair’ 
+qmúmet ‘little hat’ 
+qmús  ‘sucker (fish)’ 
+qmút  ‘hat’ 
+qú7 ‘belly button’ 
+qw7ép ‘sack’ 
+qweqú7ll ‘bone’ 
+qweqwéq̓ wme7t  ‘short, as in a person’ 
+qwetqwétn ‘soft’ 
+qwetspétsets ‘start’ 
+ri7élye ‘this’ 
+s7í7llcw ‘some of them’ 
+scwicwéye  ‘ant’ 
+secwepemctsín  ‘secwepemctsín’  
+sér ‘dragon fly’ 
+sesísle7 ‘a few’ 
+sespéy ‘skin’ 
+sets.séts.s ‘a whispering person’ 
+séts̓ em ‘to whisper’ 
+sítsem  ‘blanket’ 
+speqpéq ‘berries’ 
+splútsen ‘mouth’ 
+spséqs ‘nose’ 
+sqéxe ‘dog’ 
+Lexical item Gloss 
+sqwéxt ‘foot’ 
+stémi7 ‘what’ 
+stíqtem  ‘cloudy; with still clouds’ 
+stukstúks ‘quiet’ 
+swéti7 ‘who’ 
+tá7k pell  ‘no!’ 
+tektémtemt ‘cloudy’ 
+t̕éne ‘ear’ 
+tenép ‘turnip’ 
+stíqtem ‘cloudy; with still clouds’ 
+stukstúks  ‘quiet’ 
+swéti7 ‘who’ 
+tá7k pell 
+tektémtemt 
+‘no!’ 
+‘cloudy’ 
+teqtséqw  ‘red-brown, for animals’ 
+texwtúxwt  ‘straight’  
+tíg̓ wke ‘bell’ 
+tmícw ‘weather’ 
+tmum̓ t ‘to sit at the table’ 
+tmúsmes  ‘four (people)’ 
+tmút ‘to sit or perch’ 
+ts7ól ‘has stretched’ 
+tscwinúcwkn  ‘good morning’ 
+tséltsel  ‘cricket’ 
+tśkénem  
+tskwlóts 
+‘how’ 
+‘crooked’ 
+tsólens  ‘she stretched it’ 
+túqweqwiqw  ‘to gallop’ 
+welánk  ‘belly’ 
+wellenwí7emp 2PL 
+wellenwí7kt 1PL 
+wellenwi7s 3PL 
+witsín ‘loud’ 
+wítśke7 ‘wedge’ 
+wupupépel̓ cken ‘caterpillar’ 
+xe7tsép ‘vegetables’ 
+xexé7 ‘smart’ 
+xexetsín  ‘loud (voice)’ 
+ 
+ 

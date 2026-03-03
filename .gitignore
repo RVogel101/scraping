@@ -5,19 +5,51 @@ __pycache__/
 .eggs/
 dist/
 build/
-*.phase2_checkpoint
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
 
 # SQLite databases (generated at runtime; not committed to the repo)
 *.db
 *.db-shm
 *.db-wal
 
-# Data files
-*.csv
-*.pkl
-*.pickle
-*.json
-*Armenian (Western).txt
+# Data files (generated, large, or sensitive)
+data/*.json
+data/*.csv
+data/*.pkl
+data/*.pickle
+data/*.txt
+data/*.gz
+data/anki_media/
+data/anki_export.json
+data/extracted_text_simple/
+data/_wa_source_extract/
+!data/.gitkeep
+
+# Data directory (08-data)
+08-data/*.json
+08-data/*.csv
+08-data/*.txt
+08-data/*.bak
+08-data/*.pkl
+08-data/*.pickle
+08-data/anki_media/
+08-data/extracted_text_simple/
+08-data/_wa_source_extract/
+!08-data/.gitkeep
+
+# Generated corpus data (IA downloads, newspaper scrapes, wiki dumps, etc.)
+02-src/wa_corpus/data/
+wa_corpus/
 
 # Images
 *.jpg
@@ -39,18 +71,54 @@ logs/
 
 # Jupyter
 .ipynb_checkpoints/
-
-# IDE / Editor
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Environment
-.env
-.venv/
-venv/
+notebooks/.ipynb_checkpoints/
 
 # OS
 Thumbs.db
 .DS_Store
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Environment
+.env
+
+
+# Development & debug scripts (temporary)
+07-tools/test_*.py
+07-tools/check_*.py
+07-tools/debug_*.py
+
+# Temporary scripts
+*.bat
+*.sh
+*.cmd
+
+# Temporary data exports
+*.bak
+*.tmp
+*.temp
+07-tools/example_*.py
+07-tools/analyze_*.py
+07-tools/generate_vocab_cards.py
+07-tools/quick_*.py
+07-tools/verify_*.py
+07-tools/match_*.py
+
+# Root-level analysis/test scripts
+analyze_*.py
+check_*.py
+match_*.py
+quick_*.py
+verify_*.py
+
+# Generated data/reports that are artifacts
+08-data/frequency_map_report.txt
+08-data/unmatched_*.txt
+08-data/unmatched_*.json
+08-data/test_vocab.csv
+08-data/vocab_ordered_custom.csv
+08-data/vocab_sample.csv

@@ -1,86 +1,154 @@
-# CWAS Facebook Image Scraping & OCR Pipeline
+# Lousardzag (Լուսարձակ)
 
-A pipeline for scraping images from the [Centre for Western Armenian Studies](https://www.facebook.com/) Facebook page, extracting Armenian and English text via OCR, and preparing the data for Anki flashcard generation.
+**Western Armenian Language Learning Platform**
+
+Lousardzag ("Light-spreading" or "Dawn-bringer") is a comprehensive platform for Western Armenian language learning, featuring morphological analysis, vocabulary progression, and intelligent flashcard generation.
 
 ## Overview
 
-The project has three main stages:
+Lousardzag combines computational linguistics with pedagogical progression to create an effective Western Armenian learning experience:
 
-1. **Scrape** — Download full-resolution images from the CWAS Facebook photos page using Selenium.
-2. **Extract** — Run Tesseract OCR on each image to extract Armenian and English text.
-3. **Explore** — Categorise and clean the extracted text in a Jupyter notebook for Anki import.
+- **Morphological Analysis** — Advanced noun declension, verb conjugation, and irregular verb handling
+- **Intelligent Progression** — Syllable-based difficulty progression with prerequisite tracking
+- **Corpus Building** — Automated scraping from newspapers, Internet Archive, and dictionaries
+- **Flashcard Generation** — Context-aware sentence generation with vocabulary dependency management
 
 ## Project Structure
 
-| File | Description |
-|---|---|
-| `scrape_fb_images.py` | Facebook image scraper (Selenium + Chrome). Scrolls the photo grid, visits each photo page, and downloads full-resolution images via parallel workers. |
-| `extract_image_text_simple.py` | Tesseract OCR extraction with multiple preprocessing variants, PSM modes, and Armenian-specific post-processing corrections. |
-| `main_coordinator.py` | Orchestrates the full pipeline — scraping → OCR extraction → CSV/pickle export. |
-| `exloration.ipynb` | Jupyter notebook for exploring, cleaning, and categorising extracted text (Etymology, Word Breakdown, Example, Declension, etc.). |
-| `logging_config.py` | Shared logging configuration with session-based log files. |
-| `test_ocr_setup.py` | Verifies Tesseract installation and language pack availability. |
-| `test_date_extraction.py` | Tests date extraction from Facebook photo pages. |
-
-### Directories
-
-| Directory | Contents |
-|---|---|
-| `FB-UK-CWAS-Content/` | Downloaded images (CWAS_{number}_{date}.jpg) |
-| `extracted_text_simple/` | OCR output (CSV, JSON, pickle) |
-| `logs/` | Session and debug log files |
+```
+lousardzag/
+├── 01-docs/          Documentation and references
+├── 02-src/           Source code
+│   ├── lousardzag/   Core learning platform (morphology, progression, card generation)
+│   └── wa_corpus/    Western Armenian corpus tools (scrapers, tokenization, frequency analysis)
+├── 03-cli/           Command-line interfaces
+├── 04-tests/         Test suite
+├── 05-config/        Configuration files
+├── 06-notebooks/     Jupyter notebooks for analysis
+├── 07-tools/         Utility scripts
+└── 08-data/          Data outputs (gitignored)
+```
 
 ## Requirements
 
 - **Python 3.10+**
-- **Google Chrome** + matching ChromeDriver
-- **Tesseract OCR** with Armenian (`hye`) and English (`eng`) language packs
-  - Windows: install from [UB-Mannheim/tesseract](https://github.com/UB-Mannheim/tesseract/wiki)
+- **Conda environment** (Python 3.12.3 recommended)
+- **Anki desktop** with AnkiConnect add-on (for Anki integration)
 
-### Python Dependencies
+### Installation
 
 ```bash
 pip install -r requirements.txt
-pip install -r requirements_ocr.txt
 ```
-
-Key packages: `selenium`, `pytesseract`, `opencv-python`, `pillow`, `pandas`, `psutil`
 
 ## Usage
 
-### 1. Scrape Images
+### Generate Vocabulary Lists
 
+**Generate N-standard proficiency vocabulary (N1-N7):**
 ```bash
-python scrape_fb_images.py
+python 07-tools/gen_vocab_simple.py --preset n-standard --max-words 140 --csv-output 08-data/vocab_n_standard.csv
 ```
 
-Launches Chrome, logs in to Facebook (uses an existing session cookie), scrolls through the CWAS photos page, and downloads full-resolution images to `FB-UK-CWAS-Content/`.
-
-### 2. Extract Text (OCR)
-
+**Generate custom vocabulary with proficiency blocks:**
 ```bash
-python extract_image_text_simple.py
+python 07-tools/gen_vocab_simple.py --preset l1-core --max-words 60 --proficiency-enabled
 ```
 
-Processes all images with Tesseract OCR using `eng+hye` language mode, multiple preprocessing variants (grayscale, denoised, binary, adaptive, morphological, contrast-enhanced, sharpened), and multiple PSM modes. Results are saved as CSV, JSON, and pickle.
+Options:
+- `--preset`: l1-core | l2-expand | l3-bridge | n-standard (default: n-standard)
+- `--max-words`: Maximum vocabulary size
+- `--csv-output`: Output CSV file path
+- `--proficiency-enabled`: Enable N1-N7 block assignment
 
-### 3. Explore & Categorise
-
-Open `exloration.ipynb` in Jupyter/VS Code and run the cells to:
-
-- Load and clean the extracted text (remove copyright notices, headers)
-- Categorise entries: Etymology, Word Breakdown, Phrasal Breakdown, Example, Declension, Conjugation, Conjunction, etc.
-- Split combined Declension-Example cards into separate rows
-
-### Full Pipeline
+### Generate Flashcards
 
 ```bash
-python main_coordinator.py
+python 07-tools/generate_ordered_cards.py --max-words 40 --english-mode strict
 ```
 
-Runs scraping and extraction end-to-end.
+Options:
+- `--max-words`: Number of cards to generate
+- `--english-mode`: strict | fallback | off (default: strict)
+- `--level1-nonverb-max-syllables`: Syllable limit for Level 1 non-verbs (default: 1)
+- `--level1-verb-max-syllables`: Syllable limit for Level 1 verbs (default: 2)
 
-## Card Categories
+### Build Western Armenian Corpus
+
+**Newspapers** (Asbarez, Aztag, Nor Gyank):
+```bash
+python -m wa_corpus.build_corpus --newspapers
+```
+
+**Internet Archive** (historical documents):
+```bash
+python -m wa_corpus.build_corpus --ia
+```
+
+**Nayiri Dictionary** (polite scraping):
+```bash
+python -m wa_corpus.nayiri_scraper --delay-min 3.0 --delay-max 6.0
+```
+
+### Development Server
+
+```bash
+python 03-cli/preview_server.py --pretty
+```
+
+Launches FastAPI server at http://127.0.0.1:8000 for flashcard preview with phonetic data.
+
+## Key Features
+
+### Western Armenian Phonetics
+- **IPA Transcription**: 38 phonemes with proper Western Armenian voicing (reversed letter-shape convention)
+- **Pronunciation Difficulty**: 1-5 scale for English speakers (guttural consonants highlighted)
+- **Diphthong Support**: ու (oo), իւ (yoo) with contextual vowel handling
+- **Integration**: Difficulty scores feed into vocabulary ordering
+- **Reference**: See `.github/copilot-instructions.md` for critical voicing rules
+
+### Vocabulary Ordering System
+- **5 Ordering Modes**: frequency, pos_frequency, band_pos_frequency, difficulty, difficulty_band
+- **3 Batch Strategies**: fixed size, growth (with step), banded by difficulty
+- **4 Presets**: l1-core (60), l2-expand (80), l3-bridge (100), n-standard (flexible with N1-N7 levels)
+- **Proficiency Blocks**: N1-N7 standards-style progression (like JLPT)
+- **Filtering**: Automatic removal of phrases/sentences (>4 words, questions, sentence starters)
+- **CSV + HTML Outputs**: Include IPA, English approximations, phonetic difficulty
+
+### Sentence Progression Framework
+- **Morphological Analysis**: Syllable count, verb conjugations, rare word tracking
+- **Progression Strategies**: Linear and adaptive (based on vocabulary difficulty)
+- **Prerequisite Tracking**: Ensures introduced vocabulary is already taught
+- **Difficulty Filtering**: Prevents grammatically complex sentences early in progression
+- **Comprehensive Tests**: Full test suite in `04-tests/test_sentence_progression.py`
+
+### Morphological Analysis
+- Noun declension (8 cases: nominative, accusative, genitive, dative, ablative, instrumental, locative)
+- Verb conjugation (15 tenses, 6 persons, irregular verb support)
+- Schwa epenthesis detection
+- Syllable counting with epenthesis support
+
+### Corpus Tools
+- Multi-source newspaper scraping with deduplication
+- Internet Archive catalog management and PDF text extraction
+- Western Armenian tokenization and frequency analysis
+- Corpus analysis utilities for vocabulary mapping and unmatched word reports
+
+## Testing
+
+```bash
+python -m pytest
+```
+
+Run full test suite including vocabulary ordering, sentence progression, phonetics, and morphological analysis.
+
+## Project Name
+
+**Lousardzag** (Լուսարձակ) — Western Armenian transliteration of "light-spreading" or "dawn-bringer", reflecting the project's mission to illuminate and spread Western Armenian language knowledge.
+
+## License
+
+MIT
 
 The CWAS "Word of the Day" images fall into these categories:
 

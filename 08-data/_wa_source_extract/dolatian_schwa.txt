@@ -1,0 +1,1988 @@
+Orthography to Phonology: Constraints
+on the Armenian schw a
+Hossep Dolatian
+Stony Brook University
+March 3, 2021
+1
+Table of Contents
+Introduction
+Orthography of schw as
+Distribution of inserted schw as
+Initial cluster
+Medial cluster
+Final cluster
+Morphological Deviations
+Cyclic deletion
+Insertion vs. deletion
+Parallel allomorphy
+Conclusion
+2
+Introduction
+● Title: Orthography to Phonology: Constraints on the Armenian schwa
+● Orthography: Look at rule of spelling-pronunciation in Armenian
+→ Schwa epenthesis
+● Phonology: tendencies in pronunciation follow phonological principles
+● These principles are:
+/uni25B8Pure phonology: directional syllabiﬁcation
+/uni25B8Morphology: alignment to morpheme boundaries
+/uni25B8Morphophonology: cyclicity and allomorphy
+3
+Why orthography?
+● Orthography often used to motivate phonological analyses
+/uni25B8Cross-linguistically (Chomsky und Halle, 1968) and Armenian (Vaux, 1998)
+● Open question if orthographic representations (ORs) match:
+/uni25B8Underlying Representations, or
+/uni25B8Surface Representations, or
+/uni25B8Intermediate Representation (Sproat, 2000)
+● Safety measure:
+/uni25B8Instead of looking at UR->SR transformations, will look at OR->SR
+/uni25B8Any proposed URs are up for debate, but not the ORs + SRs
+/uni25B8In fact, will show that ORsprobably reﬂect URs
+4
+Introduction
+Orthography of schw as
+Distribution of inserted schw as
+Initial cluster
+Medial cluster
+Final cluster
+Morphological Deviations
+Cyclic deletion
+Insertion vs. deletion
+Parallel allomorphy
+Conclusion
+5
+Table of Contents
+Introduction
+Orthography of schw as
+Distribution of inserted schw as
+Initial cluster
+Medial cluster
+Final cluster
+Morphological Deviations
+Cyclic deletion
+Insertion vs. deletion
+Parallel allomorphy
+Conclusion
+5
+Armenian orthography
+● Armenian is Indo-European isolate with it’s own script
+● Orthography captures all phonemic contrasts
+● Predictable to go from orthography to pronunciation
+● Phonology: canonical 6-vowel system
+[a] [u] [o] [e] [i] [@]
+● Orthography: many-to-one mapping from grapheme to phoneme but still
+predictable
+<a> < ow> < , o> < , e> < i> < >
+<a> < u> < o> < e> < i> < @>
+● Transliteration removes many-to-one mapping because tangential for talk
+6
+Armenian orthography
+● Armenian is Indo-European isolate with it’s own script
+● Orthography captures all phonemic contrasts
+● Predictable to go from orthography to pronunciation
+● Phonology: canonical 6-vowel system
+[a] [u] [o] [e] [i] [@]
+● Orthography: many-to-one mapping from grapheme to phoneme but still
+predictable
+<a> < ow> < , o> < , e> < i> < >
+<a> < u> < o> < e> < i> < @>
+● Transliteration removes many-to-one mapping because tangential for talk
+6
+Vowels
+● Orthography generally shows surface pronunciation, especially for vowels
+[e] [ ov] [ pu] [ pan] [ sird]
+<e> < ov> < pu> < pan> < sird>
+● There’s a schwa grapheme<>, but most surface schwa’s aren’t written
+● Based on ORs vs. SRs of schwas, got 3 categories:
+Present Inserted Reduced
+OR: <@nger> < tnel> < kir> < krel>
+SR: [ @ng´ er] [ t@n´ el] [ k´ir] [k@r´ el]
+‘friend’ ‘to put’ ‘writing’ ‘to write’
+● Questions: Going from OR to SR...
+1. Is ‘schwa insertion’ productive and predictable?
+2. Do ‘reduced’ and ‘inserted’ schwas pattern the same?
+3. What are the URs?
+7
+Vowels
+● Orthography generally shows surface pronunciation, especially for vowels
+[e] [ ov] [ pu] [ pan] [ sird]
+<e> < ov> < pu> < pan> < sird>
+● There’s a schwa grapheme<>, but most surface schwa’s aren’t written
+● Based on ORs vs. SRs of schwas, got 3 categories:
+Present Inserted Reduced
+OR: <@nger> < tnel> < kir> < krel>
+SR: [ @ng´ er] [ t@n´ el] [ k´ir] [k@r´ el]
+‘friend’ ‘to put’ ‘writing’ ‘to write’
+● Questions: Going from OR to SR...
+1. Is ‘schwa insertion’ productive and predictable?
+2. Do ‘reduced’ and ‘inserted’ schwas pattern the same?
+3. What are the URs?
+7
+Vowels
+● Orthography generally shows surface pronunciation, especially for vowels
+[e] [ ov] [ pu] [ pan] [ sird]
+<e> < ov> < pu> < pan> < sird>
+● There’s a schwa grapheme<>, but most surface schwa’s aren’t written
+● Based on ORs vs. SRs of schwas, got 3 categories:
+Present Inserted Reduced
+OR: <@nger> < tnel> < kir> < krel>
+SR: [ @ng´ er] [ t@n´ el] [ k´ir] [k@r´ el]
+‘friend’ ‘to put’ ‘writing’ ‘to write’
+● Questions: Going from OR to SR...
+1. Is ‘schwa insertion’ productive and predictable?
+2. Do ‘reduced’ and ‘inserted’ schwas pattern the same?
+3. What are the URs?
+7
+Laying out
+● 3 types of SRs schwas have 3 distinct URs which is close to OR
+Present Inserted Reduced
+OR: <@nger> < tnel> < kir> < krel>
+SR: [ @ng´ er] [ t@n´ el] [ k´ir] [k@r´ el]
+UR: / @nger/ / tnel/ / kir/ / kirel/
+‘friend’ ‘to put’ ‘writing’ ‘to write’
+● 3 schwas also show separate of phonological constraints
+● Focus on ‘inserted schwas’
+8
+Laying out
+● 3 types of SRs schwas have 3 distinct URs which is close to OR
+Present Inserted Reduced
+OR: <@nger> < tnel> < kir> < krel>
+SR: [ @ng´ er] [ t@n´ el] [ k´ir] [k@r´ el]
+UR: / @nger/ / tnel/ / kir/ / kirel/
+‘friend’ ‘to put’ ‘writing’ ‘to write’
+● 3 schwas also show separate of phonological constraints
+● Focus on ‘inserted schwas’
+8
+Table of Contents
+Introduction
+Orthography of schw as
+Distribution of inserted schw as
+Initial cluster
+Medial cluster
+Final cluster
+Morphological Deviations
+Cyclic deletion
+Insertion vs. deletion
+Parallel allomorphy
+Conclusion
+9
+Syllable structure
+● Maximal syllable is CjVCC
+V VC CV CVC CVCC CjVCC
+[e] [ ov] [ pu] [ pan] [ sird] [gjank]
+<e> < ov> < pu> < pan> < sird> < gjank>
+● Light on glossing to reduce clutter
+● Complex codas must have falling sonority, and...
+*LX (*)rn# *rn... (*)ns
+*kalt xarn, xar@n gor@nkan oren(@)stir
+kajl >tSerm *gornkan toms
+10
+Syllable structure
+● Maximal syllable is CjVCC
+V VC CV CVC CVCC CjVCC
+[e] [ ov] [ pu] [ pan] [ sird] [gjank]
+<e> < ov> < pu> < pan> < sird> < gjank>
+● Light on glossing to reduce clutter
+● Complex codas must have falling sonority, and...
+*LX (*)rn# *rn... (*)ns
+*kalt xarn, xar@n gor@nkan oren(@)stir
+kajl >tSerm *gornkan toms
+10
+Initial clusters
+● Many ORs have consonant clusters that are broken up by schwas in SR
+● Clusters are especially common root-initially
+1C 2C 3C 4C 5C 6C
+<dal> < tnel> < krban> < mgrdel> < >dZmrtgel> < krtmn>tSel>
+[dal] [t@.nel] [ k@r.ban] [ m@.g@r.del] [>dZ@.m@rt.gel] [ k@rt.m@n.>tSel]
+● The above words are all either:
+/uni25B8monomorphmic k@rban ‘pocket’, or
+/uni25B8a root and verbal suﬃxt@n-el ‘to put’
+● They aren’t derived from another root that has a high vowel:
+/uni25B8*tin for t@n-el
+● How can we predict these schwas?
+→ Directional syllabiﬁcation predicts schwa placement!
+11
+Initial clusters
+● Many ORs have consonant clusters that are broken up by schwas in SR
+● Clusters are especially common root-initially
+1C 2C 3C 4C 5C 6C
+<dal> < tnel> < krban> < mgrdel> < >dZmrtgel> < krtmn>tSel>
+[dal] [t@.nel] [ k@r.ban] [ m@.g@r.del] [>dZ@.m@rt.gel] [ k@rt.m@n.>tSel]
+● The above words are all either:
+/uni25B8monomorphmic k@rban ‘pocket’, or
+/uni25B8a root and verbal suﬃxt@n-el ‘to put’
+● They aren’t derived from another root that has a high vowel:
+/uni25B8*tin for t@n-el
+● How can we predict these schwas?
+→ Directional syllabiﬁcation predicts schwa placement!
+11
+Initial clusters
+● Many ORs have consonant clusters that are broken up by schwas in SR
+● Clusters are especially common root-initially
+1C 2C 3C 4C 5C 6C
+<dal> < tnel> < krban> < mgrdel> < >dZmrtgel> < krtmn>tSel>
+[dal] [t@.nel] [ k@r.ban] [ m@.g@r.del] [>dZ@.m@rt.gel] [ k@rt.m@n.>tSel]
+● The above words are all either:
+/uni25B8monomorphmic k@rban ‘pocket’, or
+/uni25B8a root and verbal suﬃxt@n-el ‘to put’
+● They aren’t derived from another root that has a high vowel:
+/uni25B8*tin for t@n-el
+● How can we predict these schwas?
+→ Directional syllabiﬁcation predicts schwa placement!
+11
+Initial clusters
+● Many ORs have consonant clusters that are broken up by schwas in SR
+● Clusters are especially common root-initially
+1C 2C 3C 4C 5C 6C
+<dal> < tnel> < krban> < mgrdel> < >dZmrtgel> < krtmn>tSel>
+[dal] [t@.nel] [ k@r.ban] [ m@.g@r.del] [>dZ@.m@rt.gel] [ k@rt.m@n.>tSel]
+● The above words are all either:
+/uni25B8monomorphmic k@rban ‘pocket’, or
+/uni25B8a root and verbal suﬃxt@n-el ‘to put’
+● They aren’t derived from another root that has a high vowel:
+/uni25B8*tin for t@n-el
+● How can we predict these schwas?
+→ Directional syllabiﬁcation predicts schwa placement!
+11
+2C and 3C
+● For 2C and 3C clusters in OR, 1 schwa is added to form SR
+● For 2C, schwa is after C1
+<tnel> < tkal> < xmor> < prel>
+[t@.nel] [ t@.kal] [ x@.mor] [ p@.rel]
+● For 3C, schwa is again after C1
+<krban> < tZvar> < xntal> < prtel>
+[k@r.ban] [ t@Z.var] [ x@n.tal] [ p@r.tel]
+● These small clusters don’t show any special syllabiﬁcation
+12
+2C and 3C
+● For 2C and 3C clusters in OR, 1 schwa is added to form SR
+● For 2C, schwa is after C1
+<tnel> < tkal> < xmor> < prel>
+[t@.nel] [ t@.kal] [ x@.mor] [ p@.rel]
+● For 3C, schwa is again after C1
+<krban> < tZvar> < xntal> < prtel>
+[k@r.ban] [ t@Z.var] [ x@n.tal] [ p@r.tel]
+● These small clusters don’t show any special syllabiﬁcation
+12
+2C & 3C
+● 2C & 3C: Going from OR to SR is predictable
+● *CC: SR can’t have bad consonant clusters
+● Dep: schwa added to repair cluster
+● Onset: maximize onsets
+<tnel> *CC Dep Onset
+a. tnel ∗!
+b. @t.nel ∗ ∗ !
+c.  t@.nel ∗
+<krban> *CC Dep Onset
+a. krban ∗!
+b.  k@r.bar ∗
+c. k@.r@.bar ∗∗!
+13
+4C: v aried postions
+● 4C clusters show more options for schwa location:
+<pndrel> < mgrdel>
+[p@nd.rel] [m@.g@r.del]
+● Schematically...
+<CCCCV> < CCCCV>
+[C@CC.CV] [C @.C@C.CV]
+● Choice is based on sonority and directionality
+14
+4C: sonority
+● In <C1C2C3C4V>,
+● If <C2C3> can form a complex coda, then [C1@C2C3.].
+<pndrel> < grdser> < tn>dzgal>
+[p@nd.rel] [g@rd.ser] [ t@n>dz.gal]
+● Predictable from syllabiﬁcation
+<pndrel> *CC Dep
+a. pndrel ∗!
+b.  p@nd.rel ∗
+c. p@.n@d.rel ∗∗!
+15
+4C: direction
+● In <C1C2C3C4V>,
+● But if <C2C3> can’t form a complex coda, then [C1@.C2@C3].
+<mgrdel> < vrndel> < plntorel>
+[m@.g@r.del] [v@.r@n.del] [ p@.l@n.to.rel]
+● Why m@.g@r.del instead of *m@g.r@.del?
+● Right-to-left syllabiﬁcation with CVCC template (Itô, 1989):
+<mgrdel>
+Unsyllabiﬁed {mgrdel}
+R->L {mgr}.del
+{m}.g@r.del
+[m@.g@r.del]
+16
+4C: direction
+● In <C1C2C3C4V>,
+● But if <C2C3> can’t form a complex coda, then [C1@.C2@C3].
+<mgrdel> < vrndel> < plntorel>
+[m@.g@r.del] [v@.r@n.del] [ p@.l@n.to.rel]
+● Why m@.g@r.del instead of *m@g.r@.del?
+● Right-to-left syllabiﬁcation with CVCC template (Itô, 1989):
+<mgrdel>
+Unsyllabiﬁed {mgrdel}
+R->L {mgr}.del
+{m}.g@r.del
+[m@.g@r.del]
+16
+4C: direction
+● In <C1C2C3C4V>,
+● But if <C2C3> can’t form a complex coda, then [C1@.C2@C3].
+<mgrdel> < vrndel> < plntorel>
+[m@.g@r.del] [v@.r@n.del] [ p@.l@n.to.rel]
+● Why m@.g@r.del instead of *m@g.r@.del?
+● Right-to-left syllabiﬁcation with CVCC template (Itô, 1989):
+<mgrdel>
+Unsyllabiﬁed {mgrdel}
+R->L {mgr}.del
+{m}.g@r.del
+[m@.g@r.del]
+16
+4C: direction
+● In <C1C2C3C4V>,
+● But if <C2C3> can’t form a complex coda, then [C1@.C2@C3].
+<mgrdel> < vrndel> < plntorel>
+[m@.g@r.del] [v@.r@n.del] [ p@.l@n.to.rel]
+● Why m@.g@r.del instead of *m@g.r@.del?
+● Right-to-left syllabiﬁcation with CVCC template (Itô, 1989):
+<mgrdel>
+Unsyllabiﬁed {mgrdel}
+R->L {mgr}.del
+{m}.g@r.del
+[m@.g@r.del]
+16
+4C: direction
+● In <C1C2C3C4V>,
+● But if <C2C3> can’t form a complex coda, then [C1@.C2@C3].
+<mgrdel> < vrndel> < plntorel>
+[m@.g@r.del] [v@.r@n.del] [ p@.l@n.to.rel]
+● Why m@.g@r.del instead of *m@g.r@.del?
+● Right-to-left syllabiﬁcation with CVCC template (Itô, 1989):
+<mgrdel>
+Unsyllabiﬁed {mgrdel}
+R->L {mgr}.del
+{m}.g@r.del
+[m@.g@r.del]
+16
+4C: alignment
+● Right-to-left parsing easily translated into left-alignment
+● Align-σ-L: syllables should be close to left-edge
+<mgrdel> *CC Dep Align- σ-L
+a. mgrdel ∗!
+b. m@gr.del ∗! ∗ 4
+c.  m@.g@r.del ∗∗ 7
+d. m@g.r@.del ∗∗ 8!
+17
+5C
+● Right-to-left parsing likewise explains schwa location in 5C clusters
+● C@.C@CC.CV if can create complex coda
+<>dZmrtgel> < prnkd-al>
+[>dZ@.m@rt.gel] [p@.r@nk.dal]
+● C@C.C@C.CV if can’t create complex coda
+<pltrGan> < hrmStug>
+[p@l.t@r.Gan] [h@r.m@S.tug]
+● Follows from right-to-left parsing:
+<>dZmrtgel> < pltrGan>
+{>dZmrtgel} {pltrGan}
+{>dZmrt}.gel {pltr}.Gan
+{>dZ}.m@rt.gel {pl}.t@r.Gan>dZ@.m@rt.gel p@l.t@r.Gan
+18
+5C
+● Right-to-left parsing likewise explains schwa location in 5C clusters
+● C@.C@CC.CV if can create complex coda
+<>dZmrtgel> < prnkd-al>
+[>dZ@.m@rt.gel] [p@.r@nk.dal]
+● C@C.C@C.CV if can’t create complex coda
+<pltrGan> < hrmStug>
+[p@l.t@r.Gan] [h@r.m@S.tug]
+● Follows from right-to-left parsing:
+<>dZmrtgel> < pltrGan>
+{>dZmrtgel} {pltrGan}
+{>dZmrt}.gel {pltr}.Gan
+{>dZ}.m@rt.gel {pl}.t@r.Gan>dZ@.m@rt.gel p@l.t@r.Gan
+18
+5C
+● Right-to-left parsing likewise explains schwa location in 5C clusters
+● C@.C@CC.CV if can create complex coda
+<>dZmrtgel> < prnkd-al>
+[>dZ@.m@rt.gel] [p@.r@nk.dal]
+● C@C.C@C.CV if can’t create complex coda
+<pltrGan> < hrmStug>
+[p@l.t@r.Gan] [h@r.m@S.tug]
+● Follows from right-to-left parsing:
+<>dZmrtgel> < pltrGan>
+{>dZmrtgel} {pltrGan}
+{>dZmrt}.gel {pltr}.Gan
+{>dZ}.m@rt.gel {pl}.t@r.Gan>dZ@.m@rt.gel p@l.t@r.Gan
+18
+5C
+● Right-to-left parsing likewise explains schwa location in 5C clusters
+● C@.C@CC.CV if can create complex coda
+<>dZmrtgel> < prnkd-al>
+[>dZ@.m@rt.gel] [p@.r@nk.dal]
+● C@C.C@C.CV if can’t create complex coda
+<pltrGan> < hrmStug>
+[p@l.t@r.Gan] [h@r.m@S.tug]
+● Follows from right-to-left parsing:
+<>dZmrtgel> < pltrGan>
+{>dZmrtgel} {pltrGan}
+{>dZmrt}.gel {pltr}.Gan
+{>dZ}.m@rt.gel {pl}.t@r.Gan>dZ@.m@rt.gel p@l.t@r.Gan
+18
+5C
+● Right-to-left parsing likewise explains schwa location in 5C clusters
+● C@.C@CC.CV if can create complex coda
+<>dZmrtgel> < prnkd-al>
+[>dZ@.m@rt.gel] [p@.r@nk.dal]
+● C@C.C@C.CV if can’t create complex coda
+<pltrGan> < hrmStug>
+[p@l.t@r.Gan] [h@r.m@S.tug]
+● Follows from right-to-left parsing:
+<>dZmrtgel> < pltrGan>
+{>dZmrtgel} {pltrGan}
+{>dZmrt}.gel {pltr}.Gan
+{>dZ}.m@rt.gel {pl}.t@r.Gan>dZ@.m@rt.gel p@l.t@r.Gan
+18
+5C
+● Right-to-left parsing likewise explains schwa location in 5C clusters
+● C@.C@CC.CV if can create complex coda
+<>dZmrtgel> < prnkd-al>
+[>dZ@.m@rt.gel] [p@.r@nk.dal]
+● C@C.C@C.CV if can’t create complex coda
+<pltrGan> < hrmStug>
+[p@l.t@r.Gan] [h@r.m@S.tug]
+● Follows from right-to-left parsing:
+<>dZmrtgel> < pltrGan>
+{>dZmrtgel} {pltrGan}
+{>dZmrt}.gel {pltr}.Gan
+{>dZ}.m@rt.gel {pl}.t@r.Gan
+>dZ@.m@rt.gel p@l.t@r.Gan
+18
+5C
+● Right-to-left parsing likewise explains schwa location in 5C clusters
+● C@.C@CC.CV if can create complex coda
+<>dZmrtgel> < prnkd-al>
+[>dZ@.m@rt.gel] [p@.r@nk.dal]
+● C@C.C@C.CV if can’t create complex coda
+<pltrGan> < hrmStug>
+[p@l.t@r.Gan] [h@r.m@S.tug]
+● Follows from right-to-left parsing:
+<>dZmrtgel> < pltrGan>
+{>dZmrtgel} {pltrGan}
+{>dZmrt}.gel {pltr}.Gan
+{>dZ}.m@rt.gel {pl}.t@r.Gan>dZ@.m@rt.gel p@l.t@r.Gan
+18
+6C
+● Rare to ﬁnd roots with 6, but they exist
+<krtmn>tSel> < kn>tsmn>tsug>
+[k@rt.m@n.>tSel] [ k@n>ts.m@n.>tsug]
+● Mostly larger clusters involve vowel reduction or reduplication
+● Predictably syllabiﬁed
+<krtmn>tSel>
+{krtmn>tSel}
+{krtmn}.>tSel
+{krt}.m@n.>tSel
+k@rt.m@n.>tSel
+19
+6C
+● Rare to ﬁnd roots with 6, but they exist
+<krtmn>tSel> < kn>tsmn>tsug>
+[k@rt.m@n.>tSel] [ k@n>ts.m@n.>tsug]
+● Mostly larger clusters involve vowel reduction or reduplication
+● Predictably syllabiﬁed
+<krtmn>tSel>
+{krtmn>tSel}
+{krtmn}.>tSel
+{krt}.m@n.>tSel
+k@rt.m@n.>tSel
+19
+6C
+● Rare to ﬁnd roots with 6, but they exist
+<krtmn>tSel> < kn>tsmn>tsug>
+[k@rt.m@n.>tSel] [ k@n>ts.m@n.>tsug]
+● Mostly larger clusters involve vowel reduction or reduplication
+● Predictably syllabiﬁed
+<krtmn>tSel>
+{krtmn>tSel}
+{krtmn}.>tSel
+{krt}.m@n.>tSel
+k@rt.m@n.>tSel
+19
+6C
+● Rare to ﬁnd roots with 6, but they exist
+<krtmn>tSel> < kn>tsmn>tsug>
+[k@rt.m@n.>tSel] [ k@n>ts.m@n.>tsug]
+● Mostly larger clusters involve vowel reduction or reduplication
+● Predictably syllabiﬁed
+<krtmn>tSel>
+{krtmn>tSel}
+{krtmn}.>tSel
+{krt}.m@n.>tSel
+k@rt.m@n.>tSel
+19
+6C
+● Rare to ﬁnd roots with 6, but they exist
+<krtmn>tSel> < kn>tsmn>tsug>
+[k@rt.m@n.>tSel] [ k@n>ts.m@n.>tsug]
+● Mostly larger clusters involve vowel reduction or reduplication
+● Predictably syllabiﬁed
+<krtmn>tSel>
+{krtmn>tSel}
+{krtmn}.>tSel
+{krt}.m@n.>tSel
+k@rt.m@n.>tSel
+19
+Interim summary
+● Going from orthography to pronunciation, we have ‘schwa insertion’
+● For root-initial clusters, schwa position is predictable from right-to-left
+parsing
+● Show that directionality also predicts schwa locations in root-medial and
+root-ﬁnal clusters
+20
+Medial clusters
+● Medial clusters are syllabiﬁed directionally and minimally
+● 2C <VCCV> and 3C <VCCCV> clusters are heterosyllabic if can form
+(complex) codas
+<bargil> < abril> < an>tsrev> < tarkmanel>
+[bar.gil] [ ab.ril] [ an>ts.rev] [ tark.ma.nel]
+● But leftmost epenthesis [V.C@C.CV] if can’t syllabify
+<pedrvar> < makl>ts-il>
+[pe.d@r.var] [ ma.k@l.>tsil]
+● Predicted by right-to-left parsing
+<pedrvar>
+{pedrvar}
+{pedr}.var
+{pe}.d@r.var
+[pe.d@r.var] *ped.r@.var
+21
+Medial clusters
+● Medial clusters are syllabiﬁed directionally and minimally
+● 2C <VCCV> and 3C <VCCCV> clusters are heterosyllabic if can form
+(complex) codas
+<bargil> < abril> < an>tsrev> < tarkmanel>
+[bar.gil] [ ab.ril] [ an>ts.rev] [ tark.ma.nel]
+● But leftmost epenthesis [V.C@C.CV] if can’t syllabify
+<pedrvar> < makl>ts-il>
+[pe.d@r.var] [ ma.k@l.>tsil]
+● Predicted by right-to-left parsing
+<pedrvar>
+{pedrvar}
+{pedr}.var
+{pe}.d@r.var
+[pe.d@r.var] *ped.r@.var
+21
+Medial clusters
+● Medial clusters are syllabiﬁed directionally and minimally
+● 2C <VCCV> and 3C <VCCCV> clusters are heterosyllabic if can form
+(complex) codas
+<bargil> < abril> < an>tsrev> < tarkmanel>
+[bar.gil] [ ab.ril] [ an>ts.rev] [ tark.ma.nel]
+● But leftmost epenthesis [V.C@C.CV] if can’t syllabify
+<pedrvar> < makl>ts-il>
+[pe.d@r.var] [ ma.k@l.>tsil]
+● Predicted by right-to-left parsing
+<pedrvar>
+{pedrvar}
+{pedr}.var
+{pe}.d@r.var
+[pe.d@r.var] *ped.r@.var
+21
+Medial clusters
+● Medial clusters are syllabiﬁed directionally and minimally
+● 2C <VCCV> and 3C <VCCCV> clusters are heterosyllabic if can form
+(complex) codas
+<bargil> < abril> < an>tsrev> < tarkmanel>
+[bar.gil] [ ab.ril] [ an>ts.rev] [ tark.ma.nel]
+● But leftmost epenthesis [V.C@C.CV] if can’t syllabify
+<pedrvar> < makl>ts-il>
+[pe.d@r.var] [ ma.k@l.>tsil]
+● Predicted by right-to-left parsing
+<pedrvar>
+{pedrvar}
+{pedr}.var
+{pe}.d@r.var
+[pe.d@r.var] *ped.r@.var
+21
+Medial clusters
+● Medial clusters are syllabiﬁed directionally and minimally
+● 2C <VCCV> and 3C <VCCCV> clusters are heterosyllabic if can form
+(complex) codas
+<bargil> < abril> < an>tsrev> < tarkmanel>
+[bar.gil] [ ab.ril] [ an>ts.rev] [ tark.ma.nel]
+● But leftmost epenthesis [V.C@C.CV] if can’t syllabify
+<pedrvar> < makl>ts-il>
+[pe.d@r.var] [ ma.k@l.>tsil]
+● Predicted by right-to-left parsing
+<pedrvar>
+{pedrvar}
+{pedr}.var
+{pe}.d@r.var
+[pe.d@r.var] *ped.r@.var
+21
+4C
+● Large medial 4C or<VC1C2C3C4V> clusters are rare but attested
+● If C2C3 can form complex coda, then [V.C@CC.CV]
+<absbrel>
+[a.b@sp.rel]
+● If C2C3 can’t form a cluster, get medial epenthesis
+<dardGnil> < hankrvan>
+[dar.d@G.nil] [ han.k@r.van]
+● Getting [dar.d@G.nil] instead of *[dard.G@.nil] is predicted by right-to-left
+parsing
+<absbrel> < dardGnil>
+{absbrel} {dardGnil}
+{absb}.rel {dardG}.nil
+{a}.b@sp.rel {dar}.d@G.nil
+a.b@sp.rel dar.d@G.nil
+22
+4C
+● Large medial 4C or<VC1C2C3C4V> clusters are rare but attested
+● If C2C3 can form complex coda, then [V.C@CC.CV]
+<absbrel>
+[a.b@sp.rel]
+● If C2C3 can’t form a cluster, get medial epenthesis
+<dardGnil> < hankrvan>
+[dar.d@G.nil] [ han.k@r.van]
+● Getting [dar.d@G.nil] instead of *[dard.G@.nil] is predicted by right-to-left
+parsing
+<absbrel> < dardGnil>
+{absbrel} {dardGnil}
+{absb}.rel {dardG}.nil
+{a}.b@sp.rel {dar}.d@G.nil
+a.b@sp.rel dar.d@G.nil
+22
+4C
+● Large medial 4C or<VC1C2C3C4V> clusters are rare but attested
+● If C2C3 can form complex coda, then [V.C@CC.CV]
+<absbrel>
+[a.b@sp.rel]
+● If C2C3 can’t form a cluster, get medial epenthesis
+<dardGnil> < hankrvan>
+[dar.d@G.nil] [ han.k@r.van]
+● Getting [dar.d@G.nil] instead of *[dard.G@.nil] is predicted by right-to-left
+parsing
+<absbrel> < dardGnil>
+{absbrel} {dardGnil}
+{absb}.rel {dardG}.nil
+{a}.b@sp.rel {dar}.d@G.nil
+a.b@sp.rel dar.d@G.nil
+22
+4C
+● Large medial 4C or<VC1C2C3C4V> clusters are rare but attested
+● If C2C3 can form complex coda, then [V.C@CC.CV]
+<absbrel>
+[a.b@sp.rel]
+● If C2C3 can’t form a cluster, get medial epenthesis
+<dardGnil> < hankrvan>
+[dar.d@G.nil] [ han.k@r.van]
+● Getting [dar.d@G.nil] instead of *[dard.G@.nil] is predicted by right-to-left
+parsing
+<absbrel> < dardGnil>
+{absbrel} {dardGnil}
+{absb}.rel {dardG}.nil
+{a}.b@sp.rel {dar}.d@G.nil
+a.b@sp.rel dar.d@G.nil
+22
+4C
+● Large medial 4C or<VC1C2C3C4V> clusters are rare but attested
+● If C2C3 can form complex coda, then [V.C@CC.CV]
+<absbrel>
+[a.b@sp.rel]
+● If C2C3 can’t form a cluster, get medial epenthesis
+<dardGnil> < hankrvan>
+[dar.d@G.nil] [ han.k@r.van]
+● Getting [dar.d@G.nil] instead of *[dard.G@.nil] is predicted by right-to-left
+parsing
+<absbrel> < dardGnil>
+{absbrel} {dardGnil}
+{absb}.rel {dardG}.nil
+{a}.b@sp.rel {dar}.d@G.nil
+a.b@sp.rel dar.d@G.nil
+22
+4C
+● Large medial 4C or<VC1C2C3C4V> clusters are rare but attested
+● If C2C3 can form complex coda, then [V.C@CC.CV]
+<absbrel>
+[a.b@sp.rel]
+● If C2C3 can’t form a cluster, get medial epenthesis
+<dardGnil> < hankrvan>
+[dar.d@G.nil] [ han.k@r.van]
+● Getting [dar.d@G.nil] instead of *[dard.G@.nil] is predicted by right-to-left
+parsing
+<absbrel> < dardGnil>
+{absbrel} {dardGnil}
+{absb}.rel {dardG}.nil
+{a}.b@sp.rel {dar}.d@G.nil
+a.b@sp.rel dar.d@G.nil
+22
+Final clusters
+● Few roots have ﬁnal clusters, mostly 2C and 3C.
+● Most clusters can form complex codas
+<park> < pand> < paxt>
+[park] [pand] [ paxt]
+● 2C clusters that are rising sonority undergo epenthesis
+<ipr> < uremn> < go>dZG>
+[i.p@r] [u.re.m@n] [ go.>dZ@G]
+● /Cr/ clusters can optionally block epenthesis for some speakers, lexemes,
+and subdialects
+<vakr> < meGr> < dakr>
+[va.k@r] [me.G@r] [ da.k@r]
+[vakr] [meGr] [ dakr]
+● Variation for /Cr/ is potentially due to appendix formation
+23
+Final clusters
+● Few roots have ﬁnal clusters, mostly 2C and 3C.
+● Most clusters can form complex codas
+<park> < pand> < paxt>
+[park] [pand] [ paxt]
+● 2C clusters that are rising sonority undergo epenthesis
+<ipr> < uremn> < go>dZG>
+[i.p@r] [u.re.m@n] [ go.>dZ@G]
+● /Cr/ clusters can optionally block epenthesis for some speakers, lexemes,
+and subdialects
+<vakr> < meGr> < dakr>
+[va.k@r] [me.G@r] [ da.k@r]
+[vakr] [meGr] [ dakr]
+● Variation for /Cr/ is potentially due to appendix formation
+23
+Final clusters
+● Few roots have ﬁnal clusters, mostly 2C and 3C.
+● Most clusters can form complex codas
+<park> < pand> < paxt>
+[park] [pand] [ paxt]
+● 2C clusters that are rising sonority undergo epenthesis
+<ipr> < uremn> < go>dZG>
+[i.p@r] [u.re.m@n] [ go.>dZ@G]
+● /Cr/ clusters can optionally block epenthesis for some speakers, lexemes,
+and subdialects
+<vakr> < meGr> < dakr>
+[va.k@r] [me.G@r] [ da.k@r]
+[vakr] [meGr] [ dakr]
+● Variation for /Cr/ is potentially due to appendix formation
+23
+3C
+● Final 3C clusters are rarer but exist
+● Take medial epenthesis [VC.C@C], rarely [V.C@CC]
+<par>tsr> < ajsinkn> < argG> < astG> < gozrn>
+[par.>ts@r] [aj.sin.k@n] [ ar.g@G] [as.t@G] [ go.z@rn]
+[par>tsr] [astx]
+● or optional epenthesis if ﬁnalr or G/x in some roots
+● Putting aside variable ﬁnal appendix, epenthesis location is predictable
+by right-to-left parsing
+<vakr> < par>tsr> < gozrn>
+{vakr} {par>tsr} { gozrn}
+{va}.k@r {par}.>ts@r {go}.z@rn
+va.k@r par.>ts@r go.z@rn
+24
+3C
+● Final 3C clusters are rarer but exist
+● Take medial epenthesis [VC.C@C], rarely [V.C@CC]
+<par>tsr> < ajsinkn> < argG> < astG> < gozrn>
+[par.>ts@r] [aj.sin.k@n] [ ar.g@G] [as.t@G] [ go.z@rn]
+[par>tsr] [astx]
+● or optional epenthesis if ﬁnalr or G/x in some roots
+● Putting aside variable ﬁnal appendix, epenthesis location is predictable
+by right-to-left parsing
+<vakr> < par>tsr> < gozrn>
+{vakr} {par>tsr} { gozrn}
+{va}.k@r {par}.>ts@r {go}.z@rn
+va.k@r par.>ts@r go.z@rn
+24
+3C
+● Final 3C clusters are rarer but exist
+● Take medial epenthesis [VC.C@C], rarely [V.C@CC]
+<par>tsr> < ajsinkn> < argG> < astG> < gozrn>
+[par.>ts@r] [aj.sin.k@n] [ ar.g@G] [as.t@G] [ go.z@rn]
+[par>tsr] [astx]
+● or optional epenthesis if ﬁnalr or G/x in some roots
+● Putting aside variable ﬁnal appendix, epenthesis location is predictable
+by right-to-left parsing
+<vakr> < par>tsr> < gozrn>
+{vakr} {par>tsr} { gozrn}
+{va}.k@r {par}.>ts@r {go}.z@rn
+va.k@r par.>ts@r go.z@rn
+24
+3C
+● Final 3C clusters are rarer but exist
+● Take medial epenthesis [VC.C@C], rarely [V.C@CC]
+<par>tsr> < ajsinkn> < argG> < astG> < gozrn>
+[par.>ts@r] [aj.sin.k@n] [ ar.g@G] [as.t@G] [ go.z@rn]
+[par>tsr] [astx]
+● or optional epenthesis if ﬁnalr or G/x in some roots
+● Putting aside variable ﬁnal appendix, epenthesis location is predictable
+by right-to-left parsing
+<vakr> < par>tsr> < gozrn>
+{vakr} {par>tsr} { gozrn}
+{va}.k@r {par}.>ts@r {go}.z@rn
+va.k@r par.>ts@r go.z@rn
+24
+3C
+● Final 3C clusters are rarer but exist
+● Take medial epenthesis [VC.C@C], rarely [V.C@CC]
+<par>tsr> < ajsinkn> < argG> < astG> < gozrn>
+[par.>ts@r] [aj.sin.k@n] [ ar.g@G] [as.t@G] [ go.z@rn]
+[par>tsr] [astx]
+● or optional epenthesis if ﬁnalr or G/x in some roots
+● Putting aside variable ﬁnal appendix, epenthesis location is predictable
+by right-to-left parsing
+<vakr> < par>tsr> < gozrn>
+{vakr} {par>tsr} { gozrn}
+{va}.k@r {par}.>ts@r {go}.z@rn
+va.k@r par.>ts@r go.z@rn
+24
+3C
+● Final 3C clusters are rarer but exist
+● Take medial epenthesis [VC.C@C], rarely [V.C@CC]
+<par>tsr> < ajsinkn> < argG> < astG> < gozrn>
+[par.>ts@r] [aj.sin.k@n] [ ar.g@G] [as.t@G] [ go.z@rn]
+[par>tsr] [astx]
+● or optional epenthesis if ﬁnalr or G/x in some roots
+● Putting aside variable ﬁnal appendix, epenthesis location is predictable
+by right-to-left parsing
+<vakr> < par>tsr> < gozrn>
+{vakr} {par>tsr} { gozrn}
+{va}.k@r {par}.>ts@r {go}.z@rn
+va.k@r par.>ts@r go.z@rn
+24
+Table of Contents
+Introduction
+Orthography of schw as
+Distribution of inserted schw as
+Initial cluster
+Medial cluster
+Final cluster
+Morphological Deviations
+Cyclic deletion
+Insertion vs. deletion
+Parallel allomorphy
+Conclusion
+25
+Unexpected schw as
+● Epenthesis is largely governed by right-to-left parsing
+● Schematically, right-to-left parsing maximizes two types of constructions:
+1. Open-First: open schwa-syllables are word-initial
+m@.g@r.del *m@g.r@.del
+2. Maximize Codas: create as larger syllables as possible
+p@nd.rel *p@.n@d.del
+● Sometimes get violations due to other constraints
+● Will talk about morpheme boundaries eﬀects, but others exist (appendix)
+26
+Unexpected schw as
+● Epenthesis is largely governed by right-to-left parsing
+● Schematically, right-to-left parsing maximizes two types of constructions:
+1. Open-First: open schwa-syllables are word-initial
+m@.g@r.del *m@g.r@.del
+2. Maximize Codas: create as larger syllables as possible
+p@nd.rel *p@.n@d.del
+● Sometimes get violations due to other constraints
+● Will talk about morpheme boundaries eﬀects, but others exist (appendix)
+26
+Boundary alignment
+● All previous examples were root or root + suﬃx
+● In more complex morphology, schwa epenthesis respects morphological
+left-edges in
+1. Preﬁxes
+2. Compounds (appendix)
+3. Reduplication (appendix)
+27
+Prefixation
+● Armenian is primarily suﬃxing but it does have some productive preﬁxes
+● Negative preﬁx an- is cognate to Englishun-
+● Aﬃxed to adjectives
+hamper ‘patient’
+an-hamper ‘impatient’
+● And to nouns/verbs to change them to adjectives
+ham ‘taste’
+an-ham ‘tasteless’
+28
+Prefixation
+● Schwa epenthesis applies in roots and ignores the preﬁx
+● If a schwa appears in isolation, then also appears in preﬁxed form
+CCV: <tram> < antram>
+[t@ram] [an-t@ram]
+‘money’ ‘money-less’
+CCCV: <nSmar> < annSmar>
+[n@Smar] [an-n@Smar]
+‘mark’ ‘unperceived’
+CCCCV: <trtveli> < antrtveli>
+[t@rtveli] [an-t@rtveli]
+‘excitable’ ‘unshakeable’
+29
+Prefixation
+● Schwa epenthesis applies in roots and ignores the preﬁx
+● If a schwa appears in isolation, then also appears in preﬁxed form
+CCV: <tram> < antram>
+[t@ram] [an-t@ram]
+‘money’ ‘money-less’
+CCCV: <nSmar> < annSmar>
+[n@Smar] [an-n@Smar]
+‘mark’ ‘unperceived’
+CCCCV: <trtveli> < antrtveli>
+[t@rtveli] [an-t@rtveli]
+‘excitable’ ‘unshakeable’
+29
+Prefixation
+● Schwa epenthesis applies in roots and ignores the preﬁx
+● If a schwa appears in isolation, then also appears in preﬁxed form
+CCV: <tram> < antram>
+[t@ram] [an-t@ram]
+‘money’ ‘money-less’
+CCCV: <nSmar> < annSmar>
+[n@Smar] [an-n@Smar]
+‘mark’ ‘unperceived’
+CCCCV: <trtveli> < antrtveli>
+[t@rtveli] [an-t@rtveli]
+‘excitable’ ‘unshakeable’
+29
+Prefixation
+● Capture schwa epenthesis either with cyclicity, or with alignment
+constraints
+CCV: <tram> < antram>
+[t@ram] [an-t@ram]
+‘money’ ‘moneyless’
+● Use alignment for now because there are some problems with cyclicity
+(appendix)
+● Align-M: align a morpheme to left-edge of syllable
+<antram> Align-M Align- σ-L
+a. ant.ram ∗! 3
+b. a.n@t.ram ∗! 5
+c.  an-t@.ram 6
+30
+Table of Contents
+Introduction
+Orthography of schw as
+Distribution of inserted schw as
+Initial cluster
+Medial cluster
+Final cluster
+Morphological Deviations
+Cyclic deletion
+Insertion vs. deletion
+Parallel allomorphy
+Conclusion
+31
+Cyclicity
+● So far, whenever a schwa was epenthesized, it is never deleted
+● This is the case for initial-cluster schwas in preﬁxation
+● But things get complicated for ﬁnal-cluster schwas
+32
+Final clusters
+● In citation form, ﬁnal CC take schwas prescriptively
+‘tiger’ ‘basis’
+<vakr> < himn>
+[vak@r] [him@n]
+● But when add V-initial suﬃxes, the schwa disappears
+‘tiger skin’ ‘primary’
+<vakreni> < himnagan>
+[vakr-eni] [himn-agan]
+*[vak@r-eni] *[him@n-agan]
+33
+Final clusters
+● In citation form, ﬁnal CC take schwas prescriptively
+‘tiger’ ‘basis’
+<vakr> < himn>
+[vak@r] [him@n]
+● But when add V-initial suﬃxes, the schwa disappears
+‘tiger skin’ ‘primary’
+<vakreni> < himnagan>
+[vakr-eni] [himn-agan]
+*[vak@r-eni] *[him@n-agan]
+33
+Final clusters
+● Similarly for ﬁnal CCC clusters in isolation
+‘emperor’ ‘him’
+<gajsr> < inkn>
+[gajs@r] [ink@n]
+● Versus suﬃxation
+‘empress’ ‘spontaneously’
+<gajsruhi> < inknin>
+[gajs.ru.hi] [ink.nin]
+*[gaj.s@.ru.hi] *[in.k@.nin]
+● Larger clusters aren’t attested
+34
+Final clusters
+● Similarly for ﬁnal CCC clusters in isolation
+‘emperor’ ‘him’
+<gajsr> < inkn>
+[gajs@r] [ink@n]
+● Versus suﬃxation
+‘empress’ ‘spontaneously’
+<gajsruhi> < inknin>
+[gajs.ru.hi] [ink.nin]
+*[gaj.s@.ru.hi] *[in.k@.nin]
+● Larger clusters aren’t attested
+34
+Analysis
+● Basic facts: schwa when unsuﬃxed, no schwa before suﬃx
+[vak@r] [gajs@r]
+[vakreni] [gajsr-uhi]
+● Two initial hypothetical analysis
+1. Post-cyclic insertion in ﬁnal clusters
+= epenthesis in ﬁnal CC# after the morphology is over
+‘tiger’ ‘tiger-skin’
+<vakr> < vakreni>
+Insert: [ vak@r] [vakreni ]
+2. Cyclic insertion + deletion
+‘tiger’ ‘tiger-skin’
+<vakr> < vakreni>
+Cycle 1: vakr vakr
+Insert vak@r vak@r
+Cycle 2: vak@r-eni
+Delete vakr-eni
+35
+Analysis
+● Basic facts: schwa when unsuﬃxed, no schwa before suﬃx
+[vak@r] [gajs@r]
+[vakreni] [gajsr-uhi]
+● Two initial hypothetical analysis
+1. Post-cyclic insertion in ﬁnal clusters
+= epenthesis in ﬁnal CC# after the morphology is over
+‘tiger’ ‘tiger-skin’
+<vakr> < vakreni>
+Insert: [ vak@r] [vakreni ]
+2. Cyclic insertion + deletion
+‘tiger’ ‘tiger-skin’
+<vakr> < vakreni>
+Cycle 1: vakr vakr
+Insert vak@r vak@r
+Cycle 2: vak@r-eni
+Delete vakr-eni
+35
+Analysis
+● Basic facts: schwa when unsuﬃxed, no schwa before suﬃx
+[vak@r] [gajs@r]
+[vakreni] [gajsr-uhi]
+● Two initial hypothetical analysis
+1. Post-cyclic insertion in ﬁnal clusters
+= epenthesis in ﬁnal CC# after the morphology is over
+‘tiger’ ‘tiger-skin’
+<vakr> < vakreni>
+Insert: [ vak@r] [vakreni ]
+2. Cyclic insertion + deletion
+‘tiger’ ‘tiger-skin’
+<vakr> < vakreni>
+Cycle 1: vakr vakr
+Insert vak@r vak@r
+Cycle 2: vak@r-eni
+Delete vakr-eni
+35
+Inconclusive hypotheses
+● Attested examples don’t distinguish the two analyses
+● For example for CCC, both analyses work:
+1. Post-cyclic insertion
+‘emperor’ ‘empress’
+<gajsr> < gajsruhi>
+Insert [ gajs@r] [gajs.ruhi]
+2. Cyclic insertion + deletion
+‘emperor’ ‘empress’
+<gajsr> < gajsruhi>
+Cycle 1: gajsr gajsr
+Insert gajs@r gajs@r
+Cycle 2: gajs@r-uhi
+Delete gajs.ruhi]
+36
+Inconclusive hypotheses
+● Attested examples don’t distinguish the two analyses
+● For example for CCC, both analyses work:
+1. Post-cyclic insertion
+‘emperor’ ‘empress’
+<gajsr> < gajsruhi>
+Insert [ gajs@r] [gajs.ruhi]
+2. Cyclic insertion + deletion
+‘emperor’ ‘empress’
+<gajsr> < gajsruhi>
+Cycle 1: gajsr gajsr
+Insert gajs@r gajs@r
+Cycle 2: gajs@r-uhi
+Delete gajs.ruhi]
+36
+Accidental gaps and wugs
+● There is however an important gap (checked 70k dictionary)
+● For CCC# words, C1C2 is always an okay complex coda
+<gajsr> [gajs@r] ‘emperor’
+<gajsruhi> [gajs.r-uhi] ‘empress’
+*<paptr>
+● Insightful gap: hypotheses diverge when C1C2 is not a good complex coda
+● Like nonce spelled-wordpaptr and its derivativepaptr-uhi
+Base
+<paptr>
+[pap.t@r]
+<paptruhi>
+Cyclic insertion + deletion
+[pap.t@.ru.hi]
+Posy-cyclic insertion
+[pa.p@t.ru.hi]
+● Mini-survey results from my own personal elicitations and a friend:
+→ pap.t@r-uhi
+● Potentially a poverty of stimulus eﬀect→ cyclicity
+37
+Accidental gaps and wugs
+● There is however an important gap (checked 70k dictionary)
+● For CCC# words, C1C2 is always an okay complex coda
+<gajsr> [gajs@r] ‘emperor’
+<gajsruhi> [gajs.r-uhi] ‘empress’
+*<paptr>
+● Insightful gap: hypotheses diverge when C1C2 is not a good complex coda
+● Like nonce spelled-wordpaptr and its derivativepaptr-uhi
+Base
+<paptr>
+[pap.t@r]
+<paptruhi>
+Cyclic insertion + deletion
+[pap.t@.ru.hi]
+Posy-cyclic insertion
+[pa.p@t.ru.hi]
+● Mini-survey results from my own personal elicitations and a friend:
+→ pap.t@r-uhi
+● Potentially a poverty of stimulus eﬀect→ cyclicity
+37
+Accidental gaps and wugs
+● There is however an important gap (checked 70k dictionary)
+● For CCC# words, C1C2 is always an okay complex coda
+<gajsr> [gajs@r] ‘emperor’
+<gajsruhi> [gajs.r-uhi] ‘empress’
+*<paptr>
+● Insightful gap: hypotheses diverge when C1C2 is not a good complex coda
+● Like nonce spelled-wordpaptr and its derivativepaptr-uhi
+Base
+<paptr>
+[pap.t@r]
+<paptruhi>
+Cyclic insertion + deletion
+[pap.t@.ru.hi]
+Posy-cyclic insertion
+[pa.p@t.ru.hi]
+● Mini-survey results from my own personal elicitations and a friend:
+→ pap.t@r-uhi
+● Potentially a poverty of stimulus eﬀect→ cyclicity
+37
+Accidental gaps and wugs
+● There is however an important gap (checked 70k dictionary)
+● For CCC# words, C1C2 is always an okay complex coda
+<gajsr> [gajs@r] ‘emperor’
+<gajsruhi> [gajs.r-uhi] ‘empress’
+*<paptr>
+● Insightful gap: hypotheses diverge when C1C2 is not a good complex coda
+● Like nonce spelled-wordpaptr and its derivativepaptr-uhi
+Base
+<paptr>
+[pap.t@r]
+<paptruhi>
+Cyclic insertion + deletion
+[pap.t@.ru.hi]
+Posy-cyclic insertion
+[pa.p@t.ru.hi]
+● Mini-survey results from my own personal elicitations and a friend:
+→ pap.t@r-uhi
+● Potentially a poverty of stimulus eﬀect→ cyclicity
+37
+Accidental gaps and wugs
+● There is however an important gap (checked 70k dictionary)
+● For CCC# words, C1C2 is always an okay complex coda
+<gajsr> [gajs@r] ‘emperor’
+<gajsruhi> [gajs.r-uhi] ‘empress’
+*<paptr>
+● Insightful gap: hypotheses diverge when C1C2 is not a good complex coda
+● Like nonce spelled-wordpaptr and its derivativepaptr-uhi
+Base
+<paptr>
+[pap.t@r]
+<paptruhi>
+Cyclic insertion + deletion
+[pap.t@.ru.hi]
+Posy-cyclic insertion
+[pa.p@t.ru.hi]
+● Mini-survey results from my own personal elicitations and a friend:
+→ pap.t@r-uhi
+● Potentially a poverty of stimulus eﬀect→ cyclicity
+37
+Cyclic deletion
+● Delete a schwa if deletable: doesn’t violate syllable structure or
+boundary-alignment
+<gajsruhi> [gajs@r] *CC * @ BD-Max-@ Align-σ-L
+a. gaj.s@.ru.hi ∗! 15
+b.  gajs.ru.hi ∗ 10
+c. ga.j@s.ru.hi ∗! ∗ 14
+● No deletion if creates bad clusters
+<paptruhi> [pap.t@r] *CC * @ BD-Max-@ Align-σ-L
+a.  pap.t@.ru.hi ∗ 15
+b. papt.ru.hi ∗! ∗ 10
+c. pa.p@t.ru.hi ∗ ∗ ! 14
+38
+More deletion
+● Cyclic deletion also explains variation in colloquial speech
+Prescriptive Colloquial
+‘honey’ Base <meGr> < meGr>
+meG@r meG@r
+‘honeyed’ Derivation meGr-od meGr-od
+‘honey-inst’ Inﬂection meGr-ov meG@r-ov
+‘honey=is’ Clitics meGr=e meG@r=e
+‘honey took’ Word+Word meG@r arav meG@r arav
+● In Standard speech, Cyclic Deletion applies before all non-lexical
+morphemes
+→ stem-level, word-level, post-lexical within PWord’
+● But in low-class colloquial Beiruti, it mostly applies in derivation
+(stem-level)
+→ Curious interaction with allomorphy
+39
+More deletion
+● Cyclic deletion also explains variation in colloquial speech
+Prescriptive Colloquial
+‘honey’ Base <meGr> < meGr>
+meG@r meG@r
+‘honeyed’ Derivation meGr-od meGr-od
+‘honey-inst’ Inﬂection meGr-ov meG@r-ov
+‘honey=is’ Clitics meGr=e meG@r=e
+‘honey took’ Word+Word meG@r arav meG@r arav
+● In Standard speech, Cyclic Deletion applies before all non-lexical
+morphemes
+→ stem-level, word-level, post-lexical within PWord’
+● But in low-class colloquial Beiruti, it mostly applies in derivation
+(stem-level)
+→ Curious interaction with allomorphy
+39
+More deletion
+● Cyclic deletion also explains variation in colloquial speech
+Prescriptive Colloquial
+‘honey’ Base <meGr> < meGr>
+meG@r meG@r
+‘honeyed’ Derivation meGr-od meGr-od
+‘honey-inst’ Inﬂection meGr-ov meG@r-ov
+‘honey=is’ Clitics meGr=e meG@r=e
+‘honey took’ Word+Word meG@r arav meG@r arav
+● In Standard speech, Cyclic Deletion applies before all non-lexical
+morphemes
+→ stem-level, word-level, post-lexical within PWord’
+● But in low-class colloquial Beiruti, it mostly applies in derivation
+(stem-level)
+→ Curious interaction with allomorphy
+39
+More deletion
+● Cyclic deletion also explains variation in colloquial speech
+Prescriptive Colloquial
+‘honey’ Base <meGr> < meGr>
+meG@r meG@r
+‘honeyed’ Derivation meGr-od meGr-od
+‘honey-inst’ Inﬂection meGr-ov meG@r-ov
+‘honey=is’ Clitics meGr=e meG@r=e
+‘honey took’ Word+Word meG@r arav meG@r arav
+● In Standard speech, Cyclic Deletion applies before all non-lexical
+morphemes
+→ stem-level, word-level, post-lexical within PWord’
+● But in low-class colloquial Beiruti, it mostly applies in derivation
+(stem-level)
+→ Curious interaction with allomorphy
+39
+More deletion
+● Cyclic deletion also explains variation in colloquial speech
+Prescriptive Colloquial
+‘honey’ Base <meGr> < meGr>
+meG@r meG@r
+‘honeyed’ Derivation meGr-od meGr-od
+‘honey-inst’ Inﬂection meGr-ov meG@r-ov
+‘honey=is’ Clitics meGr=e meG@r=e
+‘honey took’ Word+Word meG@r arav meG@r arav
+● In Standard speech, Cyclic Deletion applies before all non-lexical
+morphemes
+→ stem-level, word-level, post-lexical within PWord’
+● But in low-class colloquial Beiruti, it mostly applies in derivation
+(stem-level)
+→ Curious interaction with allomorphy
+39
+Allomorphy
+● Plural suﬃx -er for monosyllables, -ner elsewhere
+pag pag-er ‘yard’
+panag panag-ner ‘army’
+● Schwa of initial clusters contributes to allomorphy
+<srah> s@rah s@rah-ner ‘hall’
+● Register-level variation for ﬁnal CC clusters
+<vakr>
+Standard vak@r vakr-er
+Colloquial vak@r vak@r-ner
+‘tiger’ ‘tigers’
+● Let’s look at grammars per register
+40
+Allomorphy
+● Plural suﬃx -er for monosyllables, -ner elsewhere
+pag pag-er ‘yard’
+panag panag-ner ‘army’
+● Schwa of initial clusters contributes to allomorphy
+<srah> s@rah s@rah-ner ‘hall’
+● Register-level variation for ﬁnal CC clusters
+<vakr>
+Standard vak@r vakr-er
+Colloquial vak@r vak@r-ner
+‘tiger’ ‘tigers’
+● Let’s look at grammars per register
+40
+Allomorphy
+● Plural suﬃx -er for monosyllables, -ner elsewhere
+pag pag-er ‘yard’
+panag panag-ner ‘army’
+● Schwa of initial clusters contributes to allomorphy
+<srah> s@rah s@rah-ner ‘hall’
+● Register-level variation for ﬁnal CC clusters
+<vakr>
+Standard vak@r
+vakr-er
+Colloquial vak@r vak@r-ner
+‘tiger’ ‘tigers’
+● Let’s look at grammars per register
+40
+Allomorphy
+● Plural suﬃx -er for monosyllables, -ner elsewhere
+pag pag-er ‘yard’
+panag panag-ner ‘army’
+● Schwa of initial clusters contributes to allomorphy
+<srah> s@rah s@rah-ner ‘hall’
+● Register-level variation for ﬁnal CC clusters
+<vakr>
+Standard vak@r vakr-er
+Colloquial vak@r vak@r-ner
+‘tiger’ ‘tigers’
+● Let’s look at grammars per register
+40
+Allomorphy
+● Plural suﬃx -er for monosyllables, -ner elsewhere
+pag pag-er ‘yard’
+panag panag-ner ‘army’
+● Schwa of initial clusters contributes to allomorphy
+<srah> s@rah s@rah-ner ‘hall’
+● Register-level variation for ﬁnal CC clusters
+<vakr>
+Standard vak@r vakr-er
+Colloquial vak@r vak@r-ner
+‘tiger’ ‘tigers’
+● Let’s look at grammars per register
+40
+Standard allomorphy
+● In standard speech, schwa in initial clusters feed allomorphy
+[s@rah] ‘hall’
+[s@rah-ner] ‘hall-pl’
+● Final CC schwa is always deleted before V-initial inﬂection
+[vak@r] ‘tiger’
+[vakr-ov] ‘tiger- inst
+● On the surface, absence of schwa feeds and is fed by plural allomorphy
+[vakr-er] ‘tiger- pl
+● Post-cyclic insertion straightforwardly handles allomorphy
+‘halls’ ’tiger’ ‘tigers’
+Input: srah + PL vakr vakr + PL
+Cycle 1 srah vakr vakr
+Initial epenthesis s@rah
+Cycle 2 Add PL: s@rah-ner vakr-er
+Final epenthesis vak@r
+● But doesn’t explain schwa retention facts from thepapt@.r-uhi accidental
+gaps
+41
+Standard allomorphy
+● In standard speech, schwa in initial clusters feed allomorphy
+[s@rah] ‘hall’
+[s@rah-ner] ‘hall-pl’
+● Final CC schwa is always deleted before V-initial inﬂection
+[vak@r] ‘tiger’
+[vakr-ov] ‘tiger- inst
+● On the surface, absence of schwa feeds and is fed by plural allomorphy
+[vakr-er] ‘tiger- pl
+● Post-cyclic insertion straightforwardly handles allomorphy
+‘halls’ ’tiger’ ‘tigers’
+Input: srah + PL vakr vakr + PL
+Cycle 1 srah vakr vakr
+Initial epenthesis s@rah
+Cycle 2 Add PL: s@rah-ner vakr-er
+Final epenthesis vak@r
+● But doesn’t explain schwa retention facts from thepapt@.r-uhi accidental
+gaps
+41
+Standard allomorphy
+● In standard speech, schwa in initial clusters feed allomorphy
+[s@rah] ‘hall’
+[s@rah-ner] ‘hall-pl’
+● Final CC schwa is always deleted before V-initial inﬂection
+[vak@r] ‘tiger’
+[vakr-ov] ‘tiger- inst
+● On the surface, absence of schwa feeds and is fed by plural allomorphy
+[vakr-er] ‘tiger- pl
+● Post-cyclic insertion straightforwardly handles allomorphy
+‘halls’ ’tiger’ ‘tigers’
+Input: srah + PL vakr vakr + PL
+Cycle 1 srah vakr vakr
+Initial epenthesis s@rah
+Cycle 2 Add PL: s@rah-ner vakr-er
+Final epenthesis vak@r
+● But doesn’t explain schwa retention facts from thepapt@.r-uhi accidental
+gaps
+41
+Standard allomorphy
+● In standard speech, schwa in initial clusters feed allomorphy
+[s@rah] ‘hall’
+[s@rah-ner] ‘hall-pl’
+● Final CC schwa is always deleted before V-initial inﬂection
+[vak@r] ‘tiger’
+[vakr-ov] ‘tiger- inst
+● On the surface, absence of schwa feeds and is fed by plural allomorphy
+[vakr-er] ‘tiger- pl
+● Post-cyclic insertion straightforwardly handles allomorphy
+‘halls’ ’tiger’ ‘tigers’
+Input: srah + PL vakr vakr + PL
+Cycle 1 srah vakr vakr
+Initial epenthesis s@rah
+Cycle 2 Add PL: s@rah-ner vakr-er
+Final epenthesis vak@r
+● But doesn’t explain schwa retention facts from thepapt@.r-uhi accidental
+gaps
+41
+Cyclic deletion and allomorphy
+● With cyclic deletion, allomorphy requires a degree of parallelism
+‘tiger’ ‘tigers’
+<vakr> vak@r vakr-er
+● In Standard speech:
+1. PL has strictSubcatrequirements: -er for σ, -ner elsewhere
+2. Cyclic deletion deletes deletable schwas
+3. Two feed each other
+[vak@r] - PL *CC Subcat *@ BD-Max-@ Align-σ-L
+a. va.k@r-ner ∗! 7
+b.  vak.r-er ∗ 3
+c. va.k@.r-er ∗! ∗ ∗ 6
+d. vakr-ner ∗! ∗! ∗ 4
+42
+Colloquial allomorphy
+● In contrast in colloquial speech, cyclic deletion is turned oﬀ (low ranked)
+in inﬂection
+‘tiger’ ‘tigers’
+<vakr> vak@r vak@r-ner
+● Base’s schwa feeds allomorphy
+[vak@r] - PL *CC Subcat BD-Max- @ *@ Align-σ-L
+a.  va.k@r-ner ∗ 7
+b. vak.r-er ∗! 3
+c. va.k@.r-er ∗! ∗ ∗ 6
+d. vakr-ner ∗! ∗! ∗ 4
+43
+Table of Contents
+Introduction
+Orthography of schw as
+Distribution of inserted schw as
+Initial cluster
+Medial cluster
+Final cluster
+Morphological Deviations
+Cyclic deletion
+Insertion vs. deletion
+Parallel allomorphy
+Conclusion
+44
+Conclusion
+● Looked at schwa epenthesis from OR to SRs:
+● Sensitive to:
+1. Directional syllabiﬁcation
+2. Slew of phonotactic constraints
+3. Morpheme alignment
+4. Cyclic insertion and deletion
+5. Parallelist allomorphy
+● Main take-away: OR->SR is a morphophonological process
+● Does the OR reﬂect the URs? Probably.
+45
+References
+[Abrahamyan 1959] Abrahamyan, Ašot A.: Bayakan krknavor ba˙ rerë
+žamanakakic’ hayerenowm [Reduplicated verbs in Armenian]. In:HSS˙R GA
+Te˙ gekagirhasarakakangitowt’yownneri 4 (1959), S. 41–54
+[Chomsky und Halle 1968] Chomsky, Noam ;Halle, Morris: The sound
+pattern of English. Cambridge, MA : MIT Press, 1968
+[Dolatian 2021] Dolatian, Hossep: The role of heads and cyclicity in
+bracketing paradoxes in Armenian compounds. In:Morphology 31 (2021),
+Nr. 1, S. 1–43
+[Itô 1989] Itô, Junko: A prosodic theory of epenthesis. In:Natural
+Language & Linguistic Theory 7 (1989), Nr. 2, S. 217–259
+[Kenstowicz 1994] Kenstowicz, Michael: Syllabiﬁcation in Chukchee: A
+constraints-based analysis. In: Da vison, A. (Hrsg.) ;Maier, N. (Hrsg.) ;
+Sil v a, G. (Hrsg.) ;Yan, W. S. (Hrsg.):Proceedings of the Formal
+Linguistics Society of the Midwest Bd. 4. Iowa City, IA : Department of
+Linguistics, University of Iowa, 1994, S. 160–181
+[van Oostendorp 2011] Oostendorp, Marc van:Phonological projection:
+A theory of feature content and prosodic structure. Berlin and New York :
+Mouton de Gruyter, 2011
+[Pierce 2007] Pierce, Mark: Vowel Epenthesis vs. Schwa Lexicalization in
+Classical Armenian. In:Journal of Indo-European Studies 35 (2007),
+Nr. 1/2, S. 111–119
+[Sanjian 1996] Sanjian, Avedis K.: The Armenian Alphabet. In:Daniels,
+Peter T. (Hrsg.) ;Bright, William (Hrsg.):The World’s WritingSystems.
+New York and Oxford : Oxford University Press, 1996, S. 356–357
+[Sproat 2000] Sproat, Richard: A computational theory of writing systems.
+Cambridge : Cambridge University Press, 2000
+[Vaux 1998] V aux, Bert: The phonology of Armenian. Oxford : Clarendon
+Press, 1998
+[Zuraw 2002] Zura w, Kie: Aggressive reduplication. In:Phonology 19
+(2002), Nr. 3, S. 395–439
+46
+Appendix guide
+● Underlying schwas 48
+● Phonological constraints 49
+● Aﬃx-speciﬁc epenthesis 55:
+/uni25B8Cyclic contiguity in the passive 56
+/uni25B8Fossilized allomorphy in the causative 62
+● Epenthesis inside preﬁxes 66
+● Compounds 68
+● Reduplication and pseudo-reduplication 69
+● Prosodic and semantic conditioning for sibilants in compounds 75
+● Psychological reality of epenthesis 78
+47
+Underlying schw as
+● Schwas in OR are always pronounced but are very few
+● Some are functionally loaded like inﬂectional morphemes
+<mart> ‘man’ <kiSer-van> ‘night-gen’
+<mart-@> ‘man-def <kiSer-v@n-e> ‘night-abl’
+● Or prepositions, derivational preﬁxes, and few words
+<@st> < @nt-> < @mb-el>
+‘according to’ ‘inter-’ ‘to imbibe’
+● Can ﬁnd in proper nouns and borrowings where schwa is ‘unpredictably
+there’ and cannot be deleted
+<pit@r> ‘Peter’
+<pit@r-ov> ‘Peter-inst’
+● Easiest analysis: present in UR + idiosyncratically marked to never
+delete, unlike cyclically added schwas
+48
+Sibilant-stop prothesis
+● Initial 2C clusters generally undergo medial epenthesis to satisfyOnset
+<hbard> < ttum> < dgar>
+[h@.bard] [ t@.tum] [d@.gar]
+● Systematic exception are sT clusters with initial epenthesis
+<sbasel> < sdor> < zkal]
+[@s.pa.sel] [ @s.tor] [@s.kal]
+● Cont-#sTV: root-initial stV clusters must stay adjacent
+<zkal> Cont-sTV Onset
+a.  @s.kal ∗
+b. s@.kal ∗!
+49
+Lack of prothesis
+● For initial epenthesis, C2 has to be a stop, not a sonorant
+<sxal> < slak> < zrutj>ts>
+[s@.xal] [ s@.lak] [ z@.rutj>ts]
+● Besides s/z, St shows prothesis but not other types of fricative+stop
+combinations
+<Zbid> < xdiG> < Spot> < Stap>
+[Z@.bid] [x@.diG] [ S@.pot] [ @S.tap]
+50
+Prefixation and sibilants
+● for sTV-initial roots, prothesis survives in preﬁxation
+sTV: <zkuS> < anzkuS> [@skuS] [an-@skuS]
+● Crucially, need to assume [nz] is a bad coda (which it generally is)
+● With *CC, no-epenthesis harmonically binds the winner
+● Contiguity » Alignment
+an-zkuS *CC Cont-sTV Align-M Align- σ-L
+a. anz.kuS ∗! ∗ 3
+b.  a.n@s.kuS ∗ 5
+c. an.z@.kuS ∗! 6
+● Appendix: see variation for how to syllabify after vowels + okay codas
+51
+Larger sibilant clusters
+● In larger sTC*V clusters, prothesis applies only if T is coronal
+<sprit> < sdrug> < sklil>
+[s@p.rit] [@st.rug] [ s@k.lil]
+● Same generalization applies in larger clusters
+<sbrtil> < sdr>tSum> < sgrdel>
+[s@.b@r.til] [@s.t@r.>tSum] [ s@.g@r.del]
+● Eﬀect of Cont-st for /s+{t,d}/
+<sdrug> Cont-sTV Cont-st Onset
+a.  @st.rug ∗
+b. s@d.rug ∗! ∗
+52
+Coda restrictions
+● Stop- or aﬀricate-ﬁnal complex codas can appear after non-schwas
+/NT/ /n /tieaccentlowercasets/ /rt/
+[ant.ra.nig] [an>ts.rev] [mart.ga.jin]
+● And after schwas
+/NT/ /n >ts/ /rt/
+<gntrug> < gn>tsni> < grd.ser>
+[g@rd.rug] [ g@n>ts.ni] [g@rd.ser]
+53
+Coda restrictions
+● But other complex codas only exist for non-schwas
+/Vrs/ /V rS/ /Vrm/
+[hars.nig] [garS.neG] [arm.dik]
+● Not schwas
+<Crs> < CrS> < Crm>
+<srsgel> < prSdal> < trmpal>
+[s@.r@s.kel] [ p@.r@S.tal] [t@.r@m.pal]
+*[s@rs.kel] *[ p@rS.tal] *[t@rm.pal]
+● *@XY : schwa can’t head some complex codas
+● Could be generalized with projection constraints (van Oostendorp, 2011)
+54
+Affix-specific epenthesis
+● Previous cases involved and preﬁxes undergoing epenthesis to syllabify
+clusters
+● Some aﬃxes arbitrarily require epenthesis even though unneeded for
+syllable structure
+55
+Passivization
+● Active verbs are formed from root + theme vowel + inﬂection
+[xos-i-l] ‘to speak’
+[xos-v-i-l] ‘to be spoken’
+● Passive verbs add the suﬃx-v- before the theme vowel
+● A lot of dialectal variation on what happens when-v- is after a CC-root
+● FYI: intensive suﬃx-t- behaves the same
+56
+Western Armenian
+● In Western Armenian,-v- triggers schwa after any CC-cluster
+● Whether CC is pronounceable complex coda
+[kant-e-l] ‘to destroy’
+[kant@-v-i-l] ‘to be destroyed’
+● Or not
+[madn-e-l] ‘to betray’
+[madn@-v-i-l] ‘to be betrayed’
+57
+Western Armenian
+● Output constraint: *CC-Pass
+● But the location of schwa isn’t predicted by directional syllabiﬁcation
+because creates open syllable
+<madn-v-i-l> *CC-Pass Align- σ-L
+a. madn.vil ∗! 4
+b. / ma.d@n-vil 7
+c. mad.n@-vil 8
+● Somewhat resembles Contiguity-eﬀects in Chukchee (Kenstowicz, 1994)
+58
+Cyclicity
+● Idea: add the schwa in a location that maximizes similarity of the stems
+between derived (passive) and base (active)
+● Cyclic-contiguity:
+<madn-v-i-l> [mad.nel] *CC-Pass BD-Cont Align- σ-L
+a. madn.vil ∗! 4
+b. ma.d@n-vil ∗! 7
+c.  mad.n@-vil 8
+● BD-Cont looks equivalent to useMax-@ for cyclic-deletion eﬀects
+59
+Rhotics
+● When CC ends in a rhotic, usually ﬁnd an internal schwa
+[p@ndr-e-l] ‘to ﬁnd’
+[p@nd@r-v-i-l] ‘to be found’
+● For some lexemes and speaker, can have have schwa at morpheme
+boundary
+[avr-e-l] ‘to ruin’
+[av@r-v-i-l, avr@-v-i-l] ‘to be ruined’
+● General dis-preference for medial openr@ syllables
+<avr-v-i-l> [avr-el] *CC-Pass *...r@.... BD-Cont Align- σ-L
+a. avr.vil ∗! 3
+b.  a.v@r-vil ∗ 5
+c. av.r@-vil ∗! 6
+60
+Eastern Armenian
+● Eastern Armenian is more nuanced
+● Only diﬀerence from Western is that there’s no epenthesis when CC is an
+okay complex coda
+‘to reject’ ‘to be rejected’ (E) (W)
+[merZ-el] [merZ-vel] [ merZ@-vil]
+● Though lots of lexeme-based variation
+● EA doesn’t have the *CC-Passconstraint
+<merZ-v-e-l> [merZ-el] *CC BD-Cont Align- σ-L
+a.  merZ.vel 4
+b. mer@Z-vel ∗! 7
+c. merZ@-vel 8!
+● Contiguity handles the epenthesis cases
+61
+Causative
+● Odd eﬀects for causative suﬃx<>tsn>
+● In Western, always surfaces as>ts@n even after a vowel
+‘to sing’ ‘to ﬂee’
+[jerk-e-l] [ pax-i-l]
+[jerk-e->ts@n-e-l] [pax>ts@n-e-l
+● But in EA, generally no schwa after a vowel (+ lots of variation)
+[jerkh-e->tshn-e-l] [phax>tsh@n-e-l
+● Makes some diachronic sense: reduced from Classical->tshu>tshan-e-l
+● Two equivalent(?) approaches:
+1. Allomorphy: WA has />ts@n/, while EA has />tsn,>ts@n/ with subcat frames
+2. Epenthesis: morpheme-speciﬁc constraint on causative syllabiﬁcation
+● Will try out an epenthesis approach and see how far it takes us
+62
+Coda-ban
+● In Western, the schwa is always used even in [...a->ts@...]
+● Coda-ban: the causative suﬃx disprefers being in a coda
+<jerk-e->tsn-e-l> *caus] Align-σ-L
+a. jer.ke>ts.nel ∗! 9
+b.  jer.ke.>ts@.nel 14
+● This is high-ranking and generalized in Western
+63
+Coda-ban
+● In Eastern Armenian, epenthesis generally blocked after vowels, but
+triggered for other consonants
+● Coda-ban is reﬁned for whether causative is part of complex coda or not
+jerk-e->tsn-e-l *Ccaus] Align-σ-L *Vcaus]
+a.  jer.ke>ts.nel 9
+b. jer.ke.>ts@.nel 14! ∗
+64
+Coda-ban
+● But after consonants, it triggers internal epenthesis instead of epenthesis
+at morpheme boundaries
+● Not predicted by directional syllabiﬁcation
+● Could argue that causative can’t follow schwa
+<pax->tsn-e-l> *@caus] *C caus] Align-σ-L *Vcaus]
+a. pax>ts.nel ∗! 4
+b. pa.x@>ts.nel ∗! 7 ∗
+c.  pax.>ts@.nel 8
+● Can’t use cyclicity to help because base form hasx be an onsetpax-e-l
+● Allomorphy is probably better on the long-run
+65
+Epenthesis in prefixes
+● Besides roots, preﬁxes can also undergo epenthesis
+● Productive C preﬁx:
+‘I take’ ‘I love’
+Subjunctive <arnem> [arnem] <sirem> [sirem]
+Negative <>tSarnem> [>tS-arnem] <>tSsirem> [>tS@-sirem]
+Indicative <garnem> [g-arnem] <gsirem> [g@-sirem]
+● Unproductive CC- preﬁx:
+<kujn> [kujn] ‘color’ <koh> [koh] ‘content’
+<dZkujn> [d@Z-kujn] ‘discolored’ <dZkoh> [d@Z-koh] ‘discontent’
+66
+Epenthesis in prefixes
+● Besides roots, preﬁxes can also undergo epenthesis
+● Productive C preﬁx:
+‘I take’ ‘I love’
+Subjunctive <arnem> [arnem] <sirem> [sirem]
+Negative <>tSarnem> [>tS-arnem] <>tSsirem> [>tS@-sirem]
+Indicative <garnem> [g-arnem] <gsirem> [g@-sirem]
+● Unproductive CC- preﬁx:
+<kujn> [kujn] ‘color’ <koh> [koh] ‘content’
+<dZkujn> [d@Z-kujn] ‘discolored’ <dZkoh> [d@Z-koh] ‘discontent’
+66
+Epenthesis in prefixes
+● Besides roots, preﬁxes can also undergo epenthesis
+● Productive C preﬁx:
+‘I take’ ‘I love’
+Subjunctive <arnem> [arnem] <sirem> [sirem]
+Negative <>tSarnem> [>tS-arnem] <>tSsirem> [>tS@-sirem]
+Indicative <garnem> [g-arnem] <gsirem> [g@-sirem]
+● Unproductive CC- preﬁx:
+<kujn> [kujn] ‘color’ <koh> [koh] ‘content’
+<dZkujn> [d@Z-kujn] ‘discolored’ <dZkoh> [d@Z-koh] ‘discontent’
+66
+Epenthesis in prefixes
+● Besides roots, preﬁxes can also undergo epenthesis
+● Productive C preﬁx:
+‘I take’ ‘I love’
+Subjunctive <arnem> [arnem] <sirem> [sirem]
+Negative <>tSarnem> [>tS-arnem] <>tSsirem> [>tS@-sirem]
+Indicative <garnem> [g-arnem] <gsirem> [g@-sirem]
+● Unproductive CC- preﬁx:
+<kujn> [kujn] ‘color’ <koh> [koh] ‘content’
+<dZkujn> [d@Z-kujn] ‘discolored’ <dZkoh> [d@Z-koh] ‘discontent’
+66
+Epenthesis in prefixes
+● Multiple schwas can be seen
+‘I hear’ ‘I put’
+Subjunctive <lsem> [l@.sem] <tnem> [t@.nem]
+Negative <>tSlsem> [>tS@-l@.sem] <>tStnem> [>tS@-t@.nem]
+Indicative <glsem> [g@-l@.sem] <gtnem> [g@-t@.nem]
+● Schwa location is predicted by respect to morpheme left-boundaries
+<glsem> *CC Align-M Align- σ-L
+a. glsem ∗! ∗!
+b. g@lsem ∗! 3
+c.  g@-l@sem 6
+67
+Epenthesis in prefixes
+● Multiple schwas can be seen
+‘I hear’ ‘I put’
+Subjunctive <lsem> [l@.sem] <tnem> [t@.nem]
+Negative <>tSlsem> [>tS@-l@.sem] <>tStnem> [>tS@-t@.nem]
+Indicative <glsem> [g@-l@.sem] <gtnem> [g@-t@.nem]
+● Schwa location is predicted by respect to morpheme left-boundaries
+<glsem> *CC Align-M Align- σ-L
+a. glsem ∗! ∗!
+b. g@lsem ∗! 3
+c.  g@-l@sem 6
+67
+Epenthesis in prefixes
+● Multiple schwas can be seen
+‘I hear’ ‘I put’
+Subjunctive <lsem> [l@.sem] <tnem> [t@.nem]
+Negative <>tSlsem> [>tS@-l@.sem] <>tStnem> [>tS@-t@.nem]
+Indicative <glsem> [g@-l@.sem] <gtnem> [g@-t@.nem]
+● Schwa location is predicted by respect to morpheme left-boundaries
+<glsem> *CC Align-M Align- σ-L
+a. glsem ∗! ∗!
+b. g@lsem ∗! 3
+c.  g@-l@sem 6
+67
+Epenthesis in prefixes
+● Multiple schwas can be seen
+‘I hear’ ‘I put’
+Subjunctive <lsem> [l@.sem] <tnem> [t@.nem]
+Negative <>tSlsem> [>tS@-l@.sem] <>tStnem> [>tS@-t@.nem]
+Indicative <glsem> [g@-l@.sem] <gtnem> [g@-t@.nem]
+● Schwa location is predicted by respect to morpheme left-boundaries
+<glsem> *CC Align-M Align- σ-L
+a. glsem ∗! ∗!
+b. g@lsem ∗! 3
+c.  g@-l@sem 6
+67
+Compounds
+● Compounds are formed by concatenating roots/stems with-a-
+don + >dzar ‘holiday + tree’ >tSar + sird ‘evil + heart’
+don-a- >dzar ‘Christmas tree’ >tSar-a-sird ‘evil-hearted’
+● Compounds behave same as preﬁxed words wrt schwa epenthesis
+>dZaS + s@rah ‘food + hall’ vart + Z@bid ‘rose + smile’>dZaS-a-s@rah ‘dining-hall’ vart-a-Z@bid ‘smiley (person)’
+<>dZaSasrah> < vartaZbid>
+● Doesn’t matter if compound is endocentric or exocentric
+● Appendix: some funny business with sT + Cr
+68
+Compounds
+● Compounds are formed by concatenating roots/stems with-a-
+don + >dzar ‘holiday + tree’ >tSar + sird ‘evil + heart’
+don-a- >dzar ‘Christmas tree’ >tSar-a-sird ‘evil-hearted’
+● Compounds behave same as preﬁxed words wrt schwa epenthesis
+>dZaS + s@rah ‘food + hall’ vart + Z@bid ‘rose + smile’>dZaS-a-s@rah ‘dining-hall’ vart-a-Z@bid ‘smiley (person)’
+<>dZaSasrah> < vartaZbid>
+● Doesn’t matter if compound is endocentric or exocentric
+● Appendix: some funny business with sT + Cr
+68
+Reduplication
+● Interim summary: no resyllabiﬁcation over root left-boundaries
+● Reduplication also enforces root left-alignment
+● Enforced via:
+/uni25B8morphological boundaries (morphology)
+/uni25B8pseudo-reduplication (phonology)
+69
+Reduplication
+● Diﬀerent types of reduplication in Armenian
+● Focus on verbal reduplication
+● Canonical type: CVC(C) root is reduplicated faithfully
+SoG-al ‘to shine’ SoG-SoG-al to dazzle
+● Canonical function is intensity + word-coinage
+● Relatively rare + ancient + often have semantic opacity
+>tSar ‘evil’ >tSar- >tSar-al to torture
+70
+Reduplication with schw a
+● More common are reduplicated roots with a schwa
+● Orthographically, no schwas are present
+‘to rub’ (intense) ‘to cluck’ (id.)
+[S@p-el] [S@p-S@.pel] [k@rt-al] [k@rt-k@r.tal]
+<Spel> < SpSpel> < krtal> < krtkrtal>
+● Epenthesis respects the reduplication-morpheme boundary
+<SpSpel> *CC Align-M Align- σ-L
+a. SpSpel ∗! ∗!
+b. S@.p@S.pel ∗! 7
+c.  S@p-S@pel 8
+71
+Syncopated reduplication
+● Besides canonical type, there’s a lot of other forms
+● For syncopated Red, second copy uses a schwa
+● Unsycopated forms existed before (Abrahamyan, 1959)
+‘to run’ (intensive) ‘to measure’ ‘to measure out’
+[vaz-el] vaz-v@z-el ] [kaS-el] kaS-k@S-el ]
+<vazel> < vazvzel> < kaSel> < kaSkSel>
+kaS-kS-el *CC Align-M Align- σ-L
+a. kaSk.Sel ∗!
+b. ka.S@k.Sel ∗! 7
+c.  kaS-k@.Sel 8
+72
+Corrupted reduplication
+● In ‘corrupted’ Red, second onset underwent diachrnic lenition to a bilabial
+● The copies are no longer identical
+‘to draw’ ‘to scribble’ ‘to scrape’ (intense)
+[xaz-el] [xaz-p@z-el] [k@s-el] [k@s-m@s-el]
+<xazel> < xazpzel> < ksel> < ksmsel>
+● But schwa-placement still respects the morpheme boundary
+73
+Potential pseudo-reduplication
+● In some cases, there is no unreduplicated base but the copies are identical
+<krkral> [k@r-k@.ral ‘to croak’
+<dndnal> [d@n-d@.nal ‘to loiter’
+● Other cases, there is coda lenition and there is no independent base
+<gzgdel> [g@z-g@d-el] ‘to coil up’
+<tnt>tSel> [t@n-t@>tS-el] ‘to murmur’
+● These words are arguably underived and not cases of semantically
+meaningful reduplication
+● Two ways of analyzing the pseudo-reduplication
+1. Morphological: word is morphologically made up semi-identical morphs
+gz-gd-el
+2. Phonology: single morph with a constraint for phonological identity in
+similarly-enough substrings (Zuraw, 2002)
+74
+Sibilants
+● Recall that sT triggers prothesis in isolation and in preﬁxed forms
+<zkuS> < anzkuS>
+[@zkuS] [an-@zkuS]
+‘careful’ ‘un-careful’
+● For preﬁxed form,nz is bad coda thus the schwa appears
+an-zkuS *CC Cont-sTV Align-M Align- σ-L
+a. anz.kuS ∗! ∗ 3
+b.  a.n@s.kuS ∗ 5
+c. an.z@.kuS ∗! 6
+● But what happens if there’s a vowel before sibilant?
+● Answer is in compounds
+75
+Sibilants in compounds
+● Recall that compounds use a linking vowel-a-
+● They are classiﬁed into endocentric vs. exocentric
+don + >dzar ‘holiday + tree’ >tSar + sird ‘evil + heart’
+don-a- >dzar ‘Christmas tree’ >tSar-a-sird ‘evil-hearted’
+● When Stem2 has sT, schwa prothesis applies/survives only in
+endocentrics!
+@steG>dz-e-l ‘to create’ [@skisp ‘beginning’
+p´ an + @steG>dz-e-l ‘thing + ...’ dari + @skisp ‘black + ...’
+pan-a-s.t´ eG>dz ‘poet’ dar-e-@sg´isp ‘start of the year’
+● Based on other facts on compounds, the endocentric head is parsed into
+its own prosodic constituents PStem (Dolatian, 2021)
+● Epenthesis overapplies in endocentrics because of the prosodic boundary
+76
+No schw a in exocentric
+● In exocentric compound, schwa does not surface, whether via cyclic
+dialection or via never epenthesizing it in the ﬁrst place
+<panasteG>dz> Al-H Cont V.V Al-M * @ Max-@
+[@steG>dz-el] -sTV
+a.  pa.nas.teG>dz ∗ ∗
+b. pa.na.@s.teG>dz ∗! ∗ ∗
+c. pa.na.s@.teG>dz ∗! ∗ ∗
+● But in endocentric, Align-H requires that the head is aligned with a
+prosodic boundary (ignoring any epenthesized segments)
+daresgisp Al-H Cont- V.V Al-M * @ Max-@
+[@skisp] sTV
+a. da.(res.kisp ∗! ∗ ∗
+b.  da.re.(@s.kisp ∗ ∗ ∗
+c. da.re.(s@.kisp ∗! ∗ ∗
+77
+Interim summary
+● Looked at relationship between orthography and pronuncation
+● OR->SR: widespread and systematic process of schwa epenthesis
+/uni25B8Directional syllabiﬁcation
+/uni25B8sibilant-stop contiguity
+/uni25B8complex-coda licensing
+/uni25B8boundary-alignment (preﬁx, compound, Red)
+/uni25B8cyclic contiguity (for idiosyncratic suﬃxes)
+/uni25B8cyclic deletion (for ﬁnal clusters)
+/uni25B8Parallel allomorphy
+● Give all above, epenthesis looks like a grammatical process
+● Q1: Is it part of mental grammars, or just a consciously learned process?
+● Q2: If part of grammar, is it part of orthography or also phonology?
+● Q3: Does it say anything about URs?
+78
+Unconscious
+● Q1: Is it part of mental grammars, or just a consciously learned process?
+● It’s not consciously learned
+● Textbooks and teaching grammars often provide ‘general rules’ for schwa
+epenthesis based
+● But the rules are simple
+/uni25B8"If CCCCV, sometimes schwa after C1 and/or C3"
+● Does this mean that speakers don’t learn a schwa-epenthesis process?
+79
+Grammatical
+● Q2: If part of grammar, is it part of orthography or also phonology?
+● It has to at least be part of orthography as a ‘grammar’
+● Given a nonce word or low-frequency word, a speaker will pronounce this
+word as expected based all the relevant phonological/morphological
+constraints
+● Vaux tested a speaker on a lit of 100 words
+● The speaker only recognized 20% of the words
+● For the remaining 80%, he correctly prononounced all but 7 of them
+● For the 7 ‘errors’, he had given the ‘wrong’ morphological parse
+80
+URs?
+● So there is a grammatical process of schwa epenthesis from orthography
+to SR
+● Q3: Does it say anything about URs?
+● Inconclusive yes
+● Armenian script was created for Classical Armenian in 3/4th century
+(Sanjian, 1996)
+● The grapheme was used for schwas, but not inside consonant clusters
+● Both Classical and Modern Armenian had ORs with clusters that are
+broken up in pronunciation
+● Virtually the same epenthesis process in Classical and Modern (Pierce,
+2007)
+● What this means? The original creators of the script must have thought
+that their own surface schwas were predictable to skip writing
+81

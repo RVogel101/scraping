@@ -1,0 +1,141 @@
+StdBlock,StdLabel,Batch,Rank,Word,Definition,POS,Syllables,Band,Difficulty,IPA,English_Approx,Phonetic_Difficulty
+1,N1,1,1,ու,and,noun,1,1-100,1.1,v~ɔu,v/o oo,2.0
+1,N1,1,2,որ,which,noun,1,1-100,1.1,v~ɔɾ,v/o r,2.0
+1,N1,1,8,իր,"his, her, its",noun,1,1-100,1.1,iɾ,ee r,2.0
+1,N1,1,12,մէջ,"in, among",noun,1,1-100,1.1,m?tʃ,m ? ch,1.0
+1,N1,1,13,նա,"he, him",noun,1,1-100,1.1,n?,n ?,1.0
+1,N1,1,15,մեր,our,noun,1,1-100,1.1,mɛ~jɛɾ,m e/ye r,2.0
+1,N1,1,16,ոչ,no,noun,1,1-100,1.1,v~ɔtʃ,v/o ch,2.0
+1,N1,1,24,նոր,new,noun,1,1-100,1.1,nv~ɔɾ,n v/o r,2.0
+1,N1,1,26,մեծ,"big, great",noun,1,1-100,1.1,mɛ~jɛdz,m e/ye dz,2.0
+1,N1,1,30,կամ,or,noun,1,1-100,1.1,k?m,k ? m,1.0
+1,N1,1,37,չի,"s, he, it doesn't",noun,1,1-100,1.1,tʃi,ch ee,1.0
+1,N1,1,47,ինչ,what,noun,1,1-100,1.1,intʃ,ee n ch,1.0
+1,N1,1,48,շատ,"a lot, very, many",noun,1,1-100,1.1,ʃ?d,sh ? d,1.0
+1,N1,1,52,հա,yeah,noun,1,1-100,1.1,h?,h ?,1.0
+1,N1,1,53,էջ,page,noun,1,1-100,1.1,?tʃ,? ch,1.0
+1,N1,1,55,հետ,with,noun,1,1-100,1.1,hɛ~jɛd,h e/ye d,1.0
+1,N1,1,56,երբ,when,noun,1,1-100,1.1,ɛ~jɛɾp,e/ye r p,2.0
+1,N1,1,71,իմ,my,noun,1,1-100,1.1,im,ee m,1.0
+1,N1,1,82,օր,day,noun,1,1-100,1.1,oɾ,o r,2.0
+1,N1,1,83,բան,thing,noun,1,1-100,1.1,p?n,p ? n,1.0
+2,N2,1,84,ուր,where,noun,1,1-100,1.1,v~ɔuɾ,v/o oo r,2.0
+2,N2,1,94,առ,take(!),noun,1,1-100,1.1,?r,? r (trilled),3.3
+2,N2,1,95,մենք,we,noun,1,1-100,1.1,mɛ~jɛnk,m e/ye n k,1.0
+2,N2,1,100,քան,than,noun,1,1-100,1.1,k?n,k ? n,1.0
+2,N2,2,4,էր,[No definition],unknown,1,1-100,1.35,?ɾ,? r,2.0
+2,N2,2,6,մի,[No definition],unknown,1,1-100,1.35,mi,m ee,1.0
+2,N2,2,7,կը,[No definition],unknown,1,1-100,1.35,k?,k ?,1.0
+2,N2,2,14,էլ,[No definition],unknown,1,1-100,1.35,?l,? l,1.0
+2,N2,2,19,ին,[No definition],unknown,1,1-100,1.35,in,ee n,1.0
+2,N2,2,21,մեջ,[No definition],unknown,1,1-100,1.35,mɛ~jɛtʃ,m e/ye ch,1.0
+2,N2,2,22,ար,[No definition],unknown,1,1-100,1.35,?ɾ,? r,2.0
+2,N2,2,25,իսկ,[No definition],unknown,1,1-100,1.35,isk,ee s k,1.0
+2,N2,2,27,ալ,access-restricted; nayiri; com,unknown,1,1-100,1.35,?l,? l,1.0
+2,N2,2,29,կան,[No definition],unknown,1,1-100,1.35,k?n,k ? n,1.0
+2,N2,2,32,թե,[No definition],unknown,1,1-100,1.35,tɛ~jɛ,t e/ye,1.0
+2,N2,2,39,ել,[No definition],unknown,1,1-100,1.35,ɛ~jɛl,e/ye l,1.0
+2,N2,2,40,մը,[No definition],unknown,1,1-100,1.35,m?,m ?,1.0
+2,N2,2,41,թէ,[No definition],unknown,1,1-100,1.35,t?,t ?,1.0
+2,N2,2,42,եր,[No definition],unknown,1,1-100,1.35,ɛ~jɛɾ,e/ye r,2.0
+2,N2,2,43,կա,[No definition],unknown,1,1-100,1.35,k?,k ?,1.0
+3,N3,2,50,նան,[No definition],unknown,1,1-100,1.35,n?n,n ? n,1.0
+3,N3,2,66,էն,[No definition],unknown,1,1-100,1.35,?n,? n,1.0
+3,N3,2,69,դա,[No definition],unknown,1,1-100,1.35,t?,t ?,1.0
+3,N3,2,72,չեն,[No definition],unknown,1,1-100,1.35,tʃɛ~jɛn,ch e/ye n,1.0
+3,N3,2,76,սա,[No definition],unknown,1,1-100,1.35,s?,s ?,1.0
+3,N3,2,78,մա,[No definition],unknown,1,1-100,1.35,m?,m ?,1.0
+3,N3,2,86,բա,[No definition],unknown,1,1-100,1.35,p?,p ?,1.0
+3,N3,2,88,եվ,access-restricted; nayiri; com,unknown,1,1-100,1.35,ɛ~jɛ?,e/ye ?,1.0
+3,N3,2,89,տե,[No definition],unknown,1,1-100,1.35,dɛ~jɛ,d e/ye,1.0
+3,N3,2,93,ամ,access-restricted; nayiri; com,unknown,1,1-100,1.35,?m,? m,1.0
+3,N3,2,138,ըստ,according to,noun,1,101-500,1.9,?sd,? s d,1.0
+3,N3,2,141,վեր,"up, above",noun,1,101-500,1.9,?ɛ~jɛɾ,? e/ye r,2.0
+3,N3,2,143,մոտ,near the table,noun,1,101-500,1.9,mv~ɔd,m v/o d,2.0
+3,N3,3,157,ինձ,leopard,noun,1,101-500,1.9,indz,ee n dz,2.0
+3,N3,3,163,դուրս,"out, outside",noun,1,101-500,1.9,tv~ɔuɾs,t v/o oo r s,2.0
+3,N3,3,167,տակ,under the table,noun,1,101-500,1.9,d?k,d ? k,1.0
+3,N3,3,168,թի,"shovel, oar",noun,1,101-500,1.9,ti,t ee,1.0
+3,N3,3,171,ով,who,noun,1,101-500,1.9,v~ɔ?,v/o ?,2.0
+3,N3,3,195,տեղ,place (informal),noun,1,101-500,1.9,dɛ~jɛɣ,d e/ye voiced gh,4.3
+3,N3,3,216,մեզ,us,noun,1,101-500,1.9,mɛ~jɛz,m e/ye z,1.0
+4,N4,3,223,ետ,"back, backward",noun,1,101-500,1.9,ɛ~jɛd,e/ye d,1.0
+4,N4,3,239,մարդ,"man, person",noun,1,101-500,1.9,m?ɾt,m ? r t,2.0
+4,N4,3,242,աղ,salt,noun,1,101-500,1.9,?ɣ,? voiced gh,4.3
+4,N4,3,255,նաև,also,noun,1,101-500,1.9,n??,n ? ?,1.0
+4,N4,3,260,մէկ,one,noun,1,101-500,1.9,m?k,m ? k,1.0
+4,N4,3,274,ձեր,yall's,noun,1,101-500,1.9,dzɛ~jɛɾ,dz e/ye r,2.0
+4,N4,3,276,դեռ,still,noun,1,101-500,1.9,tɛ~jɛr,t e/ye r (trilled),3.3
+4,N4,3,313,ութ,eight,noun,1,101-500,1.9,v~ɔut,v/o oo t,2.0
+4,N4,3,343,կին,"wife, woman",noun,1,101-500,1.9,kin,k ee n,1.0
+4,N4,3,344,միշտ,always,noun,1,101-500,1.9,miʃd,m ee sh d,1.0
+4,N4,3,350,պատ,wall,noun,1,101-500,1.9,p?d,p ? d,1.0
+4,N4,3,356,տէր,"lord, owner",noun,1,101-500,1.9,d?ɾ,d ? r,2.0
+4,N4,3,368,քիչ,"little, few",noun,1,101-500,1.9,kitʃ,k ee ch,1.0
+4,N4,3,381,տուն,"home, house",noun,1,101-500,1.9,dv~ɔun,d v/o oo n,2.0
+4,N4,3,383,սուրբ,"holy, saint",noun,1,101-500,1.9,sv~ɔuɾp,s v/o oo r p,2.0
+4,N4,3,398,ողջ,"alive, living",noun,1,101-500,1.9,v~ɔɣtʃ,v/o voiced gh ch,4.3
+4,N4,3,410,նախ,"first, firstly, foremost",noun,1,101-500,1.9,n?x,n ? kh,4.3
+4,N4,3,415,ձեռք,hand in hand,noun,1,101-500,1.9,dzɛ~jɛrk,dz e/ye r (trilled) k,3.3
+4,N4,3,416,բու,owl,noun,1,101-500,1.9,pv~ɔu,p v/o oo,2.0
+4,N4,3,427,բաց,"open, light",noun,1,101-500,1.9,p?ts,p ? ts,2.0
+5,N5,3,429,վար,"down, below",noun,1,101-500,1.9,??ɾ,? ? r,2.0
+5,N5,3,471,դար,"century, age, period",noun,1,101-500,1.9,t?ɾ,t ? r,2.0
+5,N5,3,490,խիստ,"hard, strict, severe, rigid",noun,1,101-500,1.9,xisd,kh ee s d,4.3
+5,N5,3,5,եւ,and,noun,2,1-100,2.0,ɛ~jɛu,e/ye oo,1.0
+5,N5,3,36,մասին,"concerning, about",noun,2,1-100,2.0,m?sin,m ? s ee n,1.0
+5,N5,3,38,բայց,but,noun,2,1-100,2.0,p?jts,p ? y ts,2.0
+5,N5,3,54,իրենց,their,noun,2,1-100,2.0,iɾɛ~jɛnts,ee r e/ye n ts,2.0
+5,N5,4,59,հայ,Armenian (person),noun,2,1-100,2.0,h?j,h ? y,1.0
+5,N5,4,68,երկու,two,noun,2,1-100,2.0,ɛ~jɛɾkv~ɔu,e/ye r k v/o oo,2.0
+5,N5,4,73,կարող,"able, capable",noun,2,1-100,2.0,k?ɾv~ɔɣ,k ? r v/o voiced gh,4.3
+5,N5,4,87,պետք,need,noun,2,1-100,2.0,pɛ~jɛdk,p e/ye d k,1.0
+5,N5,4,98,պիտի,"going to, will",noun,2,1-100,2.0,pidi,p ee d ee,1.0
+5,N5,4,101,ոլ,[No definition],unknown,1,101-500,2.15,v~ɔl,v/o l,2.0
+5,N5,4,103,զի,[No definition],unknown,1,101-500,2.15,zi,z ee,1.0
+5,N5,4,104,ման,[No definition],unknown,1,101-500,2.15,m?n,m ? n,1.0
+5,N5,4,105,ենք,[No definition],unknown,1,101-500,2.15,ɛ~jɛnk,e/ye n k,1.0
+5,N5,4,106,ում,[No definition],unknown,1,101-500,2.15,v~ɔum,v/o oo m,2.0
+5,N5,4,108,մեկ,[No definition],unknown,1,101-500,2.15,mɛ~jɛk,m e/ye k,1.0
+5,N5,4,117,ճետ,[No definition],unknown,1,101-500,2.15,tʃɛ~jɛd,ch e/ye d,1.0
+5,N5,4,118,տա,[No definition],unknown,1,101-500,2.15,d?,d ?,1.0
+6,N6,4,122,լի,[No definition],unknown,1,101-500,2.15,li,l ee,1.0
+6,N6,4,123,պա,[No definition],unknown,1,101-500,2.15,p?,p ?,1.0
+6,N6,4,129,ոն,[No definition],unknown,1,101-500,2.15,v~ɔn,v/o n,2.0
+6,N6,4,130,չէր,[No definition],unknown,1,101-500,2.15,tʃ?ɾ,ch ? r,2.0
+6,N6,4,133,դեմ,[No definition],unknown,1,101-500,2.15,tɛ~jɛm,t e/ye m,1.0
+6,N6,4,135,լա,[No definition],unknown,1,101-500,2.15,l?,l ?,1.0
+6,N6,4,137,աշ,[No definition],unknown,1,101-500,2.15,?ʃ,? sh,1.0
+6,N6,4,142,ուն,[No definition],unknown,1,101-500,2.15,v~ɔun,v/o oo n,2.0
+6,N6,4,146,բո,[No definition],unknown,1,101-500,2.15,pv~ɔ,p v/o,2.0
+6,N6,4,149,ճա,[No definition],unknown,1,101-500,2.15,tʃ?,ch ?,1.0
+6,N6,4,156,րի,[No definition],unknown,1,101-500,2.15,ɾi,r ee,2.0
+6,N6,4,159,դի,access-restricted; nayiri; com,unknown,1,101-500,2.15,ti,t ee,1.0
+6,N6,4,166,սո,[No definition],unknown,1,101-500,2.15,sv~ɔ,s v/o,2.0
+6,N6,4,169,նի,[No definition],unknown,1,101-500,2.15,ni,n ee,1.0
+6,N6,4,170,ալդ,[No definition],unknown,1,101-500,2.15,?lt,? l t,1.0
+6,N6,4,172,ոբ,[No definition],unknown,1,101-500,2.15,v~ɔp,v/o p,2.0
+6,N6,4,174,նե,[No definition],unknown,1,101-500,2.15,nɛ~jɛ,n e/ye,1.0
+6,N6,4,176,ընդ,[No definition],unknown,1,101-500,2.15,?nt,? n t,1.0
+6,N6,4,181,մար,[No definition],unknown,1,101-500,2.15,m?ɾ,m ? r,2.0
+6,N6,4,184,մե,[No definition],unknown,1,101-500,2.15,mɛ~jɛ,m e/ye,1.0
+7,N7,4,186,ած,[No definition],unknown,1,101-500,2.15,?dz,? dz,2.0
+7,N7,4,189,րա,[No definition],unknown,1,101-500,2.15,ɾ?,r ?,2.0
+7,N7,4,190,լավ,[No definition],unknown,1,101-500,2.15,l??,l ? ?,1.0
+7,N7,4,191,դու,[No definition],unknown,1,101-500,2.15,tv~ɔu,t v/o oo,2.0
+7,N7,4,198,նը,[No definition],unknown,1,101-500,2.15,n?,n ?,1.0
+7,N7,4,199,ւն,[No definition],unknown,1,101-500,2.15,un,oo n,1.0
+7,N7,5,200,հի,[No definition],unknown,1,101-500,2.15,hi,h ee,1.0
+7,N7,5,201,քո,[No definition],unknown,1,101-500,2.15,kv~ɔ,k v/o,2.0
+7,N7,5,203,հան,[No definition],unknown,1,101-500,2.15,h?n,h ? n,1.0
+7,N7,5,205,հո,[No definition],unknown,1,101-500,2.15,hv~ɔ,h v/o,2.0
+7,N7,5,207,կու,[No definition],unknown,1,101-500,2.15,kv~ɔu,k v/o oo,2.0
+7,N7,5,213,որն,[No definition],unknown,1,101-500,2.15,v~ɔɾn,v/o r n,2.0
+7,N7,5,215,լու,[No definition],unknown,1,101-500,2.15,lv~ɔu,l v/o oo,2.0
+7,N7,5,217,գա,[No definition],unknown,1,101-500,2.15,k?,k ?,1.0
+7,N7,5,218,կո,[No definition],unknown,1,101-500,2.15,kv~ɔ,k v/o,2.0
+7,N7,5,219,կար,[No definition],unknown,1,101-500,2.15,k?ɾ,k ? r,2.0
+7,N7,5,222,հե,[No definition],unknown,1,101-500,2.15,hɛ~jɛ,h e/ye,1.0
+7,N7,5,226,լո,[No definition],unknown,1,101-500,2.15,lv~ɔ,l v/o,2.0
+7,N7,5,227,խոր,[No definition],unknown,1,101-500,2.15,xv~ɔɾ,kh v/o r,4.3
+7,N7,5,228,ալն,[No definition],unknown,1,101-500,2.15,?ln,? l n,1.0

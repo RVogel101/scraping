@@ -11,6 +11,10 @@ pandas>=1.3.0
 selenium>=4.0.0
 requests>=2.25.0
 
+# Standalone preview API
+fastapi>=0.112.0
+uvicorn>=0.30.0
+
 # System monitoring (optional, for performance tracking)
 psutil>=5.8.0
 

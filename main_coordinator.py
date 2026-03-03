@@ -1,4 +1,4 @@
-"""
+﻿"""
 Main Coordinator Script for CWAS Facebook Image Processing Pipeline
 
 This script coordinates the full pipeline:

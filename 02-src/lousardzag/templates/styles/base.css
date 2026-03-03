@@ -1,0 +1,69 @@
+.card {
+    font-family: 'Noto Sans Armenian', 'DejaVu Sans', sans-serif;
+    font-size: 20px;
+    text-align: center;
+    color: #333;
+    background-color: #fafafa;
+    padding: 20px;
+}
+.armenian {
+    font-size: 28px;
+    font-weight: bold;
+    color: #1a237e;
+    margin: 10px 0;
+}
+.translation {
+    font-size: 18px;
+    color: #555;
+    font-style: italic;
+}
+.case-label, .tense-label {
+    font-size: 14px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+table {
+    margin: 15px auto;
+    border-collapse: collapse;
+    font-size: 16px;
+}
+td, th {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+}
+th {
+    background-color: #e8eaf6;
+    font-weight: bold;
+}
+.highlight {
+    color: #d32f2f;
+    font-weight: bold;
+}
+.sentence {
+    margin: 8px 0;
+    font-size: 18px;
+}
+.sentence-arm {
+    font-size: 22px;
+    color: #1a237e;
+}
+.sentence-en {
+    font-size: 16px;
+    color: #666;
+}
+.loanword-chip {
+    display: inline-block;
+    border-radius: 999px;
+    padding: 3px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    margin-bottom: 8px;
+    border: 1px solid #cfd8dc;
+}
+.origin-unknown { background: #f5f7fa; color: #455a64; }
+.origin-arabic  { background: #fff3e0; color: #8d6e63; border-color: #ffcc80; }
+.origin-turkish { background: #e8f5e9; color: #1b5e20; border-color: #a5d6a7; }
+.origin-french  { background: #e3f2fd; color: #0d47a1; border-color: #90caf9; }
+.origin-farsi   { background: #fce4ec; color: #880e4f; border-color: #f8bbd0; }
