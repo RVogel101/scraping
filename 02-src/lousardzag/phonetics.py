@@ -10,17 +10,22 @@ Western Armenian has different pronunciations for several letters (e.g., ղ, ծ,
 
 # Mapping of WESTERN ARMENIAN letters to IPA and closest English approximations
 ARMENIAN_PHONEMES = {
+    # Vowels (WESTERN ARMENIAN)
+    'ա': {'ipa': 'ɑ', 'english': 'ah', 'word': 'father', 'difficulty': 1},  # vowel
+    'ե': {'ipa': 'ɛ~jɛ', 'english': 'e/ye', 'word': 'bed (or yes at word start)', 'difficulty': 1},  # vowel: e in middle, ye at start
+    'է': {'ipa': 'ɛ', 'english': 'eh', 'word': 'bed', 'difficulty': 1},  # vowel
+    'ը': {'ipa': 'ə', 'english': 'uh', 'word': 'about (schwa)', 'difficulty': 1},  # vowel: schwa
+    'ի': {'ipa': 'i', 'english': 'ee', 'word': 'fleece', 'difficulty': 1},  # vowel
+    'ո': {'ipa': 'v~ɔ', 'english': 'v/o', 'word': 'von/lot (v before consonants)', 'difficulty': 2},  # Western: v before consonants (ոչ=voch, որ=vor), o vowel otherwise
+    'օ': {'ipa': 'o', 'english': 'o', 'word': 'go', 'difficulty': 1},  # vowel
+    
     # Single consonants (WESTERN ARMENIAN)
     'բ': {'ipa': 'p', 'english': 'p', 'word': 'pat (unaspirated)', 'difficulty': 1},  # Western: p (not b)
     'գ': {'ipa': 'k', 'english': 'k', 'word': 'kit', 'difficulty': 1},  # Western: k (not g)
     'դ': {'ipa': 't', 'english': 't', 'word': 'top (unaspirated)', 'difficulty': 1},  # Western: t (not d)
-    'ե': {'ipa': 'ɛ~jɛ', 'english': 'e/ye', 'word': 'bed (or yes at word start)', 'difficulty': 1},  # vowel: e in middle, ye at start
-    'է': {'ipa': 'ɛ', 'english': 'eh', 'word': 'bed', 'difficulty': 1},  # vowel
     'զ': {'ipa': 'z', 'english': 'z', 'word': 'zoo', 'difficulty': 1},
-    # Note: ե appears twice - same letter, different contexts handled in transcription function
     'թ': {'ipa': 't', 'english': 't', 'word': 'top', 'difficulty': 1},  # Western: regular t (not th)
     'ժ': {'ipa': 'ʒ', 'english': 'zh', 'word': 'measure', 'difficulty': 2},
-    'ի': {'ipa': 'i', 'english': 'ee', 'word': 'fleece', 'difficulty': 1},
     'լ': {'ipa': 'l', 'english': 'l', 'word': 'lot', 'difficulty': 1},
     'խ': {'ipa': 'x', 'english': 'kh', 'word': 'German Bach (guttural)', 'difficulty': 4},  # Guttural
     'ծ': {'ipa': 'dz', 'english': 'dz', 'word': 'adze', 'difficulty': 2},  # Western: voiced dz
@@ -33,7 +38,6 @@ ARMENIAN_PHONEMES = {
     'յ': {'ipa': 'j~h', 'english': 'y/h', 'word': 'yes (middle) / hat (start)', 'difficulty': 1},  # Western: y in middle of words, h at beginning
     'ն': {'ipa': 'n', 'english': 'n', 'word': 'no', 'difficulty': 1},
     'շ': {'ipa': 'ʃ', 'english': 'sh', 'word': 'shop', 'difficulty': 1},
-    'ո': {'ipa': 'v~ɔ', 'english': 'v/o', 'word': 'von/lot (v before consonants)', 'difficulty': 2},  # Western: v before consonants (ոչ=voch, որ=vor), o vowel otherwise
     'չ': {'ipa': 'tʃ', 'english': 'ch', 'word': 'chop', 'difficulty': 1},
     'պ': {'ipa': 'b', 'english': 'b', 'word': 'bat', 'difficulty': 1},  # Western: b (not p)
     'ջ': {'ipa': 'tʃ', 'english': 'ch', 'word': 'chop', 'difficulty': 1},  # Western: ch (not j)
@@ -45,7 +49,6 @@ ARMENIAN_PHONEMES = {
     'ւ': {'ipa': 'v~u', 'english': 'v/oo', 'word': 'vet (between vowels) / goose (as diphthong)', 'difficulty': 1},  # Western: v between vowels, oo in diphthongs
     'փ': {'ipa': 'p', 'english': 'p', 'word': 'pat', 'difficulty': 1},
     'ք': {'ipa': 'k', 'english': 'k', 'word': 'kit', 'difficulty': 1},
-    'օ': {'ipa': 'o', 'english': 'o', 'word': 'go', 'difficulty': 1},  # vowel
     'ֆ': {'ipa': 'f', 'english': 'f', 'word': 'fun', 'difficulty': 1},
 }
 

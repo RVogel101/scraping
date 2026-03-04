@@ -77,6 +77,8 @@ ARMENIAN_LETTERS: Dict[str, Dict] = {
         'difficulty': 1,
         'example_words': ['ալրկենական (garden)', 'առաւոտ (morning)', 'ասել (to say)'],
         'pronunciation_tip': 'Like "ah" in father',
+        'audio_file_name': '01_ա_name.wav',
+        'audio_file_sound': '01_ա_sound.wav',
     },
     'բ': {
         'name': 'pen',
@@ -566,6 +568,58 @@ ARMENIAN_DIPHTHONGS = {
     },
 }
 
+
+# ─── Add Audio File References ───────────────────────────────────────
+# Automatically add audio file references to each letter if not already present
+
+_AUDIO_FILE_MAP = {
+    'ա': ('01_ա_name.wav', '01_ա_sound.wav'),
+    'բ': ('02_բ_name.wav', '02_բ_sound.wav'),
+    'գ': ('03_գ_name.wav', '03_գ_sound.wav'),
+    'դ': ('04_դ_name.wav', '04_դ_sound.wav'),
+    'ե': ('05_ե_name.wav', '05_ե_sound.wav'),
+    'զ': ('06_զ_name.wav', '06_զ_sound.wav'),
+    'է': ('07_է_name.wav', '07_է_sound.wav'),
+    'ը': ('08_ը_name.wav', '08_ը_sound.wav'),
+    'թ': ('09_թ_name.wav', '09_թ_sound.wav'),
+    'ժ': ('10_ժ_name.wav', '10_ժ_sound.wav'),
+    'ի': ('11_ի_name.wav', '11_ի_sound.wav'),
+    'լ': ('12_լ_name.wav', '12_լ_sound.wav'),
+    'խ': ('13_խ_name.wav', '13_խ_sound.wav'),
+    'ծ': ('14_ծ_name.wav', '14_ծ_sound.wav'),
+    'կ': ('15_կ_name.wav', '15_կ_sound.wav'),
+    'հ': ('16_հ_name.wav', '16_հ_sound.wav'),
+    'ձ': ('17_ձ_name.wav', '17_ձ_sound.wav'),
+    'ղ': ('18_ղ_name.wav', '18_ղ_sound.wav'),
+    'ճ': ('19_ճ_name.wav', '19_ճ_sound.wav'),
+    'մ': ('20_մ_name.wav', '20_մ_sound.wav'),
+    'յ': ('21_յ_name.wav', '21_յ_sound.wav'),
+    'ն': ('22_ն_name.wav', '22_ն_sound.wav'),
+    'շ': ('23_շ_name.wav', '23_շ_sound.wav'),
+    'ո': ('24_ո_name.wav', '24_ո_sound.wav'),
+    'չ': ('25_չ_name.wav', '25_չ_sound.wav'),
+    'պ': ('26_պ_name.wav', '26_պ_sound.wav'),
+    'ջ': ('27_ջ_name.wav', '27_ջ_sound.wav'),
+    'ռ': ('28_ռ_name.wav', '28_ռ_sound.wav'),
+    'ս': ('29_ս_name.wav', '29_ս_sound.wav'),
+    'վ': ('30_վ_name.wav', '30_վ_sound.wav'),
+    'տ': ('31_տ_name.wav', '31_տ_sound.wav'),
+    'ր': ('32_ր_name.wav', '32_ր_sound.wav'),
+    'ց': ('33_ց_name.wav', '33_ց_sound.wav'),
+    'ւ': ('34_ւ_name.wav', '34_ւ_sound.wav'),
+    'փ': ('35_փ_name.wav', '35_փ_sound.wav'),
+    'ք': ('36_ք_name.wav', '36_ք_sound.wav'),
+    'օ': ('37_օ_name.wav', '37_օ_sound.wav'),
+    'ֆ': ('38_ֆ_name.wav', '38_ֆ_sound.wav'),
+}
+
+# Add audio files to each letter (if not already present)
+for letter, (name_file, sound_file) in _AUDIO_FILE_MAP.items():
+    if letter in ARMENIAN_LETTERS:
+        if 'audio_file_name' not in ARMENIAN_LETTERS[letter]:
+            ARMENIAN_LETTERS[letter]['audio_file_name'] = name_file
+        if 'audio_file_sound' not in ARMENIAN_LETTERS[letter]:
+            ARMENIAN_LETTERS[letter]['audio_file_sound'] = sound_file
 
 # ─── Helper Functions ────────────────────────────────────────────────
 
