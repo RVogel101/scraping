@@ -12,12 +12,13 @@ from typing import Optional
 
 from .anki_connect import AnkiConnect, AnkiConnectError
 from .config import (
-    SOURCE_DECK, TARGET_DECK,
-    NOUN_DECLENSION_MODEL, VERB_CONJUGATION_MODEL, VOCAB_SENTENCES_MODEL,
-    SOURCE_FIELDS, TAG_GENERATED, TAG_DECLENSION, TAG_CONJUGATION, TAG_SENTENCES,
+    SOURCE_DECK, TARGET_DECK, LETTER_CARDS_DECK,
+    NOUN_DECLENSION_MODEL, VERB_CONJUGATION_MODEL, VOCAB_SENTENCES_MODEL, LETTER_CARDS_MODEL,
+    SOURCE_FIELDS, TAG_GENERATED, TAG_DECLENSION, TAG_CONJUGATION, TAG_SENTENCES, TAG_LETTER,
     DEFAULT_NOUN_DECLENSION, DEFAULT_VERB_CLASS, SENTENCES_PER_WORD,
 )
 from .database import CardDatabase
+from . import letter_data
 from .morphology.nouns import decline_noun, NounDeclension, CASE_LABELS_EN
 from .morphology.verbs import conjugate_verb, VerbConjugation, PERSONS, PERSON_LABELS
 from .morphology.articles import add_definite, add_indefinite
@@ -61,6 +62,13 @@ VERB_FIELDS = [
 SENTENCE_FIELDS = [
     "Word", "Translation", "FormLabel", "ArmenianSentence", "EnglishSentence",
     "LoanwordOrigin", "LoanwordOriginLabel", "LoanwordBadgeClass",
+]
+
+LETTER_FIELDS = [
+    "Letter", "LetterUppercase", "LetterName", "Position",
+    "LetterType", "IPA", "EnglishSound", "PronunciationTip",
+    "Difficulty", "ExampleWords", "WesternNote", "DiphthongInfo",
+    "Audio",
 ]
 
 
@@ -110,12 +118,20 @@ class CardGenerator:
             css=self.assets.css,
         )
 
+        self.anki.create_model(
+            name=LETTER_CARDS_MODEL,
+            fields=LETTER_FIELDS,
+            card_templates=self.assets.letter_templates,
+            css=self.assets.css,
+        )
+
         logger.info("Note types ready")
 
     def setup_decks(self) -> None:
         """Create target decks if they don't exist."""
         self.anki.ensure_deck(TARGET_DECK)
-        logger.info(f"Target deck ready: {TARGET_DECK}")
+        self.anki.ensure_deck(LETTER_CARDS_DECK)
+        logger.info(f"Target decks ready: {TARGET_DECK}, {LETTER_CARDS_DECK}")
 
     # ─── HTML Field Extraction Helpers ───────────────────────────────
     # Deck format: Front/Back fields contain HTML like:
@@ -727,6 +743,134 @@ class CardGenerator:
                 note_ids.append(sentence_id)
 
         logger.info(f"Created {len(note_ids)} sentence cards for: {word}")
+        return note_ids
+
+    def generate_letter_card(
+        self,
+        letter: str,
+        deck: Optional[str] = None,
+        push_to_anki: bool = True,
+        extra_tags: Optional[list[str]] = None,
+    ) -> Optional[int]:
+        """Generate a flashcard for a single Armenian letter.
+
+        Args:
+            letter: Single Armenian letter (lowercase)
+            deck: Target deck (defaults to LETTER_CARDS_DECK)
+            push_to_anki: Whether to push to Anki via AnkiConnect
+            extra_tags: Additional tags to apply
+
+        Returns:
+            Note ID if created, None if skipped
+        """
+        letter_info = letter_data.get_letter_info(letter)
+        if not letter_info:
+            logger.warning(f"No letter data found for: {letter}")
+            return None
+
+        # Format example words as newline-separated list
+        example_words_formatted = "<br>".join(letter_info.get("example_words", []))
+
+        # Check if this letter forms diphthongs
+        diphthong_info = ""
+        for diph, diph_data in letter_data.ARMENIAN_DIPHTHONGS.items():
+            if letter in diph_data.get("letters", []):
+                diphthong_info = f"{diph} ({diph_data['ipa']}) = {diph_data['english']} — {diph_data['note']}"
+                break
+
+        fields = {
+            "Letter": letter_info["lowercase"],
+            "LetterUppercase": letter_info["uppercase"],
+            "LetterName": letter_info["name"],
+            "Position": str(letter_info["position"]),
+            "LetterType": letter_info["type"],
+            "IPA": letter_info["ipa"],
+            "EnglishSound": letter_info["english"],
+            "PronunciationTip": letter_info.get("pronunciation_tip", ""),
+            "Difficulty": str(letter_info["difficulty"]),
+            "ExampleWords": example_words_formatted,
+            "WesternNote": letter_info.get("western_note", ""),
+            "DiphthongInfo": diphthong_info,
+            "Audio": "",  # Placeholder for audio file path (future feature)
+        }
+
+        tags = [TAG_GENERATED, TAG_LETTER] + (extra_tags or [])
+
+        # Add difficulty-specific tags
+        if letter_info["difficulty"] >= 3:
+            tags.append("difficult-pronunciation")
+        if letter_info["type"] == "vowel":
+            tags.append("vowel")
+        elif letter_info["type"] == "consonant":
+            tags.append("consonant")
+
+        note_id = None
+        if push_to_anki:
+            note_id = self.anki.add_note(
+                deck=deck or LETTER_CARDS_DECK,
+                model=LETTER_CARDS_MODEL,
+                fields=fields,
+                tags=tags,
+            )
+
+        # Persist to local database
+        db_card_id = self.db.upsert_card(
+            word=letter,
+            translation=f"{letter_info['name']} ({letter_info['english']})",
+            pos="letter",
+            card_type="letter",
+            template_version=self.assets.template_version,
+            metadata={
+                "letter_name": letter_info["name"],
+                "position": letter_info["position"],
+                "letter_type": letter_info["type"],
+                "ipa": letter_info["ipa"],
+                "difficulty": letter_info["difficulty"],
+            },
+        )
+
+        if not push_to_anki:
+            note_id = db_card_id
+
+        logger.info(f"Created letter card for: {letter} ({letter_info['name']})")
+        return note_id
+
+    def generate_all_letter_cards(
+        self,
+        deck: Optional[str] = None,
+        push_to_anki: bool = True,
+        difficulty_filter: Optional[int] = None,
+    ) -> list[int]:
+        """Generate flashcards for all Armenian letters.
+
+        Args:
+            deck: Target deck (defaults to LETTER_CARDS_DECK)
+            push_to_anki: Whether to push to Anki via AnkiConnect
+            difficulty_filter: If set, only generate cards for letters with
+                             difficulty >= this value (1-5)
+
+        Returns:
+            List of created note IDs
+        """
+        note_ids = []
+        all_letters = letter_data.get_all_letters_ordered()
+
+        for letter in all_letters:
+            letter_info = letter_data.get_letter_info(letter)
+            if letter_info:
+                # Apply difficulty filter if specified
+                if difficulty_filter and letter_info["difficulty"] < difficulty_filter:
+                    continue
+
+                note_id = self.generate_letter_card(
+                    letter=letter,
+                    deck=deck,
+                    push_to_anki=push_to_anki,
+                )
+                if note_id:
+                    note_ids.append(note_id)
+
+        logger.info(f"Created {len(note_ids)} letter cards (total letters: {len(all_letters)})")
         return note_ids
 
     def process_all(self, source_deck: Optional[str] = None, field_overrides: Optional[dict] = None,

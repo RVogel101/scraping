@@ -1,0 +1,20 @@
+<div class="letter-card">
+    <!-- Large Armenian letter display -->
+    <div class="letter-display">
+        <div class="letter-lowercase">{{Letter}}</div>
+        <div class="letter-uppercase">{{LetterUppercase}}</div>
+    </div>
+    
+    <!-- Letter name -->
+    <div class="letter-name">{{LetterName}}</div>
+    
+    <!-- Audio playback (if available) -->
+    {{#Audio}}
+    <div class="audio-section">
+        {{Audio}}
+    </div>
+    {{/Audio}}
+    
+    <!-- Prompt -->
+    <div class="prompt">What sound does this letter make?</div>
+</div>

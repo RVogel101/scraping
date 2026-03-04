@@ -1,0 +1,69 @@
+<div class="letter-card">
+    <!-- Repeat front content -->
+    <div class="letter-display">
+        <div class="letter-lowercase">{{Letter}}</div>
+        <div class="letter-uppercase">{{LetterUppercase}}</div>
+    </div>
+    
+    <div class="letter-name">{{LetterName}}</div>
+    
+    <!-- Audio playback -->
+    {{#Audio}}
+    <div class="audio-section">
+        {{Audio}}
+    </div>
+    {{/Audio}}
+    
+    <hr class="divider">
+    
+    <!-- Pronunciation information -->
+    <div class="pronunciation-section">
+        <div class="phonetic-row">
+            <span class="label">IPA:</span>
+            <span class="value ipa">{{IPA}}</span>
+        </div>
+        
+        <div class="phonetic-row">
+            <span class="label">English sound:</span>
+            <span class="value english-sound">{{EnglishSound}}</span>
+        </div>
+        
+        <div class="pronunciation-tip">
+            <strong>Pronunciation tip:</strong> {{PronunciationTip}}
+        </div>
+        
+        {{#WesternNote}}
+        <div class="western-note">
+            <strong>⚠️ Western Armenian:</strong> {{WesternNote}}
+        </div>
+        {{/WesternNote}}
+        
+        <div class="difficulty-badge difficulty-{{Difficulty}}">
+            Difficulty: {{Difficulty}}/5
+        </div>
+    </div>
+    
+    <!-- Example words -->
+    <div class="examples-section">
+        <div class="section-title">Example words:</div>
+        <div class="example-list">
+            {{#ExampleWords}}
+            <div class="example-word">{{ExampleWords}}</div>
+            {{/ExampleWords}}
+        </div>
+    </div>
+    
+    <!-- Letter classification -->
+    <div class="letter-info">
+        <span class="letter-type {{LetterType}}">{{LetterType}}</span>
+        <span class="position">Position: {{Position}}/38</span>
+    </div>
+    
+    <!-- Diphthong information (if applicable) -->
+    {{#DiphthongInfo}}
+    <div class="diphthong-section">
+        <div class="section-title">Forms diphthong:</div>
+        <div class="diphthong-details">{{DiphthongInfo}}</div>
+    </div>
+    {{/DiphthongInfo}}
+</div>

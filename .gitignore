@@ -63,6 +63,9 @@ wa_corpus/
 
 # HTML
 *.html
+# But allow Anki card template HTML
+!02-src/lousardzag/templates/models/*/front.html
+!02-src/lousardzag/templates/models/*/back.html
 
 # Logs
 *.log

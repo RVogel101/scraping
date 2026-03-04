@@ -195,6 +195,37 @@ _FALLBACK_SENTENCES_BACK = """
 <div class="loanword-chip {{LoanwordBadgeClass}}">{{LoanwordOriginLabel}}</div>
 """.strip()
 
+_FALLBACK_LETTER_FRONT = """
+<div class="letter-display">
+    <div class="letter-lowercase">{{Letter}}</div>
+    <div class="letter-uppercase">{{LetterUppercase}}</div>
+</div>
+<div class="letter-name">{{LetterName}}</div>
+{{#Audio}}{{Audio}}{{/Audio}}
+<div class="prompt">What sound does this letter make?</div>
+""".strip()
+
+_FALLBACK_LETTER_BACK = """
+{{FrontSide}}
+<hr id="answer">
+<div class="pronunciation-section">
+    <div><strong>IPA:</strong> {{IPA}}</div>
+    <div><strong>English sound:</strong> {{EnglishSound}}</div>
+    <div><strong>Pronunciation tip:</strong> {{PronunciationTip}}</div>
+    {{#WesternNote}}<div><strong>⚠️ Western Armenian:</strong> {{WesternNote}}</div>{{/WesternNote}}
+    <div class="difficulty-badge">Difficulty: {{Difficulty}}/5</div>
+</div>
+<div class="examples-section">
+    <div><strong>Example words:</strong></div>
+    <div>{{ExampleWords}}</div>
+</div>
+<div class="letter-info">
+    <span class="letter-type">{{LetterType}}</span>
+    <span class="position">Position: {{Position}}/38</span>
+</div>
+{{#DiphthongInfo}}<div class="diphthong-section"><strong>Forms diphthong:</strong> {{DiphthongInfo}}</div>{{/DiphthongInfo}}
+""".strip()
+
 
 @dataclass(frozen=True)
 class CardModelAssets:
@@ -205,6 +236,7 @@ class CardModelAssets:
     noun_templates: list[dict]
     verb_templates: list[dict]
     sentence_templates: list[dict]
+    letter_templates: list[dict]
 
 
 def _read_or_fallback(path: Path, fallback: str) -> str:
@@ -244,6 +276,15 @@ def load_card_model_assets() -> CardModelAssets:
         _FALLBACK_SENTENCES_BACK,
     )
 
+    letter_front = _read_or_fallback(
+        TEMPLATES_DIR / "models" / "letter_cards" / "front.html",
+        _FALLBACK_LETTER_FRONT,
+    )
+    letter_back = _read_or_fallback(
+        TEMPLATES_DIR / "models" / "letter_cards" / "back.html",
+        _FALLBACK_LETTER_BACK,
+    )
+
     return CardModelAssets(
         css=css,
         template_version=TEMPLATE_VERSION,
@@ -261,6 +302,11 @@ def load_card_model_assets() -> CardModelAssets:
             "Name": "Sentence Practice",
             "Front": sentences_front,
             "Back": sentences_back,
+        }],
+        letter_templates=[{
+            "Name": "Letter Recognition",
+            "Front": letter_front,
+            "Back": letter_back,
         }],
     )
 
