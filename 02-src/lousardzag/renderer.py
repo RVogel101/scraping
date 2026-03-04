@@ -226,6 +226,64 @@ _FALLBACK_LETTER_BACK = """
 {{#DiphthongInfo}}<div class="diphthong-section"><strong>Forms diphthong:</strong> {{DiphthongInfo}}</div>{{/DiphthongInfo}}
 """.strip()
 
+_FALLBACK_VISUAL_LETTER_FRONT = """
+<div class="letter-visual-showcase">
+    <div class="letter-display-large">
+        <div class="letter-uppercase">{{LetterUppercase}}</div>
+        <div class="letter-lowercase">{{Letter}}</div>
+    </div>
+</div>
+<div class="letter-name-section">{{LetterName}}</div>
+<div class="shape-description">
+    <div class="shape-description-label">Shape:</div>
+    <div class="shape-description-text">{{ShapeDescription}}</div>
+</div>
+<div class="key-features">
+    <div class="features-label">Key Features:</div>
+    <div class="features-list">{{KeyFeatures}}</div>
+</div>
+<div class="practice-prompt">Practice writing this letter below</div>
+""".strip()
+
+_FALLBACK_VISUAL_LETTER_BACK = """
+{{FrontSide}}
+<hr id="answer">
+<div class="handwriting-guide">
+    <div class="handwriting-title">How to Write {{LetterName}}</div>
+    
+    <div class="stroke-sequence">
+        <div class="stroke-title">Stroke Sequence (Right-to-Left):</div>
+        <div class="stroke-content">{{StrokeSequence}}</div>
+    </div>
+    
+    <div class="writing-tips">
+        <div class="tips-title">Writing Tips:</div>
+        <div class="tips-content">{{WritingTips}}</div>
+    </div>
+    
+    {{#CommonMistakes}}<div class="common-mistakes">
+        <div class="mistakes-title">⚠️ Common Mistakes:</div>
+        <div class="mistakes-content">{{CommonMistakes}}</div>
+    </div>{{/CommonMistakes}}
+    
+    {{#ShapeVariants}}<div class="shape-variants">
+        <div class="variants-title">Shape Variants:</div>
+        <div class="variants-content">{{ShapeVariants}}</div>
+    </div>{{/ShapeVariants}}
+    
+    {{#SimilarLetters}}<div class="similar-letters">
+        <div class="similar-title">Similar Letters & How to Distinguish:</div>
+        <div class="similar-content">{{SimilarLetters}}</div>
+        <div class="distinction-content">{{Distinction}}</div>
+    </div>{{/SimilarLetters}}
+</div>
+
+<div class="pronunciation-reminder">
+    <div><strong>Pronunciation:</strong> {{IPA}} - {{EnglishSound}}</div>
+    <div><strong>Tip:</strong> {{PronunciationTip}}</div>
+</div>
+""".strip()
+
 
 @dataclass(frozen=True)
 class CardModelAssets:
@@ -237,6 +295,7 @@ class CardModelAssets:
     verb_templates: list[dict]
     sentence_templates: list[dict]
     letter_templates: list[dict]
+    visual_letter_templates: list[dict]
 
 
 def _read_or_fallback(path: Path, fallback: str) -> str:
@@ -285,6 +344,15 @@ def load_card_model_assets() -> CardModelAssets:
         _FALLBACK_LETTER_BACK,
     )
 
+    visual_letter_front = _read_or_fallback(
+        TEMPLATES_DIR / "models" / "letter_visual" / "front.html",
+        _FALLBACK_VISUAL_LETTER_FRONT,
+    )
+    visual_letter_back = _read_or_fallback(
+        TEMPLATES_DIR / "models" / "letter_visual" / "back.html",
+        _FALLBACK_VISUAL_LETTER_BACK,
+    )
+
     return CardModelAssets(
         css=css,
         template_version=TEMPLATE_VERSION,
@@ -307,6 +375,11 @@ def load_card_model_assets() -> CardModelAssets:
             "Name": "Letter Recognition",
             "Front": letter_front,
             "Back": letter_back,
+        }],
+        visual_letter_templates=[{
+            "Name": "Visual Training",
+            "Front": visual_letter_front,
+            "Back": visual_letter_back,
         }],
     )
 

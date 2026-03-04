@@ -16,11 +16,17 @@ TARGET_DECK = "Armenian Vocabulary::Morphology"
 # Target deck for letter learning cards
 LETTER_CARDS_DECK = "Armenian Vocabulary::Letters"
 
+# Target deck for visual/handwriting training letter cards
+VISUAL_LETTER_CARDS_DECK = "Armenian Vocabulary::Letters::Visual Training"
+
 # ─── Note Type (Model) Names ─────────────────────────────────────────
 NOUN_DECLENSION_MODEL = "Armenian Noun Declension"
 VERB_CONJUGATION_MODEL = "Armenian Verb Conjugation"
 VOCAB_SENTENCES_MODEL = "Armenian Vocab Sentences"
 LETTER_CARDS_MODEL = "Armenian Letter Cards"
+
+# Note type for visual/handwriting training letter cards
+VISUAL_LETTER_CARDS_MODEL = "Armenian Visual Letter Cards"
 
 # ─── Field Names ──────────────────────────────────────────────────────
 # Fields expected in the source vocabulary notes
@@ -37,6 +43,7 @@ TAG_DECLENSION = "declension"
 TAG_CONJUGATION = "conjugation"
 TAG_SENTENCES = "sentences"
 TAG_LETTER = "letter-card"
+TAG_VISUAL_LETTER = "letter-visual"
 
 # ─── Morphology Settings ─────────────────────────────────────────────
 # Default declension class for nouns when not specified
