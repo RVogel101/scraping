@@ -22,6 +22,12 @@ env/
 *.db-shm
 *.db-wal
 
+# Credentials and API keys (NEVER commit)
+arm-speech-converter-*.json
+google-credentials-*.json
+.env.local
+.env.*.local
+
 # Data files (generated, large, or sensitive)
 data/*.json
 data/*.csv

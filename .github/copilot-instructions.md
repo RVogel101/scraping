@@ -148,3 +148,33 @@ After every conversation compaction (context window reset), update the session p
 - Be specific — include counts, file paths, error messages, and concrete outcomes rather than vague summaries.
 - If a previous finding was wrong or updated, note the correction explicitly.
 - Do this automatically on every compaction without being asked.
+
+---
+
+## Git Cleanup Procedures
+
+**⚠️ IMPORTANT: Sensitive files must be handled carefully**
+
+When user requests "clean up git changes":
+
+1. **Identify sensitive files** (credentials, API keys, private config):
+   - Google Cloud service account keys (`.json` with credentials)
+   - AWS credentials, GitHub tokens, any authentication material
+   - Local environment configs with secrets
+   - Private data files
+
+2. **Action for sensitive files**:
+   - ❌ DO NOT simply delete them (they may be needed later)
+   - ✅ DO add to `.gitignore` so they won't be tracked
+   - ✅ Verify file is untracked and safe before committing .gitignore change
+   - Example: `arm-speech-converter-*.json` pattern in .gitignore
+
+3. **Action for normal untracked development files**:
+   - Remove diagnostic scripts (`diag_*.py`, `test_*.py` temporary tools)
+   - Remove experimental outputs (`08-data/letter_audio_ipa/`, etc.)
+   - Delete with `Remove-Item -Force` or `git clean -fd`
+
+4. **Final step**:
+   - `git status` should show only legitimate changes
+   - Commit legitimate work with clear message
+   - Leave sensitive files untracked but safe in working directory
