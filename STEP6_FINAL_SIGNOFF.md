@@ -32,12 +32,26 @@ Scope: Cross-repo migration sign-off for lousardzag + WesternArmenianLLM central
 ## Step 6 Status
 
 - Local sign-off status: COMPLETE
-- Remote CI sign-off status: Pending remote workflow runs in both repos
-- Monitoring window status: Pending 1-week stability observation
+- Remote CI sign-off status: COMPLETE (for configured checks)
+- Monitoring window status: In progress (1-week stability observation started)
+
+## Remote Verification (Post-Merge)
+
+### PR merge verification
+
+- `RVogel101/lousardzag#12`: merged (`merged_at=2026-03-07T02:51:06Z`)
+- `RVogel101/WesternArmenianLLM#4`: merged (`merged_at=2026-03-07T02:51:12Z`)
+
+### Remote check-runs
+
+- `lousardzag` merge commit `d3778d5c3672b37dba2bf6b20a1769e07afb9d09`:
+  - `Run Full Extraction Pipeline`: success
+  - `Notify on Pipeline Status`: success
+- `WesternArmenianLLM` merge commit `49bba2885439bb90afe93bb6bc3b50b2fe72c640`:
+  - No check-runs configured on this commit
 
 ## Notes
 
 This sign-off confirms local migration correctness and parity.
 The final operational closeout remains dependent on:
-1. Remote CI runs in both repositories remaining green
-2. Completion of the planned monitoring window with no rollback events
+1. Completion of the planned monitoring window with no rollback events
