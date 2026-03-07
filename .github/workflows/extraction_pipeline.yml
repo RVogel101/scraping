@@ -154,7 +154,7 @@ jobs:
       
       - name: Upload artifacts
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: extraction-artifacts
           path: |
@@ -168,7 +168,7 @@ jobs:
       
       - name: Upload logs
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: extraction-logs
           path: logs/
