@@ -37,6 +37,8 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          # Central extraction package (Phase 2 cutover)
+          pip install git+https://github.com/RVogel101/armenian-corpus-core@main
       
       - name: Create data directories
         run: |
@@ -53,7 +55,7 @@ jobs:
       - name: Export core contracts
         id: export
         run: |
-          python 07-tools/extraction/export_core_contracts_jsonl.py \
+          python -m armenian_corpus_core.extraction.export_core_contracts_jsonl \
             --db-path 08-data/armenian_cards.db \
             --lexicon-out 08-data/export_lexicon_entries.jsonl \
             --documents-out 08-data/export_document_records.jsonl
@@ -62,7 +64,7 @@ jobs:
       - name: Validate contract alignment
         id: validate
         run: |
-          python 07-tools/extraction/validate_contract_alignment.py \
+          python -m armenian_corpus_core.extraction.validate_contract_alignment \
             --lexicon-jsonl 08-data/export_lexicon_entries.jsonl \
             --documents-jsonl 08-data/export_document_records.jsonl \
             --output-json 08-data/contract_alignment_report_ci.json
@@ -71,7 +73,7 @@ jobs:
       - name: Ingest WA fingerprints
         id: ingest-wa
         run: |
-          python 07-tools/extraction/ingest_wa_fingerprints_to_contracts.py \
+          python -m armenian_corpus_core.extraction.ingest_wa_fingerprints_to_contracts \
             --fingerprint-csv /tmp/corpus_fingerprints.csv \
             --output-jsonl 08-data/wa_fingerprint_document_records.jsonl
         continue-on-error: true
@@ -79,7 +81,7 @@ jobs:
       - name: Merge document records (basic)
         id: merge-basic
         run: |
-          python 07-tools/extraction/merge_document_records.py \
+          python -m armenian_corpus_core.extraction.merge_document_records \
             --local-jsonl 08-data/export_document_records.jsonl \
             --wa-jsonl 08-data/wa_fingerprint_document_records.jsonl \
             --output-jsonl 08-data/unified_document_records.jsonl
@@ -88,7 +90,7 @@ jobs:
       - name: Merge document records (app-ready profile)
         id: merge-app-ready
         run: |
-          python 07-tools/extraction/merge_document_records_with_profiles.py \
+          python -m armenian_corpus_core.extraction.merge_document_records_with_profiles \
             --profile app-ready \
             --local-jsonl 08-data/export_document_records.jsonl \
             --wa-jsonl 08-data/wa_fingerprint_document_records.jsonl \
@@ -98,7 +100,7 @@ jobs:
       - name: Merge document records (corpus-ready profile)
         id: merge-corpus-ready
         run: |
-          python 07-tools/extraction/merge_document_records_with_profiles.py \
+          python -m armenian_corpus_core.extraction.merge_document_records_with_profiles \
             --profile corpus-ready \
             --local-jsonl 08-data/export_document_records.jsonl \
             --wa-jsonl 08-data/wa_fingerprint_document_records.jsonl \
@@ -108,7 +110,7 @@ jobs:
       - name: Extract fingerprint index
         id: extract-fingerprint
         run: |
-          python 07-tools/extraction/extract_fingerprint_index.py \
+          python -m armenian_corpus_core.extraction.extract_fingerprint_index \
             --unified-jsonl 08-data/unified_document_records.jsonl \
             --content-only-jsonl 08-data/unified_document_records_content_only.jsonl \
             --fingerprint-index-jsonl 08-data/unified_document_records_fingerprint_index.jsonl
@@ -117,7 +119,7 @@ jobs:
       - name: Materialize dialect views
         id: materialize-dialects
         run: |
-          python 07-tools/extraction/materialize_dialect_views.py \
+          python -m armenian_corpus_core.extraction.materialize_dialect_views \
             --unified-jsonl 08-data/unified_document_records.jsonl \
             --wa-jsonl 08-data/materialized_wa_documents.jsonl \
             --ea-jsonl 08-data/materialized_ea_documents.jsonl \
@@ -127,7 +129,7 @@ jobs:
       - name: Generate pipeline summary
         id: summary
         run: |
-          python 07-tools/extraction/summarize_unified_documents.py \
+          python -m armenian_corpus_core.extraction.summarize_unified_documents \
             --unified-jsonl 08-data/unified_document_records.jsonl \
             --output-json 08-data/unified_document_records_summary_ci.json
         continue-on-error: true

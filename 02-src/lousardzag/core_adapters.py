@@ -8,7 +8,7 @@ This module provides compatibility wrappers that:
 This enables gradual migration to the central package without breaking existing code.
 
 Environment Variables:
-- LOUSARDZAG_USE_CENTRAL_PACKAGE: Enable/disable central package usage (default: 0)
+- LOUSARDZAG_USE_CENTRAL_PACKAGE: Enable/disable central package usage (default: 1)
 - LOUSARDZAG_DEBUG_IMPORTS: Show import diagnostics (default: 0)
 """
 
@@ -30,7 +30,7 @@ def _debug_print(message: str) -> None:
 
 def _is_central_enabled() -> bool:
     """Check if central package usage is enabled via environment variable."""
-    env_value = os.environ.get("LOUSARDZAG_USE_CENTRAL_PACKAGE", "0")
+    env_value = os.environ.get("LOUSARDZAG_USE_CENTRAL_PACKAGE", "1")
     enabled = env_value.lower() in ("1", "true", "yes")
     _debug_print(f"Central package enabled: {enabled} (env: {env_value})")
     return enabled
@@ -43,7 +43,7 @@ def get_extraction_registry():
         ExtractionRegistry: The central package registry if available, else None
         
     Behavior:
-        - Returns None if central package usage is disabled (default)
+        - Returns None if central package usage is explicitly disabled
         - Returns None if central package is not installed
         - Returns registry instance if central package is available and enabled
     

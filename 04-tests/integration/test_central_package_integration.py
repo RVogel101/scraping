@@ -123,3 +123,31 @@ def test_adapter_runner_dry_run_local_fallback(monkeypatch: pytest.MonkeyPatch) 
     assert proc.returncode == 0, proc.stderr or proc.stdout
     combined = (proc.stdout or "") + "\n" + (proc.stderr or "")
     assert "(local)" in combined
+
+
+def test_adapter_runner_dry_run_default_env_central(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Adapter runner should default to central mode when env var is unset."""
+    monkeypatch.delenv("LOUSARDZAG_USE_CENTRAL_PACKAGE", raising=False)
+
+    lousardzag_root = Path(__file__).resolve().parents[2]
+    adapter_runner = lousardzag_root / "07-tools" / "extraction" / "run_pipeline_adapter.py"
+
+    if not adapter_runner.exists():
+        pytest.skip(f"Adapter runner not found: {adapter_runner}")
+
+    env = os.environ.copy()
+    env["PYTHONIOENCODING"] = "utf-8"
+    env.pop("LOUSARDZAG_USE_CENTRAL_PACKAGE", None)
+
+    proc = subprocess.run(
+        [sys.executable, str(adapter_runner), "--dry-run"],
+        cwd=str(lousardzag_root),
+        capture_output=True,
+        text=True,
+        env=env,
+        timeout=60,
+    )
+
+    assert proc.returncode == 0, proc.stderr or proc.stdout
+    combined = (proc.stdout or "") + "\n" + (proc.stderr or "")
+    assert "(central)" in combined
