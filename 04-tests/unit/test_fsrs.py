@@ -135,7 +135,7 @@ class TestDatabaseFSRSIntegration(unittest.TestCase):
         self._tmp.close()
         self.db = CardDatabase(self._tmp.name)
         self.user_id = self.db.get_or_create_user("tester")
-        self.card_id = self.db.upsert_card(word="test", translation="test")
+        self.card_id = self.db.upsert_card(word="test", translation="test", anki_note_id=99001)
 
     def tearDown(self):
         os.unlink(self._tmp.name)

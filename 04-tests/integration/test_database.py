@@ -32,7 +32,7 @@ class TestCardDatabase(unittest.TestCase):
     # ── Schema / init ──────────────────────────────────────────────────
 
     def test_tables_created(self):
-        """All four tables must exist after init."""
+        """All expected tables must exist after init."""
         import sqlite3
         conn = sqlite3.connect(self._tmp.name)
         tables = {
@@ -42,7 +42,7 @@ class TestCardDatabase(unittest.TestCase):
             ).fetchall()
         }
         conn.close()
-        for expected in ("cards", "sentences", "users", "card_reviews"):
+        for expected in ("anki_cards", "card_enrichment", "sentences", "users", "card_reviews"):
             self.assertIn(expected, tables)
 
     # ── Cards ──────────────────────────────────────────────────────────
@@ -52,16 +52,16 @@ class TestCardDatabase(unittest.TestCase):
             word="test_noun",
             translation="book",
             pos="noun",
-            card_type="noun_declension",
             syllable_count=1,
+            anki_note_id=1001,
         )
         self.assertIsInstance(card_id, int)
         self.assertGreater(card_id, 0)
 
     def test_upsert_card_update(self):
-        """Second upsert with same (word, card_type) updates without changing id."""
-        id1 = self.db.upsert_card(word="test", card_type="noun_declension", translation="a")
-        id2 = self.db.upsert_card(word="test", card_type="noun_declension", translation="b")
+        """Second upsert with same anki_note_id updates without changing id."""
+        id1 = self.db.upsert_card(word="test", translation="a", anki_note_id=2001)
+        id2 = self.db.upsert_card(word="test", translation="b", anki_note_id=2001)
         self.assertEqual(id1, id2)
         card = self.db.get_card(id1)
         self.assertEqual(card["translation"], "b")
@@ -72,8 +72,8 @@ class TestCardDatabase(unittest.TestCase):
             word="test_noun",
             translation="book",
             pos="noun",
-            card_type="noun_declension",
             morphology=morphology,
+            anki_note_id=3001,
         )
         card = self.db.get_card(card_id)
         self.assertIsNotNone(card)
@@ -88,9 +88,9 @@ class TestCardDatabase(unittest.TestCase):
         card_id = self.db.upsert_card(
             word="test_meta",
             translation="menu",
-            card_type="noun_declension",
             template_version="v2",
             metadata=metadata,
+            anki_note_id=4001,
         )
         card = self.db.get_card(card_id)
         self.assertEqual(card["template_version"], "v2")
@@ -100,28 +100,28 @@ class TestCardDatabase(unittest.TestCase):
         self.assertIsNone(self.db.get_card(99999))
 
     def test_get_card_by_word(self):
-        self.db.upsert_card(word="test_noun", card_type="noun_declension")
-        card = self.db.get_card_by_word("test_noun", "noun_declension")
+        self.db.upsert_card(word="test_noun", anki_note_id=5001)
+        card = self.db.get_card_by_word("test_noun")
         self.assertIsNotNone(card)
         self.assertEqual(card["word"], "test_noun")
 
     def test_list_cards_filter_pos(self):
-        self.db.upsert_card(word="w1", pos="noun", card_type="noun_declension")
-        self.db.upsert_card(word="w2", pos="verb", card_type="verb_conjugation")
+        self.db.upsert_card(word="w1", pos="noun", anki_note_id=6001)
+        self.db.upsert_card(word="w2", pos="verb", anki_note_id=6002)
         nouns = self.db.list_cards(pos="noun")
         self.assertEqual(len(nouns), 1)
         self.assertEqual(nouns[0]["word"], "w1")
 
     def test_list_cards_filter_level(self):
-        self.db.upsert_card(word="w1", pos="noun", card_type="noun_declension", level=1)
-        self.db.upsert_card(word="w2", pos="noun", card_type="verb_conjugation", level=2)
+        self.db.upsert_card(word="w1", pos="noun", level=1, anki_note_id=7001)
+        self.db.upsert_card(word="w2", pos="noun", level=2, anki_note_id=7002)
         lvl1 = self.db.list_cards(level=1)
         self.assertEqual(len(lvl1), 1)
 
     # ── Sentences ──────────────────────────────────────────────────────
 
     def test_add_and_get_sentences(self):
-        card_id = self.db.upsert_card(word="test_noun", card_type="noun_declension")
+        card_id = self.db.upsert_card(word="test_noun", anki_note_id=8001)
         sent_id = self.db.add_sentence(
             card_id=card_id,
             form_label="Nominative Sg",
@@ -136,7 +136,7 @@ class TestCardDatabase(unittest.TestCase):
         self.assertEqual(sents[0]["grammar_type"], "nominative_subject")
 
     def test_get_sentences_empty(self):
-        card_id = self.db.upsert_card(word="w1", card_type="noun_declension")
+        card_id = self.db.upsert_card(word="w1", anki_note_id=8002)
         self.assertEqual(self.db.get_sentences(card_id), [])
 
     # ── Users ──────────────────────────────────────────────────────────
@@ -167,14 +167,14 @@ class TestCardDatabase(unittest.TestCase):
 
     def test_record_review_returns_id(self):
         uid = self.db.get_or_create_user("Alice")
-        cid = self.db.upsert_card(word="test_noun", card_type="noun_declension")
+        cid = self.db.upsert_card(word="test_noun", anki_note_id=9001)
         rid = self.db.record_review(uid, cid, rating=3, response_time_ms=800)
         self.assertIsInstance(rid, int)
         self.assertGreater(rid, 0)
 
     def test_get_reviews_by_user(self):
         uid = self.db.get_or_create_user("Alice")
-        cid = self.db.upsert_card(word="test_noun", card_type="noun_declension")
+        cid = self.db.upsert_card(word="test_noun", anki_note_id=9002)
         self.db.record_review(uid, cid, rating=2)
         self.db.record_review(uid, cid, rating=4)
         reviews = self.db.get_reviews(user_id=uid)
@@ -182,7 +182,7 @@ class TestCardDatabase(unittest.TestCase):
 
     def test_get_reviews_by_algorithm_version(self):
         uid = self.db.get_or_create_user("Alice")
-        cid = self.db.upsert_card(word="test_noun", card_type="noun_declension")
+        cid = self.db.upsert_card(word="test_noun", anki_note_id=9003)
         self.db.record_review(uid, cid, rating=3, algorithm_version="v1")
         self.db.record_review(uid, cid, rating=4, algorithm_version="fsrs_v4")
         v1_reviews = self.db.get_reviews(algorithm_version="v1")
@@ -193,7 +193,7 @@ class TestCardDatabase(unittest.TestCase):
 
     def test_due_cards_returns_overdue(self):
         uid = self.db.get_or_create_user("Alice")
-        cid = self.db.upsert_card(word="test_noun", card_type="noun_declension")
+        cid = self.db.upsert_card(word="test_noun", anki_note_id=10001)
         # next_due in the past
         self.db.record_review(uid, cid, rating=1, next_due_at="2000-01-01T00:00:00+00:00")
         due = self.db.due_cards(uid)
@@ -202,7 +202,7 @@ class TestCardDatabase(unittest.TestCase):
 
     def test_due_cards_excludes_future(self):
         uid = self.db.get_or_create_user("Alice")
-        cid = self.db.upsert_card(word="test_noun", card_type="noun_declension")
+        cid = self.db.upsert_card(word="test_noun", anki_note_id=10002)
         # next_due far in the future
         self.db.record_review(uid, cid, rating=4, next_due_at="2099-01-01T00:00:00+00:00")
         due = self.db.due_cards(uid)
@@ -212,7 +212,7 @@ class TestCardDatabase(unittest.TestCase):
 
     def test_review_stats_aggregation(self):
         uid = self.db.get_or_create_user("Alice")
-        cid = self.db.upsert_card(word="test_noun", card_type="noun_declension")
+        cid = self.db.upsert_card(word="test_noun", anki_note_id=11001)
         self.db.record_review(uid, cid, rating=4, algorithm_version="v1")
         self.db.record_review(uid, cid, rating=2, algorithm_version="v1")
         stats = self.db.review_stats()
@@ -226,7 +226,7 @@ class TestCardDatabase(unittest.TestCase):
     def test_review_stats_ab_comparison(self):
         """Stats must group independently by algorithm_version for A/B analysis."""
         uid = self.db.get_or_create_user("Alice")
-        cid = self.db.upsert_card(word="test_noun", card_type="noun_declension")
+        cid = self.db.upsert_card(word="test_noun", anki_note_id=11002)
         self.db.record_review(uid, cid, rating=4, algorithm_version="v1")
         self.db.record_review(uid, cid, rating=1, algorithm_version="fsrs_v4")
         stats = self.db.review_stats()

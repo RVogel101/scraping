@@ -26,15 +26,15 @@ class TestPreviewPayload(unittest.TestCase):
             word="մայր",
             translation="mother",
             pos="noun",
-            card_type="noun_declension",
             template_version="v2",
+            anki_note_id=50001,
         )
         self.db.upsert_card(
-            word="գրել",
+            word="գրdelays",
             translation="to write",
             pos="verb",
-            card_type="verb_conjugation",
             template_version="v2",
+            anki_note_id=50002,
         )
 
     def tearDown(self):
@@ -76,15 +76,15 @@ class TestPreviewApi(unittest.TestCase):
             word="մայր",
             translation="mother",
             pos="noun",
-            card_type="noun_declension",
             template_version="v2",
+            anki_note_id=51001,
         )
         self.db.upsert_card(
             word="գրել",
             translation="to write",
             pos="verb",
-            card_type="verb_conjugation",
             template_version="v2",
+            anki_note_id=51002,
         )
 
     def tearDown(self):
@@ -95,8 +95,6 @@ class TestPreviewApi(unittest.TestCase):
         payload = cards_preview(req)
 
         self.assertIn("cards", payload)
-        self.assertEqual(payload["cards"]["noun"]["card_type"], "noun_declension")
-        self.assertEqual(payload["cards"]["verb"]["card_type"], "verb_conjugation")
 
     def test_cards_preview_endpoint(self):
         client = TestClient(app)
