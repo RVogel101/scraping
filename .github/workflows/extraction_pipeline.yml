@@ -1,0 +1,190 @@
+name: Extraction Pipeline
+
+on:
+  # Run on schedule (daily at 2 AM UTC)
+  schedule:
+    - cron: '0 2 * * *'
+  # Allow manual trigger
+  workflow_dispatch:
+  # Also run after merge to main (if applicable)
+  push:
+    branches:
+      - main
+    paths:
+      - '02-src/lousardzag/core_contracts/**'
+      - '02-src/lousardzag/core_shims/**'
+      - '07-tools/extraction/**'
+      - '.github/workflows/extraction_pipeline.yml'
+
+jobs:
+  extraction-pipeline:
+    runs-on: ubuntu-latest
+    name: Run Full Extraction Pipeline
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Create data directories
+        run: |
+          mkdir -p 08-data
+          mkdir -p logs
+
+      - name: Adapter runner dry-run (central preferred, local fallback)
+        env:
+          LOUSARDZAG_USE_CENTRAL_PACKAGE: "1"
+        run: |
+          python 07-tools/extraction/run_pipeline_adapter.py --dry-run
+        continue-on-error: true
+      
+      - name: Export core contracts
+        id: export
+        run: |
+          python 07-tools/extraction/export_core_contracts_jsonl.py \
+            --db-path 08-data/armenian_cards.db \
+            --lexicon-out 08-data/export_lexicon_entries.jsonl \
+            --documents-out 08-data/export_document_records.jsonl
+        continue-on-error: true
+      
+      - name: Validate contract alignment
+        id: validate
+        run: |
+          python 07-tools/extraction/validate_contract_alignment.py \
+            --lexicon-jsonl 08-data/export_lexicon_entries.jsonl \
+            --documents-jsonl 08-data/export_document_records.jsonl \
+            --output-json 08-data/contract_alignment_report_ci.json
+        continue-on-error: true
+      
+      - name: Ingest WA fingerprints
+        id: ingest-wa
+        run: |
+          python 07-tools/extraction/ingest_wa_fingerprints_to_contracts.py \
+            --fingerprint-csv /tmp/corpus_fingerprints.csv \
+            --output-jsonl 08-data/wa_fingerprint_document_records.jsonl
+        continue-on-error: true
+      
+      - name: Merge document records (basic)
+        id: merge-basic
+        run: |
+          python 07-tools/extraction/merge_document_records.py \
+            --local-jsonl 08-data/export_document_records.jsonl \
+            --wa-jsonl 08-data/wa_fingerprint_document_records.jsonl \
+            --output-jsonl 08-data/unified_document_records.jsonl
+        continue-on-error: true
+      
+      - name: Merge document records (app-ready profile)
+        id: merge-app-ready
+        run: |
+          python 07-tools/extraction/merge_document_records_with_profiles.py \
+            --profile app-ready \
+            --local-jsonl 08-data/export_document_records.jsonl \
+            --wa-jsonl 08-data/wa_fingerprint_document_records.jsonl \
+            --output-jsonl 08-data/unified_document_records_app-ready.jsonl
+        continue-on-error: true
+      
+      - name: Merge document records (corpus-ready profile)
+        id: merge-corpus-ready
+        run: |
+          python 07-tools/extraction/merge_document_records_with_profiles.py \
+            --profile corpus-ready \
+            --local-jsonl 08-data/export_document_records.jsonl \
+            --wa-jsonl 08-data/wa_fingerprint_document_records.jsonl \
+            --output-jsonl 08-data/unified_document_records_corpus-ready.jsonl
+        continue-on-error: true
+      
+      - name: Extract fingerprint index
+        id: extract-fingerprint
+        run: |
+          python 07-tools/extraction/extract_fingerprint_index.py \
+            --unified-jsonl 08-data/unified_document_records.jsonl \
+            --content-only-jsonl 08-data/unified_document_records_content_only.jsonl \
+            --fingerprint-index-jsonl 08-data/unified_document_records_fingerprint_index.jsonl
+        continue-on-error: true
+      
+      - name: Materialize dialect views
+        id: materialize-dialects
+        run: |
+          python 07-tools/extraction/materialize_dialect_views.py \
+            --unified-jsonl 08-data/unified_document_records.jsonl \
+            --wa-jsonl 08-data/materialized_wa_documents.jsonl \
+            --ea-jsonl 08-data/materialized_ea_documents.jsonl \
+            --mixed-jsonl 08-data/materialized_mixed_documents.jsonl
+        continue-on-error: true
+      
+      - name: Generate pipeline summary
+        id: summary
+        run: |
+          python 07-tools/extraction/summarize_unified_documents.py \
+            --unified-jsonl 08-data/unified_document_records.jsonl \
+            --output-json 08-data/unified_document_records_summary_ci.json
+        continue-on-error: true
+      
+      - name: Check extraction results
+        run: |
+          echo "=== Extraction Pipeline Results ==="
+          echo "Export core contracts: ${{ steps.export.outcome }}"
+          echo "Validate alignment: ${{ steps.validate.outcome }}"
+          echo "Ingest WA fingerprints: ${{ steps.ingest-wa.outcome }}"
+          echo "Merge basic: ${{ steps.merge-basic.outcome }}"
+          echo "Merge app-ready: ${{ steps.merge-app-ready.outcome }}"
+          echo "Merge corpus-ready: ${{ steps.merge-corpus-ready.outcome }}"
+          echo "Extract fingerprint index: ${{ steps.extract-fingerprint.outcome }}"
+          echo "Materialize dialects: ${{ steps.materialize-dialects.outcome }}"
+          echo "Generate summary: ${{ steps.summary.outcome }}"
+          
+          # Exit with error if any critical step failed
+          if [[ "${{ steps.export.outcome }}" == "failure" ]] || \
+             [[ "${{ steps.merge-basic.outcome }}" == "failure" ]]; then
+            echo "Critical extraction step failed"
+            exit 1
+          fi
+      
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: extraction-artifacts
+          path: |
+            08-data/export_*.jsonl
+            08-data/unified_*.jsonl
+            08-data/materialized_*.jsonl
+            08-data/*_stats.json
+            08-data/contract_alignment_report_ci.json
+            08-data/unified_document_records_summary_ci.json
+          retention-days: 90
+      
+      - name: Upload logs
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: extraction-logs
+          path: logs/
+          retention-days: 30
+
+  notification:
+    runs-on: ubuntu-latest
+    name: Notify on Pipeline Status
+    needs: extraction-pipeline
+    if: always()
+    
+    steps:
+      - name: Pipeline status
+        run: |
+          if [[ "${{ needs.extraction-pipeline.result }}" == "success" ]]; then
+            echo "✅ Extraction pipeline completed successfully"
+          else
+            echo "❌ Extraction pipeline failed or was skipped"
+          fi
